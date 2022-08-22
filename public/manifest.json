@@ -8,7 +8,7 @@
     "default_title": "Open"
   },
   "icons": {
-    "16": "./logo192.png"
+    "16": "./chromelogo.png"
   },
 
   "permissions": ["scripting"],
