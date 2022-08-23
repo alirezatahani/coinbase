@@ -65,13 +65,64 @@ const Main = () => {
           />
         </form>
       </div>
-      {filterData.length != 0 && (
+      {/* {filterData.length != 0 && (
         <div id="show-result">
           {filterData.map((item, index) => {
             return <p key={index}>name : {item.name}</p>;
           })}
         </div>
-      )}
+      )} */}
+      <table>
+        <tr>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Savings</th>
+          <th>Savings</th>
+          <th>Savings</th>
+          <th>Savings</th>
+          <th>Savings</th>
+        </tr>
+        <tr>
+          <td>Peter</td>
+          <td>Griffin</td>
+          <td>$100</td> <td>Peter</td>
+          <td>Griffin</td>
+          <td>$100</td>
+          <td>$100</td>
+        </tr>
+        <tr>
+          <td>Peter</td>
+          <td>Griffin</td>
+          <td>$100</td> <td>Peter</td>
+          <td>Griffin</td>
+          <td>$100</td>
+          <td>$100</td>
+        </tr>
+        <tr>
+          <td>Peter</td>
+          <td>Griffin</td>
+          <td>$100</td> <td>Peter</td>
+          <td>Griffin</td>
+          <td>$100</td>
+          <td>$100</td>
+        </tr>
+        <tr>
+          <td>Peter</td>
+          <td>Griffin</td>
+          <td>$100</td> <td>Peter</td>
+          <td>Griffin</td>
+          <td>$100</td>
+          <td>$100</td>
+        </tr>{" "}
+        <tr>
+          <td>Peter</td>
+          <td>Griffin</td>
+          <td>$100</td> <td>Peter</td>
+          <td>Griffin</td>
+          <td>$100</td>
+          <td>$100</td>
+        </tr>
+      </table>
     </div>
   );
 };
