@@ -29,17 +29,11 @@ const Main = () => {
   }, []);
 
   console.log("Success:", data);
-
+  console.log(filterData, "filtered");
   function handleFilter(e) {
     setNewFilter(
-      data.filter((value) => {
-        return (
-          value.name?.toLowerCase().includes(e.target.value.toLowerCase()) ||
-          value.title?.toLowerCase().includes(e.target.value.toLowerCase()) ||
-          value.id?.toString().includes(e.target.value) ||
-          value.body?.toLowerCase().includes(e.target.value.toLowerCase()) ||
-          value.email?.toLowerCase().includes(e.target.value.toLowerCase())
-        );
+      data.data.coins.filter((value) => {
+        return value.name?.toLowerCase().includes(e.target.value.toLowerCase());
       })
     );
 
@@ -65,23 +59,22 @@ const Main = () => {
           />
         </form>
       </div>
-      {/* {filterData.length != 0 && (
-        <div id="show-result">
-          {filterData.map((item, index) => {
-            return <p key={index}>name : {item.name}</p>;
-          })}
-        </div>
-      )} */}
+
       <table>
-        <tr>
-          <th>Rank</th>
-          <th>Icon</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Change</th>
-        </tr>
-        {data &&
-          data.data.coins.map((item, index) => {
+        {filterData.length == 0 ? (
+          <div></div>
+        ) : (
+          <tr>
+            <th>Rank</th>
+            <th>Icon</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Change</th>
+          </tr>
+        )}
+
+        {filterData.length != 0 &&
+          filterData.map((item, index) => {
             return (
               <tr key={index}>
                 <td>{item.rank}</td>

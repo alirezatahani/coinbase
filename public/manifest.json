@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "coinbase",
+  "name": "coinRanking",
   "description": "coinbase chrome extension",
   "version": "0.0.1",
   "action": {
