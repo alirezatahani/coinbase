@@ -6,21 +6,29 @@ const Main = () => {
   const [newFilter, setNewFilter] = useState([]);
   const [data, setData] = useState(null);
 
-  const baseUrl = `https://jsonplaceholder.typicode.com/users`;
+  const baseUrl = "https://api.coinranking.com/v2/coins";
+  const apiKey = "coinranking369971eebd30ea4d94a91d301bd9fb9099e6792808fd718c";
 
   useEffect(() => {
     async function getData() {
-      const actualData = await fetch(baseUrl).then((response) =>
-        response.json()
-      );
-      setData(actualData);
+      fetch(baseUrl, {
+        method: "GET",
+        headers: {
+          "x-access-token": apiKey,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setData(data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
-
     getData();
   }, []);
 
-  console.log(data, "data");
-  console.log(filterData, "filter");
+  console.log("Success:", data);
 
   function handleFilter(e) {
     setNewFilter(
