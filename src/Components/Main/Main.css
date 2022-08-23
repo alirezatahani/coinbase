@@ -1,6 +1,6 @@
 #box-wrapper {
   width: 500px;
-  height: 400px;
+  height: auto;
   background-color: #0052fe;
   padding: 2rem;
 }
@@ -63,6 +63,6 @@ tr:nth-child(odd) {
 }
 
 th {
-  background-color: #04aa6d;
+  background-color: #313232;
   color: white;
 }

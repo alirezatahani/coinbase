@@ -53,7 +53,7 @@ const Main = () => {
   return (
     <div id="box-wrapper">
       <div className="box-title">
-        <h2>Coinbase</h2>
+        <h2>CoinRanking</h2>
       </div>
       <div id="input-wrapper">
         <form>
@@ -74,54 +74,26 @@ const Main = () => {
       )} */}
       <table>
         <tr>
-          <th>Firstname</th>
-          <th>Lastname</th>
-          <th>Savings</th>
-          <th>Savings</th>
-          <th>Savings</th>
-          <th>Savings</th>
-          <th>Savings</th>
+          <th>Rank</th>
+          <th>Icon</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Change</th>
         </tr>
-        <tr>
-          <td>Peter</td>
-          <td>Griffin</td>
-          <td>$100</td> <td>Peter</td>
-          <td>Griffin</td>
-          <td>$100</td>
-          <td>$100</td>
-        </tr>
-        <tr>
-          <td>Peter</td>
-          <td>Griffin</td>
-          <td>$100</td> <td>Peter</td>
-          <td>Griffin</td>
-          <td>$100</td>
-          <td>$100</td>
-        </tr>
-        <tr>
-          <td>Peter</td>
-          <td>Griffin</td>
-          <td>$100</td> <td>Peter</td>
-          <td>Griffin</td>
-          <td>$100</td>
-          <td>$100</td>
-        </tr>
-        <tr>
-          <td>Peter</td>
-          <td>Griffin</td>
-          <td>$100</td> <td>Peter</td>
-          <td>Griffin</td>
-          <td>$100</td>
-          <td>$100</td>
-        </tr>{" "}
-        <tr>
-          <td>Peter</td>
-          <td>Griffin</td>
-          <td>$100</td> <td>Peter</td>
-          <td>Griffin</td>
-          <td>$100</td>
-          <td>$100</td>
-        </tr>
+        {data &&
+          data.data.coins.map((item, index) => {
+            return (
+              <tr key={index}>
+                <td>{item.rank}</td>
+                <td>
+                  <img src={item.iconUrl} style={{ width: 40 }} />
+                </td>
+                <td>{item.name}</td>
+                <td>${item.price}</td>
+                <td>{item.change}%</td>
+              </tr>
+            );
+          })}
       </table>
     </div>
   );
