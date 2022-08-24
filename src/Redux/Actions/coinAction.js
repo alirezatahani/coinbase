@@ -1,4 +1,10 @@
-import { COINS_API, LOADER, ERROR, FORM_INPUT } from "../Types/types";
+import {
+  COINS_API,
+  FAVORITE_DATA,
+  LOADER,
+  ERROR,
+  FORM_INPUT,
+} from "../Types/types";
 
 //
 export const coinsApiCall = (coins) => {
@@ -7,14 +13,16 @@ export const coinsApiCall = (coins) => {
     payload: coins,
   };
 };
+export const favoriteDataAction = (data) => {
+  return {
+    type: FAVORITE_DATA,
+    payload: data,
+  };
+};
 
 export const Form = (eTarget) => {
   return {
     type: FORM_INPUT,
     payload: eTarget,
   };
-};
-
-export const LoaderFunc = () => {
-  return { type: LOADER };
 };

@@ -5,17 +5,18 @@ import { Tabs } from "antd";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import { Button, notification, Space } from "antd";
 import { getData } from "../../API/coinApi";
+import { favoriteDataAction } from "../../Redux/Actions/coinAction";
 
 //
 const Main = () => {
   const [filterData, setFilterData] = useState([]);
   const [newFilter, setNewFilter] = useState([]);
-  const [data, setData] = useState(null);
-  const [favorite, setFavorite] = useState([]);
 
   const dispatch = useDispatch();
 
-  const { coinsData } = useSelector((state) => state.coinsReducer);
+  const { coinsData, favoriteData } = useSelector(
+    (state) => state.coinsReducer
+  );
 
   useEffect(() => {
     dispatch(getData());
@@ -42,7 +43,7 @@ const Main = () => {
   }
 
   const addToFavorite = (item, name) => {
-    setFavorite((favorite) => [...favorite, item]);
+    dispatch(favoriteDataAction(item));
     openNotificationWithIcon("success", name);
   };
   const { TabPane } = Tabs;
@@ -125,14 +126,14 @@ const Main = () => {
                   fontSize: 13,
                 }}
               >
-                {favorite.length}
+                {favoriteData.length}
               </div>
             </div>
           }
           key="2"
         >
           <table>
-            {favorite.length == 0 ? (
+            {favoriteData.length == 0 ? (
               <div></div>
             ) : (
               <tr>
@@ -144,8 +145,8 @@ const Main = () => {
               </tr>
             )}
 
-            {favorite.length != 0 ? (
-              favorite.map((item, index) => {
+            {favoriteData.length != 0 ? (
+              favoriteData.map((item, index) => {
                 return (
                   <tr key={index}>
                     <td>{item.rank}</td>
