@@ -71,3 +71,7 @@ th {
 .favBtn:hover {
   background-color: #1e77ff;
 }
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: white !important;
+}

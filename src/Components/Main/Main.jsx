@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./Main.css";
+import { Tabs } from "antd";
+import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 
-const Main = () => {
+const Main = (setGlobalState) => {
   const [filterData, setFilterData] = useState([]);
   const [newFilter, setNewFilter] = useState([]);
   const [data, setData] = useState(null);
@@ -29,8 +31,6 @@ const Main = () => {
     getData();
   }, []);
 
-  console.log("Success:", data);
-  console.log(filterData, "filtered");
   function handleFilter(e) {
     setNewFilter(
       data.data.coins.filter((value) => {
@@ -46,65 +46,75 @@ const Main = () => {
   }
 
   const addToFavorite = (item) => {
-    setFavorite((prevItem) => [...prevItem, item]);
+    setGlobalState((globalState) => [...globalState, item]);
   };
+  const { TabPane } = Tabs;
 
   return (
-    <div id="box-wrapper">
-      <div className="box-title">
-        <h2>CoinRanking</h2>
-      </div>
-      <div id="input-wrapper">
-        <form>
-          <input
-            type="search"
-            className="input-style"
-            placeholder="do search"
-            onChange={handleFilter}
-          />
-        </form>
-      </div>
+    <div>
+      <Tabs defaultActiveKey="1">
+        <TabPane tab="All" key="1">
+          <div id="box-wrapper">
+            <div className="box-title">
+              <h2>CoinRanking</h2>
+            </div>
+            <div id="input-wrapper">
+              <form>
+                <input
+                  type="search"
+                  className="input-style"
+                  placeholder="do search"
+                  onChange={handleFilter}
+                />
+              </form>
+            </div>
 
-      <table>
-        {filterData.length == 0 ? (
-          <div></div>
-        ) : (
-          <tr>
-            <th>Rank</th>
-            <th>Icon</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Change</th>
-            <th></th>
-          </tr>
-        )}
+            <table>
+              {filterData.length == 0 ? (
+                <div></div>
+              ) : (
+                <tr>
+                  <th>Rank</th>
+                  <th>Icon</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Change</th>
+                  <th></th>
+                </tr>
+              )}
 
-        {filterData.length != 0 ? (
-          filterData.map((item, index) => {
-            return (
-              <tr key={index}>
-                <td>{item.rank}</td>
-                <td>
-                  <img src={item.iconUrl} style={{ width: 40 }} />
-                </td>
-                <td>{item.name}</td>
-                <td>${Number(item.price).toFixed(3)}</td>
-                <td>{item.change}%</td>
-                <td>
-                  <button
-                    className="favBtn"
-                    onClick={() => addToFavorite(item)}
-                  >
-                    add to favorite
-                  </button>
-                </td>
-              </tr>
-            );
-          })
-        ) : (
-          <div></div>
-        )}
-      </table>
+              {filterData.length != 0 ? (
+                filterData.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{item.rank}</td>
+                      <td>
+                        <img src={item.iconUrl} style={{ width: 40 }} />
+                      </td>
+                      <td>{item.name}</td>
+                      <td>${Number(item.price).toFixed(3)}</td>
+                      <td>{item.change}%</td>
+                      <td>
+                        <button
+                          className="favBtn"
+                          onClick={() => addToFavorite(item)}
+                        >
+                          add to favorite
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <div></div>
+              )}
+            </table>
+          </div>
+        </TabPane>
+        <TabPane tab="Favorite" key="2">
+          Favorite
+        </TabPane>
+      </Tabs>
     </div>
   );
 };
