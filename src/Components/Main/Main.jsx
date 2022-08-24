@@ -82,7 +82,7 @@ const Main = () => {
                   <img src={item.iconUrl} style={{ width: 40 }} />
                 </td>
                 <td>{item.name}</td>
-                <td>${item.price}</td>
+                <td>${Number(item.price).toFixed(3)}</td>
                 <td>{item.change}%</td>
               </tr>
             );
