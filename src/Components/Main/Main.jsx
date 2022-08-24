@@ -16,7 +16,6 @@ const Main = () => {
   const dispatch = useDispatch();
 
   const { coinsData } = useSelector((state) => state.coinsReducer);
-  console.log(coinsData, "redux");
 
   useEffect(() => {
     dispatch(getData());
@@ -30,7 +29,7 @@ const Main = () => {
 
   function handleFilter(e) {
     setNewFilter(
-      data.data.coins.filter((value) => {
+      coinsData.data.coins.filter((value) => {
         return value.name?.toLowerCase().includes(e.target.value.toLowerCase());
       })
     );
