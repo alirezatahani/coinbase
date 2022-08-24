@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./Main.css";
 import { Tabs } from "antd";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
-
-const Main = (setGlobalState) => {
+//
+const Main = () => {
   const [filterData, setFilterData] = useState([]);
   const [newFilter, setNewFilter] = useState([]);
   const [data, setData] = useState(null);
@@ -46,7 +46,7 @@ const Main = (setGlobalState) => {
   }
 
   const addToFavorite = (item) => {
-    setGlobalState((globalState) => [...globalState, item]);
+    setFavorite((favorite) => [...favorite, item]);
   };
   const { TabPane } = Tabs;
 
@@ -112,7 +112,37 @@ const Main = (setGlobalState) => {
           </div>
         </TabPane>
         <TabPane tab="Favorite" key="2">
-          Favorite
+          <table>
+            {favorite.length == 0 ? (
+              <div></div>
+            ) : (
+              <tr>
+                <th>Rank</th>
+                <th>Icon</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Change</th>
+              </tr>
+            )}
+
+            {favorite.length != 0 ? (
+              favorite.map((item, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{item.rank}</td>
+                    <td>
+                      <img src={item.iconUrl} style={{ width: 40 }} />
+                    </td>
+                    <td>{item.name}</td>
+                    <td>${Number(item.price).toFixed(3)}</td>
+                    <td>{item.change}%</td>
+                  </tr>
+                );
+              })
+            ) : (
+              <div></div>
+            )}
+          </table>
         </TabPane>
       </Tabs>
     </div>
