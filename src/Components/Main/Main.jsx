@@ -79,7 +79,7 @@ const Main = () => {
           </tr>
         )}
 
-        {filterData.length != 0 &&
+        {filterData.length != 0 ? (
           filterData.map((item, index) => {
             return (
               <tr key={index}>
@@ -100,7 +100,10 @@ const Main = () => {
                 </td>
               </tr>
             );
-          })}
+          })
+        ) : (
+          <div></div>
+        )}
       </table>
     </div>
   );

@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import Main from "./Components/Main/Main";
+import Tab from "./Components/TabComponent/Tab";
 
 function App() {
   return (
     <div className="App">
-      <Main />
+      <Tab />
     </div>
   );
 }
