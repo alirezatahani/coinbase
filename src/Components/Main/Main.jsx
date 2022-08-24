@@ -3,6 +3,7 @@ import "./Main.css";
 import { Tabs } from "antd";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import { Button, notification, Space } from "antd";
+import { Badge } from "antd";
 
 //
 const Main = () => {
@@ -121,7 +122,28 @@ const Main = () => {
             </table>
           </div>
         </TabPane>
-        <TabPane tab="Favorite" key="2">
+        <TabPane
+          tab={
+            <div className="flex">
+              <span>Favorite Coins</span>
+              <div
+                style={{
+                  width: 20,
+                  height: 20,
+                  backgroundColor: "#04aa6d",
+                  textAlign: "center",
+                  borderRadius: "50%",
+                  color: "white",
+                  marginLeft: 6,
+                  fontSize: 13,
+                }}
+              >
+                {favorite.length}
+              </div>
+            </div>
+          }
+          key="2"
+        >
           <table>
             {favorite.length == 0 ? (
               <div></div>

@@ -12,6 +12,12 @@
   border-radius: 4px;
 }
 
+.flex {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
 #input-wrapper {
   margin-bottom: 2rem;
 }
@@ -74,4 +80,8 @@ th {
 
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
   color: white !important;
+}
+.ant-tabs-tab-btn,
+.ant-tabs-tab-remove {
+  color: wheat !important;
 }
