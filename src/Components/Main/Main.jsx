@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux/es/exports";
 import "./Main.css";
 import { Tabs } from "antd";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import { Button, notification, Space } from "antd";
-import { Badge } from "antd";
+import { getData } from "../../API/coinApi";
 
 //
 const Main = () => {
@@ -12,26 +13,13 @@ const Main = () => {
   const [data, setData] = useState(null);
   const [favorite, setFavorite] = useState([]);
 
-  const baseUrl = "https://api.coinranking.com/v2/coins";
-  const apiKey = "coinranking369971eebd30ea4d94a91d301bd9fb9099e6792808fd718c";
+  const dispatch = useDispatch();
+
+  const { coinsData } = useSelector((state) => state.coinsReducer);
+  console.log(coinsData, "redux");
 
   useEffect(() => {
-    async function getData() {
-      fetch(baseUrl, {
-        method: "GET",
-        headers: {
-          "x-access-token": apiKey,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setData(data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    }
-    getData();
+    dispatch(getData());
   }, []);
 
   const openNotificationWithIcon = (type, name) => {
