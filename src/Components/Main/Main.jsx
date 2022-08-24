@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./Main.css";
 import { Tabs } from "antd";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
+import { Button, notification, Space } from "antd";
+
 //
 const Main = () => {
   const [filterData, setFilterData] = useState([]);
@@ -31,6 +33,12 @@ const Main = () => {
     getData();
   }, []);
 
+  const openNotificationWithIcon = (type, name) => {
+    notification[type]({
+      message: `${name} added`,
+    });
+  };
+
   function handleFilter(e) {
     setNewFilter(
       data.data.coins.filter((value) => {
@@ -45,8 +53,9 @@ const Main = () => {
     }
   }
 
-  const addToFavorite = (item) => {
+  const addToFavorite = (item, name) => {
     setFavorite((favorite) => [...favorite, item]);
+    openNotificationWithIcon("success", name);
   };
   const { TabPane } = Tabs;
 
@@ -95,12 +104,13 @@ const Main = () => {
                       <td>${Number(item.price).toFixed(3)}</td>
                       <td>{item.change}%</td>
                       <td>
-                        <button
-                          className="favBtn"
-                          onClick={() => addToFavorite(item)}
-                        >
-                          add to favorite
-                        </button>
+                        <Space>
+                          <Button
+                            onClick={() => addToFavorite(item, item.name)}
+                          >
+                            addToFavorite
+                          </Button>
+                        </Space>
                       </td>
                     </tr>
                   );
@@ -140,7 +150,7 @@ const Main = () => {
                 );
               })
             ) : (
-              <div></div>
+              <div>You didn't choose any coins</div>
             )}
           </table>
         </TabPane>
