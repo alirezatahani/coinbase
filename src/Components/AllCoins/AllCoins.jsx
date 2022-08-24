@@ -7,12 +7,21 @@ import { favoriteDataAction } from "../../Redux/Actions/coinAction";
 export default function AllCoins() {
   const [filterData, setFilterData] = useState([]);
   const [newFilter, setNewFilter] = useState([]);
-  const { coinsData } = useSelector((state) => state.coinsReducer);
+  const [find, setFind] = useState(null);
+  const { coinsData, favoriteData } = useSelector(
+    (state) => state.coinsReducer
+  );
   const dispatch = useDispatch();
 
   const openNotificationWithIcon = (type, name) => {
     notification[type]({
       message: `${name} added`,
+      duration: 1,
+    });
+  };
+  const openNotificationError = (type, name) => {
+    notification[type]({
+      message: `${name} exist`,
       duration: 1,
     });
   };
@@ -31,7 +40,23 @@ export default function AllCoins() {
     }
   }
 
+  console.log(filterData, "filterData");
+  console.log(favoriteData, "favData");
+
   const addToFavorite = (item, name) => {
+    // favoriteData &&
+    //   favoriteData.map((favoriteData) => {
+    //     const findItem = filterData.find(
+    //       (filterData) => filterData.name === favoriteData.name
+    //     );
+    //     setFind(findItem);
+    //   });
+    // if (find) {
+    //   openNotificationError("error", name);
+    // } else {
+    //   dispatch(favoriteDataAction(item));
+    //   openNotificationWithIcon("success", name);
+    // }
     dispatch(favoriteDataAction(item));
     openNotificationWithIcon("success", name);
   };
