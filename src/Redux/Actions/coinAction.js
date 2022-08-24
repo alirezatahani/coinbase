@@ -1,10 +1,4 @@
-import {
-  COINS_API,
-  FAVORITE_DATA,
-  LOADER,
-  ERROR,
-  FORM_INPUT,
-} from "../Types/types";
+import { COINS_API, FAVORITE_DATA, ERROR } from "../Types/types";
 
 //
 export const coinsApiCall = (coins) => {
@@ -20,9 +14,6 @@ export const favoriteDataAction = (data) => {
   };
 };
 
-export const Form = (eTarget) => {
-  return {
-    type: FORM_INPUT,
-    payload: eTarget,
-  };
+export const ErrorAction = (error) => {
+  return { type: ERROR, payload: error };
 };
