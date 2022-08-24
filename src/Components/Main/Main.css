@@ -1,5 +1,5 @@
 #box-wrapper {
-  width: 500px;
+  width: 550px;
   height: auto;
   background-color: #0052fe;
   padding: 2rem;
@@ -65,4 +65,16 @@ tr:nth-child(odd) {
 th {
   background-color: #313232;
   color: white;
+}
+
+.favBtn {
+  border: none;
+  padding: 6px;
+  border-radius: 4px;
+  color: white;
+  background-color: #04aa6d;
+  cursor: pointer;
+}
+.favBtn:hover {
+  background-color: #1e77ff;
 }
