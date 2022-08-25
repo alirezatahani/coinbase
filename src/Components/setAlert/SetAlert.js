@@ -1,11 +1,5 @@
-import {
-  Button,
-  DatePicker,
-  Form,
-  InputNumber,
-  Select,
-} from "antd";
-import { useState } from "react";
+import { Button, DatePicker, Form, InputNumber, Select } from "antd";
+import { createRef, useState } from "react";
 import "antd/dist/antd.css";
 
 export const SetAlert = (props) => {
@@ -13,6 +7,7 @@ export const SetAlert = (props) => {
   const [cryptoValue, setCryptoValue] = useState(0);
   const { data } = props;
   const options = data && data.data.coins;
+  const formRef = createRef();
 
   const config = {
     rules: [
@@ -23,14 +18,14 @@ export const SetAlert = (props) => {
       },
     ],
   };
-  function onChange(value) {
+
+  const onChange = (value) => {
     const selectedCrypto = options.filter((item) => {
       return item.name === value;
     });
     let fixedValue = Number(selectedCrypto[0].price).toFixed(5);
     setCryptoValue(fixedValue);
-  }
-
+  };
   const onFinish = (fieldsValue) => {
     const values = {
       ...fieldsValue,
@@ -39,9 +34,12 @@ export const SetAlert = (props) => {
       ),
     };
     setAlertCondition([...alertCondition, values]);
+    formRef.current.resetFields();
+    setCryptoValue(0);
   };
-  console.log("alert", alertCondition);
   
+  console.log("alert", alertCondition);
+
   return (
     <>
       <Form
@@ -59,6 +57,7 @@ export const SetAlert = (props) => {
           span: 24,
         }}
         onFinish={onFinish}
+        ref={formRef}
       >
         <Form.Item name="selectCrypto" label="Crypto" {...config}>
           <Select
