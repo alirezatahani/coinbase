@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./AllCoins.css";
 import { Button, notification, Space } from "antd";
 import { favoriteDataAction } from "../../Redux/Actions/coinAction";
+import { debounce } from "lodash";
+import { getData } from "../../API/coinApi";
 
 export default function AllCoins() {
   const [filterData, setFilterData] = useState([]);
-  const [newFilter, setNewFilter] = useState([]);
-  const [find, setFind] = useState(null);
   const { coinsData, favoriteData } = useSelector(
     (state) => state.coinsReducer
   );
@@ -26,37 +26,21 @@ export default function AllCoins() {
     });
   };
 
-  function handleFilter(e) {
-    setNewFilter(
-      coinsData.data.coins.filter((value) => {
-        return value.name?.toLowerCase().includes(e.target.value.toLowerCase());
-      })
-    );
-
-    if (e.target.value == "") {
-      return setFilterData([]);
-    } else {
-      return setFilterData(newFilter);
+  const action = (e) => {
+    try {
+      dispatch(getData(e));
+    } catch (err) {
+      console.log(err.message);
     }
+  };
+
+  const handler = useCallback(debounce(action, 600), []);
+
+  function handleFilter(e) {
+    handler(e.target.value);
   }
 
-  console.log(filterData, "filterData");
-  console.log(favoriteData, "favData");
-
   const addToFavorite = (item, name) => {
-    // favoriteData &&
-    //   favoriteData.map((favoriteData) => {
-    //     const findItem = filterData.find(
-    //       (filterData) => filterData.name === favoriteData.name
-    //     );
-    //     setFind(findItem);
-    //   });
-    // if (find) {
-    //   openNotificationError("error", name);
-    // } else {
-    //   dispatch(favoriteDataAction(item));
-    //   openNotificationWithIcon("success", name);
-    // }
     dispatch(favoriteDataAction(item));
     openNotificationWithIcon("success", name);
   };
@@ -79,20 +63,19 @@ export default function AllCoins() {
         </div>
         <table>
           {filterData.length == 0 ? (
-            <div></div>
+            <></>
           ) : (
             <tr>
               <th>Rank</th>
               <th>Icon</th>
               <th>Name</th>
               <th>Price</th>
-              <th>Change</th>
               <th></th>
             </tr>
           )}
 
-          {filterData.length != 0 ? (
-            filterData.map((item, index) => {
+          {coinsData.length != 0 ? (
+            coinsData.data.coins.map((item, index) => {
               return (
                 <tr key={index}>
                   <td>{item.rank}</td>
@@ -101,7 +84,6 @@ export default function AllCoins() {
                   </td>
                   <td>{item.name}</td>
                   <td>${Number(item.price).toFixed(3)}</td>
-                  <td>{item.change}%</td>
                   <td>
                     <Space>
                       <Button onClick={() => addToFavorite(item, item.name)}>
@@ -113,7 +95,7 @@ export default function AllCoins() {
               );
             })
           ) : (
-            <div></div>
+            <></>
           )}
         </table>
       </div>
