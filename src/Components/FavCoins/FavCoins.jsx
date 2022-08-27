@@ -7,7 +7,7 @@ export default function FavCoins() {
   return (
     <div>
       <table>
-        {favoriteData.length == 0 ? (
+        {favoriteData.length === 0 ? (
           <div></div>
         ) : (
           <tr>
@@ -15,7 +15,6 @@ export default function FavCoins() {
             <th>Icon</th>
             <th>Name</th>
             <th>Price</th>
-            <th>Change</th>
           </tr>
         )}
 
@@ -29,7 +28,6 @@ export default function FavCoins() {
                 </td>
                 <td>{item.name}</td>
                 <td>${Number(item.price).toFixed(3)}</td>
-                <td>{item.change}%</td>
               </tr>
             );
           })

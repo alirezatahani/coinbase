@@ -7,7 +7,6 @@ import { debounce } from "lodash";
 import { getData } from "../../API/coinApi";
 
 export default function AllCoins() {
-  const [filterData, setFilterData] = useState([]);
   const { coinsData, favoriteData } = useSelector(
     (state) => state.coinsReducer
   );
@@ -16,12 +15,6 @@ export default function AllCoins() {
   const openNotificationWithIcon = (type, name) => {
     notification[type]({
       message: `${name} added`,
-      duration: 1,
-    });
-  };
-  const openNotificationError = (type, name) => {
-    notification[type]({
-      message: `${name} exist`,
       duration: 1,
     });
   };
@@ -34,7 +27,7 @@ export default function AllCoins() {
     }
   };
 
-  const handler = useCallback(debounce(action, 600), []);
+  const handler = useCallback(debounce(action, 100), []);
 
   function handleFilter(e) {
     handler(e.target.value);
@@ -62,7 +55,7 @@ export default function AllCoins() {
           </form>
         </div>
         <table>
-          {filterData.length == 0 ? (
+          {coinsData.length !== 0 ? (
             <></>
           ) : (
             <tr>
