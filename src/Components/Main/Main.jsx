@@ -1,93 +1,54 @@
-import React, { useState, useEffect } from "react";
-import "./Main.css";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux/es/exports";
+import { Tabs } from "antd";
+import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
+import { getData } from "../../API/coinApi";
+import FavCoins from "../FavCoins/FavCoins";
+import AllCoins from "../AllCoins/AllCoins";
 
+//
 const Main = () => {
-  const [filterData, setFilterData] = useState([]);
-  const [newFilter, setNewFilter] = useState([]);
-  const [data, setData] = useState(null);
+  const dispatch = useDispatch();
 
-  const baseUrl = "https://api.coinranking.com/v2/coins";
-  const apiKey = "coinranking369971eebd30ea4d94a91d301bd9fb9099e6792808fd718c";
+  const { favoriteData } = useSelector((state) => state.coinsReducer);
 
   useEffect(() => {
-    async function getData() {
-      fetch(baseUrl, {
-        method: "GET",
-        headers: {
-          "x-access-token": apiKey,
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setData(data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    }
-    getData();
+    dispatch(getData());
   }, []);
 
-  console.log("Success:", data);
-  console.log(filterData, "filtered");
-  function handleFilter(e) {
-    setNewFilter(
-      data.data.coins.filter((value) => {
-        return value.name?.toLowerCase().includes(e.target.value.toLowerCase());
-      })
-    );
-
-    if (e.target.value == "") {
-      return setFilterData([]);
-    } else {
-      return setFilterData(newFilter);
-    }
-  }
+  const { TabPane } = Tabs;
 
   return (
-    <div id="box-wrapper">
-      <div className="box-title">
-        <h2>CoinRanking</h2>
-      </div>
-      <div id="input-wrapper">
-        <form>
-          <input
-            type="search"
-            className="input-style"
-            placeholder="do search"
-            onChange={handleFilter}
-          />
-        </form>
-      </div>
-
-      <table>
-        {filterData.length == 0 ? (
-          <div></div>
-        ) : (
-          <tr>
-            <th>Rank</th>
-            <th>Icon</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Change</th>
-          </tr>
-        )}
-
-        {filterData.length != 0 &&
-          filterData.map((item, index) => {
-            return (
-              <tr key={index}>
-                <td>{item.rank}</td>
-                <td>
-                  <img src={item.iconUrl} style={{ width: 40 }} />
-                </td>
-                <td>{item.name}</td>
-                <td>${item.price}</td>
-                <td>{item.change}%</td>
-              </tr>
-            );
-          })}
-      </table>
+    <div>
+      <Tabs defaultActiveKey="1">
+        <TabPane tab="All" key="1">
+          <AllCoins />
+        </TabPane>
+        <TabPane
+          tab={
+            <div className="flex">
+              <span>Favorite Coins</span>
+              <div
+                style={{
+                  width: 20,
+                  height: 20,
+                  backgroundColor: "#04aa6d",
+                  textAlign: "center",
+                  borderRadius: "50%",
+                  color: "white",
+                  marginLeft: 6,
+                  fontSize: 13,
+                }}
+              >
+                {favoriteData.length}
+              </div>
+            </div>
+          }
+          key="2"
+        >
+          <FavCoins />
+        </TabPane>
+      </Tabs>
     </div>
   );
 };

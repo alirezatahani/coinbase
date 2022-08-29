@@ -5,4 +5,8 @@
 
 .App {
   text-align: center;
+  width: 550px;
+  height: auto;
+  background-color: #0052fe;
+  padding: 2rem;
 }
