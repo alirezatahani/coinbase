@@ -1,16 +1,13 @@
 import React, { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import "./Allcoins.css";
+import "./AllCoins.css";
 import { Button, notification, Space } from "antd";
 import { favoriteDataAction } from "../../Redux/Actions/coinAction";
 import { debounce } from "lodash";
-import { getData } from "../../API/coinApi";
 import { getAsyncCoins } from "../../features/coins/coinsSlice";
 
 export default function AllCoins() {
-  // const { coinsData } = useSelector((state) => state.coinsReducer);
-  const {loading,error,coins} = useSelector(state=>state.coins)
-  console.log(coins ,"xxxxxxxxxx");
+  const { coins } = useSelector((state) => state.coins);
   const dispatch = useDispatch();
 
   const openNotificationWithIcon = (type, name) => {
@@ -55,21 +52,9 @@ export default function AllCoins() {
             />
           </form>
         </div>
-        {/* <table>
-          {coinsData.length !== 0 ? (
-            <></>
-          ) : (
-            <tr>
-              <th>Rank</th>
-              <th>Icon</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th></th>
-            </tr>
-          )}
-
-          {coinsData.length != 0 ? (
-            coinsData.data.coins.map((item, index) => {
+        <table>
+          {coins.length != 0 ? (
+            coins.data.coins.map((item, index) => {
               return (
                 <tr key={index}>
                   <td>{item.rank}</td>
@@ -91,7 +76,7 @@ export default function AllCoins() {
           ) : (
             <></>
           )}
-        </table> */}
+        </table>
       </div>
     </div>
   );
