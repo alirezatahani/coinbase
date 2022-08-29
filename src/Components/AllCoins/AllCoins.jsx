@@ -2,17 +2,24 @@ import React, { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./AllCoins.css";
 import { Button, notification, Space } from "antd";
-import { favoriteDataAction } from "../../Redux/Actions/coinAction";
 import { debounce } from "lodash";
 import { getAsyncCoins } from "../../features/coins/coinsSlice";
+import { addToFavorite } from "../../features/favCoins/favCoinsSlice";
 
 export default function AllCoins() {
   const { coins } = useSelector((state) => state.coins);
+  const { favCoins } = useSelector((state) => state.favCoins);
   const dispatch = useDispatch();
 
-  const openNotificationWithIcon = (type, name) => {
+  const addNotification = (type, name) => {
     notification[type]({
       message: `${name} added`,
+      duration: 1,
+    });
+  };
+  const isExistNotification = (type, name) => {
+    notification[type]({
+      message: `${name} was added`,
       duration: 1,
     });
   };
@@ -31,9 +38,14 @@ export default function AllCoins() {
     handler(e.target.value);
   }
 
-  const addToFavorite = (item, name) => {
-    dispatch(favoriteDataAction(item));
-    openNotificationWithIcon("success", name);
+  const favoriteHandler = (item, name) => {
+    const isExist = favCoins.find((coin) => coin.name === item.name);
+    if (isExist) {
+      isExistNotification("error", name);
+    } else {
+      dispatch(addToFavorite(item));
+      addNotification("success", name);
+    }
   };
 
   return (
@@ -65,7 +77,7 @@ export default function AllCoins() {
                   <td>${Number(item.price).toFixed(3)}</td>
                   <td>
                     <Space>
-                      <Button onClick={() => addToFavorite(item, item.name)}>
+                      <Button onClick={() => favoriteHandler(item, item.name)}>
                         addToFavorite
                       </Button>
                     </Space>
