@@ -5,5 +5,6 @@ import coinReducer from "./features/coins/coinsSlice";
 export const store = configureStore({
   reducer: {
     coins: coinReducer,
+    alerts: alertsReducer,
   },
 });

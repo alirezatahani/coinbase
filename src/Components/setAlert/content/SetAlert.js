@@ -44,12 +44,6 @@ export const SetAlert = (props) => {
     setCryptoValue(0);
   };
 
-  function deleteAlert(index) {
-    const copyAlertCondition = [...alertCondition];
-    copyAlertCondition.splice(index, 1);
-    setAlertCondition(copyAlertCondition);
-  }
-
   function checkAlertAuth() {
     alertCondition.map((item, index) => {
       const findCoin = data.data.coins.filter((coin) => {
@@ -60,7 +54,7 @@ export const SetAlert = (props) => {
 
       console.log(alertTime > nowTime);
       if (nowTime > alertTime) {
-        deleteAlert(index);
+        dispatch(addToAlerts(item));
       } else {
         console.log(findCoin[0].price, item.targetValue);
         switch (item.crossing) {
@@ -69,7 +63,7 @@ export const SetAlert = (props) => {
               alert(
                 `${findCoin[0].name} price crossing up ${item.targetValue}`
               );
-              deleteAlert(index);
+              dispatch(addToAlerts(item));
             }
             break;
           case "crossingDown":
@@ -77,7 +71,7 @@ export const SetAlert = (props) => {
               alert(
                 `${findCoin[0].name} price crossing up ${item.targetValue}`
               );
-              deleteAlert(index);
+              dispatch(addToAlerts(item));
             }
             break;
 
