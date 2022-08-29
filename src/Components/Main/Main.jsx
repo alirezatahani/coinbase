@@ -1,16 +1,13 @@
 import React from "react";
-import {  useDispatch } from "react-redux/es/exports";
 import { Tabs } from "antd";
+import { useSelector } from "react-redux";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import FavCoins from "../FavCoins/FavCoins";
 import AllCoins from "../AllCoins/AllCoins";
 
 //
 const Main = () => {
-  const dispatch = useDispatch();
-
-  // const { favoriteData } = useSelector((state) => state.coinsReducer);
-
+  const { favCoins } = useSelector((state) => state.favCoins);
 
   const { TabPane } = Tabs;
 
@@ -36,7 +33,7 @@ const Main = () => {
                   fontSize: 13,
                 }}
               >
-                {/* {favoriteData.length} */}
+                {favCoins.length}
               </div>
             </div>
           }
