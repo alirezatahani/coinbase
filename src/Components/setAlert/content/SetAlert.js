@@ -6,14 +6,13 @@ import { GetTimeAsNumber } from "../utils/getTime";
 import { useDispatch, useSelector } from "react-redux";
 import { addToAlerts } from "../../../features/alerts/alertsSlice";
 
-export const SetAlert = (props) => {
-  const [alertCondition, setAlertCondition] = useState([]);
+export const SetAlert = () => {
   const [cryptoValue, setCryptoValue] = useState(0);
-  const { data } = props;
   const alerts = useSelector((state) => state.alerts.alerts);
+  const { loading, error, coins } = useSelector((state) => state.coins);
   const dispatch = useDispatch();
 
-  const options = data && data.coins;
+  const options = coins && coins.data && coins.data.coins;
   const formRef = createRef();
 
   const config = {
@@ -36,7 +35,7 @@ export const SetAlert = (props) => {
   const onFinish = (fieldsValue) => {
     const values = {
       ...fieldsValue,
-      id:Date.now(),
+      id: Date.now(),
       expirationTime: fieldsValue["expirationTime"]?.format("YYYY-M-D H:m:s"),
     };
     dispatch(addToAlerts(values));
@@ -44,47 +43,47 @@ export const SetAlert = (props) => {
     setCryptoValue(0);
   };
 
-  function checkAlertAuth() {
-    alertCondition.map((item, index) => {
-      const findCoin = data.data.coins.filter((coin) => {
-        return coin.name === item.name;
-      });
-      let alertTime = GetTimeAsNumber(item.expirationTime);
-      let nowTime = GetTimeAsNumber();
+  // function checkAlertAuth() {
+  //   alerts.map((item, index) => {
+  //     const findCoin = data.data.coins.filter((coin) => {
+  //       return coin.name === item.name;
+  //     });
+  //     let alertTime = GetTimeAsNumber(item.expirationTime);
+  //     let nowTime = GetTimeAsNumber();
 
-      console.log(alertTime > nowTime);
-      if (nowTime > alertTime) {
-        dispatch(addToAlerts(item));
-      } else {
-        console.log(findCoin[0].price, item.targetValue);
-        switch (item.crossing) {
-          case "crossingUp":
-            if (findCoin[0].price >= item.targetValue) {
-              alert(
-                `${findCoin[0].name} price crossing up ${item.targetValue}`
-              );
-              dispatch(addToAlerts(item));
-            }
-            break;
-          case "crossingDown":
-            if (findCoin[0].price <= item.targetValue) {
-              alert(
-                `${findCoin[0].name} price crossing up ${item.targetValue}`
-              );
-              dispatch(addToAlerts(item));
-            }
-            break;
+  //     console.log(alertTime > nowTime);
+  //     if (nowTime > alertTime) {
+  //       dispatch(addToAlerts(item));
+  //     } else {
+  //       console.log(findCoin[0].price, item.targetValue);
+  //       switch (item.crossing) {
+  //         case "crossingUp":
+  //           if (findCoin[0].price >= item.targetValue) {
+  //             alert(
+  //               `${findCoin[0].name} price crossing up ${item.targetValue}`
+  //             );
+  //             dispatch(addToAlerts(item));
+  //           }
+  //           break;
+  //         case "crossingDown":
+  //           if (findCoin[0].price <= item.targetValue) {
+  //             alert(
+  //               `${findCoin[0].name} price crossing up ${item.targetValue}`
+  //             );
+  //             dispatch(addToAlerts(item));
+  //           }
+  //           break;
 
-          default:
-            break;
-        }
-      }
-    });
-  }
+  //         default:
+  //           break;
+  //       }
+  //     }
+  //   });
+  // }
 
-  useEffect(() => {
-    alertCondition.length && checkAlertAuth();
-  }, [data]);
+  // useEffect(() => {
+  //   alerts.length && checkAlertAuth();
+  // }, [alerts]);
 
   return (
     <>
@@ -114,7 +113,7 @@ export const SetAlert = (props) => {
               option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
             }
           >
-            {data &&
+            {options &&
               options.map((item) => {
                 return (
                   <Select.Option value={item.name} key={item.name}>
