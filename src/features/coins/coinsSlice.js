@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const baseUrl = "https://api.coinranking.com/v2/coins";
 const apiKey = "coinranking369971eebd30ea4d94a91d301bd9fb9099e6792808fd718c";
 
 const headers = {
@@ -10,7 +9,10 @@ const headers = {
 
 export const getAsyncCoins = createAsyncThunk(
   "coins/getCoins",
-  async (_, { rejectWithValue }) => {
+  async (query, { rejectWithValue }) => {
+    const baseUrl = `https://api.coinranking.com/v2/search-suggestions?query=${
+      query ? query : "redux"
+    }`;
     try {
       const response = await axios.get(baseUrl, {
         headers: headers,

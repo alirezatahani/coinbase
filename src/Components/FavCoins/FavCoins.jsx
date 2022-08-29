@@ -2,11 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 
 export default function FavCoins() {
-  const { favoriteData } = useSelector((state) => state.coinsReducer);
+  //const { favoriteData } = useSelector((state) => state.coinsReducer);
 
   return (
     <div>
-      <table>
+      {/* <table>
         {favoriteData.length === 0 ? (
           <div></div>
         ) : (
@@ -36,7 +36,7 @@ export default function FavCoins() {
             <p style={{ color: "white" }}>You didn't choose any coins</p>
           </div>
         )}
-      </table>
+      </table> */}
     </div>
   );
 }

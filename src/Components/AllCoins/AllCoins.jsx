@@ -1,15 +1,16 @@
 import React, { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import "./AllCoins.css";
+import "./Allcoins.css";
 import { Button, notification, Space } from "antd";
 import { favoriteDataAction } from "../../Redux/Actions/coinAction";
 import { debounce } from "lodash";
 import { getData } from "../../API/coinApi";
+import { getAsyncCoins } from "../../features/coins/coinsSlice";
 
 export default function AllCoins() {
-  const { coinsData } = useSelector(
-    (state) => state.coinsReducer
-  );
+  // const { coinsData } = useSelector((state) => state.coinsReducer);
+  const {loading,error,coins} = useSelector(state=>state.coins)
+  console.log(coins ,"xxxxxxxxxx");
   const dispatch = useDispatch();
 
   const openNotificationWithIcon = (type, name) => {
@@ -21,7 +22,7 @@ export default function AllCoins() {
 
   const action = (e) => {
     try {
-      dispatch(getData(e));
+      dispatch(getAsyncCoins(e));
     } catch (err) {
       console.log(err.message);
     }
@@ -54,7 +55,7 @@ export default function AllCoins() {
             />
           </form>
         </div>
-        <table>
+        {/* <table>
           {coinsData.length !== 0 ? (
             <></>
           ) : (
@@ -90,7 +91,7 @@ export default function AllCoins() {
           ) : (
             <></>
           )}
-        </table>
+        </table> */}
       </div>
     </div>
   );
