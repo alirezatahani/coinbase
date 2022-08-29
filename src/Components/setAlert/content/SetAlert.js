@@ -6,14 +6,9 @@ import { GetTimeAsNumber } from "../utils/getTime";
 import { useDispatch, useSelector } from "react-redux";
 import { addToAlerts } from "../../../features/alerts/alertsSlice";
 
-export const SetAlert = () => {
-  const [cryptoValue, setCryptoValue] = useState(0);
-  const alerts = useSelector((state) => state.alerts.alerts);
-  const { loading, error, coins } = useSelector((state) => state.coins);
+const SetAlert = (props) => {
   const dispatch = useDispatch();
-
-  const options = coins && coins.data && coins.data.coins;
-  const formRef = createRef();
+  const {coin ,closeModal} = props
 
   const config = {
     rules: [
@@ -25,13 +20,6 @@ export const SetAlert = () => {
     ],
   };
 
-  const onChange = (value) => {
-    const selectedCrypto = options.filter((item) => {
-      return item.name === value;
-    });
-    let fixedValue = Number(selectedCrypto[0].price).toFixed(5);
-    setCryptoValue(fixedValue);
-  };
   const onFinish = (fieldsValue) => {
     const values = {
       ...fieldsValue,
@@ -39,8 +27,7 @@ export const SetAlert = () => {
       expirationTime: fieldsValue["expirationTime"]?.format("YYYY-M-D H:m:s"),
     };
     dispatch(addToAlerts(values));
-    formRef.current.resetFields();
-    setCryptoValue(0);
+    closeModal()
   };
 
   // function checkAlertAuth() {
@@ -92,7 +79,11 @@ export const SetAlert = () => {
         fields={[
           {
             name: ["targetValue"],
-            value: cryptoValue,
+            value: Number(coin.price).toFixed(6),
+          },
+          {
+            name: ["name"],
+            value: coin.name,
           },
         ]}
         labelCol={{
@@ -102,25 +93,10 @@ export const SetAlert = () => {
           span: 24,
         }}
         onFinish={onFinish}
-        ref={formRef}
       >
-        <Form.Item name="name" label="Crypto" {...config}>
-          <Select
-            showSearch
-            placeholder="Select a Crypto"
-            onChange={onChange}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            }
-          >
-            {options &&
-              options.map((item) => {
-                return (
-                  <Select.Option value={item.name} key={item.name}>
-                    {item.name}
-                  </Select.Option>
-                );
-              })}
+        <Form.Item name="name" label="Crypto">
+        <Select>
+            <Select.Option></Select.Option>
           </Select>
         </Form.Item>
         <Form.Item name="targetValue" label="Price" {...config}>
@@ -151,9 +127,12 @@ export const SetAlert = () => {
         <Button type="primary" htmlType="submit">
           Create alert
         </Button>
+        <Button type="danger" onClick={closeModal}>
+          Cancel
+        </Button>
       </Form>
-
-      {alerts.length > 0 ? <AlertsTable /> : <p>There is no alert !</p>}
     </>
   );
 };
+
+export default SetAlert;

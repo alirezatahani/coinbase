@@ -1,12 +1,16 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./Allcoins.css";
-import { Button, notification, Space } from "antd";
+import { Button, Modal, notification, Space } from "antd";
 import { debounce } from "lodash";
 import { getAsyncCoins } from "../../features/coins/coinsSlice";
 import { favoriteDataAction } from "../../Redux/Actions/coinAction";
+import SetAlert from "../setAlert/content/SetAlert";
 
 export default function AllCoins() {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedCoin, setSelectedCoin] = useState({});
+
   const { coins } = useSelector((state) => state.coins);
   const dispatch = useDispatch();
 
@@ -25,7 +29,7 @@ export default function AllCoins() {
     }
   };
 
-  const handler = useCallback(debounce(action, 100), []);
+  const handler = useCallback(debounce(action, 600), []);
 
   function handleFilter(e) {
     handler(e.target.value);
@@ -34,6 +38,16 @@ export default function AllCoins() {
   const addToFavorite = (item, name) => {
     dispatch(favoriteDataAction(item));
     openNotificationWithIcon("success", name);
+  };
+
+  
+  const showModal = (item) => {
+    setSelectedCoin(item);
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
   };
 
   return (
@@ -81,10 +95,23 @@ export default function AllCoins() {
                       </Button>
                     </Space>
                   </td>
+                  <td>
+                    <Space>
+                      <Button onClick={() => showModal(item)}>set alert</Button>
+                    </Space>
+                  </td>
                 </tr>
               );
             })}
         </table>
+        <Modal
+          title={`Create Alert on ${selectedCoin.name}`}
+          onCancel={handleCancel}
+          visible={isModalVisible}
+          footer={null}
+        >
+          <SetAlert coin={selectedCoin} closeModal={handleCancel} />
+        </Modal>
       </div>
     </div>
   );

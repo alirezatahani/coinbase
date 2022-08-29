@@ -44,7 +44,11 @@ export const AlertsTable = () => {
   ];
   return (
     <>
-      <Table columns={columns} dataSource={alerts} />
+      {alerts.length ? (
+        <Table columns={columns} dataSource={alerts} />
+      ) : (
+        <p>There is not any alerts !</p>
+      )}
     </>
   );
 };
