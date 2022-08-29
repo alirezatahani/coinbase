@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./AllCoins.css";
 import { Button, notification, Space } from "antd";
@@ -7,7 +7,7 @@ import { debounce } from "lodash";
 import { getData } from "../../API/coinApi";
 
 export default function AllCoins() {
-  const { coinsData, favoriteData } = useSelector(
+  const { coinsData } = useSelector(
     (state) => state.coinsReducer
   );
   const dispatch = useDispatch();
