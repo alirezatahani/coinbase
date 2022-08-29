@@ -3,12 +3,17 @@ import { createRef, useEffect, useState } from "react";
 import "antd/dist/antd.css";
 import { AlertsTable } from "./AlertsTable";
 import { GetTimeAsNumber } from "../utils/getTime";
+import { useDispatch, useSelector } from "react-redux";
+import { addToAlerts } from "../../../features/alerts/alertsSlice";
 
 export const SetAlert = (props) => {
   const [alertCondition, setAlertCondition] = useState([]);
   const [cryptoValue, setCryptoValue] = useState(0);
   const { data } = props;
-  const options = data && data.data.coins;
+  const alerts = useSelector((state) => state.alerts.alerts);
+  const dispatch = useDispatch();
+
+  const options = data && data.coins;
   const formRef = createRef();
 
   const config = {
@@ -31,13 +36,13 @@ export const SetAlert = (props) => {
   const onFinish = (fieldsValue) => {
     const values = {
       ...fieldsValue,
-      expirationTime: fieldsValue["expirationTime"].format("YYYY-M-D H:m:s"),
+      id:Date.now(),
+      expirationTime: fieldsValue["expirationTime"]?.format("YYYY-M-D H:m:s"),
     };
-    setAlertCondition([...alertCondition, values]);
+    dispatch(addToAlerts(values));
     formRef.current.resetFields();
     setCryptoValue(0);
   };
-
 
   function deleteAlert(index) {
     const copyAlertCondition = [...alertCondition];
@@ -155,11 +160,7 @@ export const SetAlert = (props) => {
         </Button>
       </Form>
 
-      {alertCondition.length > 0 ? (
-        <AlertsTable alerts={alertCondition} />
-      ) : (
-        <p>There is no alert !</p>
-      )}
+      {alerts.length > 0 ? <AlertsTable /> : <p>There is no alert !</p>}
     </>
   );
 };
