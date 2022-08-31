@@ -1,17 +1,28 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import "./Allcoins.css";
 import { Button, Modal, notification, Space } from "antd";
 import { debounce } from "lodash";
+import "./Allcoins.css";
+import SetAlert from "../setAlert/content/SetAlert";
+import { GetTimeAsNumber } from "../setAlert/utils/getTime";
 import { getAsyncCoins } from "../../features/coins/coinsSlice";
 import { favoriteDataAction } from "../../Redux/Actions/coinAction";
-import SetAlert from "../setAlert/content/SetAlert";
+import { createUuidQuery } from "../../utils/createUuidQuery";
+import {
+  addToAlerts,
+  getAsyncAlertsCoins,
+} from "../../features/alerts/alertsSlice";
 
 export default function AllCoins() {
+  const [intervalId, setIntervalId] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedCoin, setSelectedCoin] = useState({});
 
   const { coins } = useSelector((state) => state.coins);
+  const alerts = useSelector((state) => state.alerts.alerts);
+  const { loading, error, alertedCoinData } = useSelector(
+    (state) => state.alerts
+  );
   const dispatch = useDispatch();
 
   const openNotificationWithIcon = (type, name) => {
@@ -40,7 +51,6 @@ export default function AllCoins() {
     openNotificationWithIcon("success", name);
   };
 
-  
   const showModal = (item) => {
     setSelectedCoin(item);
     setIsModalVisible(true);
@@ -49,6 +59,55 @@ export default function AllCoins() {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
+  function checkAlertValid() {
+    alerts.map((item, index) => {
+      let alertTime = GetTimeAsNumber(item.expirationTime);
+      let nowTime = GetTimeAsNumber();
+      if (nowTime > alertTime) {
+        dispatch(addToAlerts(item));
+      } else {
+        const findCoin = alertedCoinData.data.coins.filter((coin) => {
+          return coin.name === item.name;
+        });
+        switch (item.crossing) {
+          case "crossingUp":
+            if (findCoin[0].price >= item.targetValue) {
+              alert(
+                `${findCoin[0].name} price crossing up ${item.targetValue}`
+              );
+              dispatch(addToAlerts(item));
+            }
+            break;
+          case "crossingDown":
+            if (findCoin[0].price <= item.targetValue) {
+              alert(
+                `${findCoin[0].name} price crossing up ${item.targetValue}`
+              );
+              dispatch(addToAlerts(item));
+            }
+            break;
+
+          default:
+            break;
+        }
+      }
+    });
+  }
+
+  useEffect(() => {
+    const myInterval = setInterval(() => {
+      alerts.length && checkAlertValid();
+    }, 5000);
+    setIntervalId(myInterval);
+    !alerts.length && clearInterval(myInterval);
+    return () => clearInterval(myInterval);
+  }, [alertedCoinData, alerts]);
+
+  useEffect(() => {
+    const uuidQuery = createUuidQuery(alerts);
+    alerts.length && dispatch(getAsyncAlertsCoins(uuidQuery));
+  }, [alerts]);
 
   return (
     <div>

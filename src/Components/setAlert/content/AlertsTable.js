@@ -1,15 +1,23 @@
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Table } from "antd";
 import "antd/dist/antd.css";
-import { useDispatch, useSelector } from "react-redux";
 import { addToAlerts } from "../../../features/alerts/alertsSlice";
 
 export const AlertsTable = () => {
   const alerts = useSelector((state) => state.alerts.alerts);
   const dispatch = useDispatch();
+
   const deleteHandler = (alert) => {
     dispatch(addToAlerts(alert));
   };
+
   const columns = [
+    {
+      title: "Icon",
+      dataIndex: "icon",
+      key: "icon",
+    },
     {
       title: "Name",
       dataIndex: "name",
@@ -42,6 +50,7 @@ export const AlertsTable = () => {
       render: (e) => <a onClick={() => deleteHandler(e)}>Delete</a>,
     },
   ];
+
   return (
     <>
       {alerts.length ? (
