@@ -8,10 +8,14 @@ export const favCoinsSlice = createSlice({
   initialState,
   reducers: {
     addToFavorite: (state, action) => {
-      return {
-        ...state,
-        favCoins: [...state.favCoins, action.payload],
-      };
+      const favCoinsIndex = state.favCoins.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if (favCoinsIndex < 0) {
+        state.favCoins.push(action.payload);
+      } else {
+        state.favCoins.splice(favCoinsIndex, 1);
+      }
     },
   },
 });
