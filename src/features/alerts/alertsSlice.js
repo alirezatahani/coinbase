@@ -28,14 +28,13 @@ export const alertsSlice = createSlice({
   initialState,
   reducers: {
     addToAlerts: (state, action) => {
-      const alertId = state.alerts.findIndex(
+      state.alerts.push(action.payload);
+    },
+    removeFromAlerts: (state,action) => {
+      const alertIndex = state.alerts.findIndex(
         (item) => item.id === action.payload.id
       );
-      if (alertId < 0) {
-        state.alerts.push(action.payload);
-      } else {
-        state.alerts.splice(alertId, 1);
-      }
+      state.alerts.splice(alertIndex, 1);
     },
   },
   extraReducers: {
@@ -61,5 +60,5 @@ export const alertsSlice = createSlice({
   },
 });
 
-export const { addToAlerts } = alertsSlice.actions;
+export const { addToAlerts ,removeFromAlerts} = alertsSlice.actions;
 export default alertsSlice.reducer;

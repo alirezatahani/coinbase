@@ -9,8 +9,8 @@ import { getAsyncCoins } from "../../features/coins/coinsSlice";
 import { favoriteDataAction } from "../../Redux/Actions/coinAction";
 import { createUuidQuery } from "../../utils/createUuidQuery";
 import {
-  addToAlerts,
   getAsyncAlertsCoins,
+  removeFromAlerts,
 } from "../../features/alerts/alertsSlice";
 
 export default function AllCoins() {
@@ -65,7 +65,7 @@ export default function AllCoins() {
       let alertTime = GetTimeAsNumber(item.expirationTime);
       let nowTime = GetTimeAsNumber();
       if (nowTime > alertTime) {
-        dispatch(addToAlerts(item));
+        dispatch(removeFromAlerts(item));
       } else {
         const findCoin = alertedCoinData.data.coins.filter((coin) => {
           return coin.name === item.name;
@@ -76,7 +76,7 @@ export default function AllCoins() {
               alert(
                 `${findCoin[0].name} price crossing up ${item.targetValue}`
               );
-              dispatch(addToAlerts(item));
+              dispatch(removeFromAlerts(item));
             }
             break;
           case "crossingDown":
@@ -84,7 +84,7 @@ export default function AllCoins() {
               alert(
                 `${findCoin[0].name} price crossing up ${item.targetValue}`
               );
-              dispatch(addToAlerts(item));
+              dispatch(removeFromAlerts(item));
             }
             break;
 

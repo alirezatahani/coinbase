@@ -2,14 +2,14 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Table } from "antd";
 import "antd/dist/antd.css";
-import { addToAlerts } from "../../../features/alerts/alertsSlice";
+import { removeFromAlerts } from "../../../features/alerts/alertsSlice";
 
 export const AlertsTable = () => {
   const alerts = useSelector((state) => state.alerts.alerts);
   const dispatch = useDispatch();
 
   const deleteHandler = (alert) => {
-    dispatch(addToAlerts(alert));
+    dispatch(removeFromAlerts(alert));
   };
 
   const columns = [
