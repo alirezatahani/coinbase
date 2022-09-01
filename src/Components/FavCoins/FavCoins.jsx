@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector } from "react-redux";
 
 export default function FavCoins() {
   const { favCoins } = useSelector((state) => state.favCoins);
@@ -15,7 +15,7 @@ export default function FavCoins() {
                   <img src={item.iconUrl} style={{ width: 40 }} />
                 </td>
                 <td>{item.name}</td>
-                <td>${Number(item.price).toFixed(3)}</td>
+                <td>${Number(item.price).toFixed(5)}</td>
               </tr>
             );
           })

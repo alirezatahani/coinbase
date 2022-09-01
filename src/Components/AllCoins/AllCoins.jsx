@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./AllCoins.css";
 import { Button, notification, Space } from "antd";
@@ -32,7 +32,7 @@ export default function AllCoins() {
     }
   };
 
-  const handler = useCallback(debounce(action, 100), []);
+  const handler = useCallback(debounce(action, 600), []);
 
   function handleFilter(e) {
     handler(e.target.value);
@@ -47,6 +47,48 @@ export default function AllCoins() {
       addNotification("success", name);
     }
   };
+
+  function checkAlertValid() {
+    alerts.map((item, index) => {
+      let alertTime = GetTimeAsNumber(item.expirationTime);
+      let nowTime = GetTimeAsNumber();
+      if (nowTime > alertTime) {
+        dispatch(removeFromAlerts(item));
+      } else {
+        const findCoin = alertedCoinData.data.coins.filter((coin) => {
+          return coin.name === item.name;
+        });
+        switch (item.crossing) {
+          case "crossingUp":
+            if (findCoin[0].price > item.targetValue) {
+              showNotification("warning", item);
+              dispatch(removeFromAlerts(item));
+            }
+            break;
+          case "crossingDown":
+            if (findCoin[0].price < item.targetValue) {
+              showNotification("warning", item);
+              dispatch(removeFromAlerts(item));
+            }
+            break;
+
+          default:
+            break;
+        }
+      }
+    });
+  }
+
+  useEffect(() => {
+    const uuidQuery = createUuidQuery(alerts);
+    const myInterval = setInterval(() => {
+      dispatch(getAsyncAlertsCoins(uuidQuery));
+      alerts.length && checkAlertValid();
+    }, 5000);
+    setIntervalId(myInterval);
+    !alerts.length && clearInterval(myInterval);
+    return () => clearInterval(myInterval);
+  }, [alertedCoinData, alerts]);
 
   return (
     <div>
@@ -69,12 +111,20 @@ export default function AllCoins() {
             coins.data.coins.map((item, index) => {
               return (
                 <tr key={index}>
-                  <td>{item.rank}</td>
                   <td>
                     <img src={item.iconUrl} style={{ width: 40 }} />
                   </td>
                   <td>{item.name}</td>
                   <td>${Number(item.price).toFixed(3)}</td>
+                  <td>
+                    <Space onClick={() => addToFavorite(item)}>
+                      {favCoins.some((coin) => coin.name === item.name) ? (
+                        <StarFilled />
+                      ) : (
+                        <StarOutlined />
+                      )}
+                    </Space>
+                  </td>
                   <td>
                     <Space>
                       <Button onClick={() => favoriteHandler(item, item.name)}>

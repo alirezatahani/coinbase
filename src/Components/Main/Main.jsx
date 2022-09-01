@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import FavCoins from "../FavCoins/FavCoins";
 import AllCoins from "../AllCoins/AllCoins";
+import SetAlert from "../setAlert/content/SetAlert";
+import { AlertsTable } from "../setAlert/content/AlertsTable";
 
 //
 const Main = () => {
@@ -40,6 +42,9 @@ const Main = () => {
           key="2"
         >
           <FavCoins />
+        </TabPane>
+        <TabPane tab="Alerts">
+          <AlertsTable/>
         </TabPane>
       </Tabs>
     </div>
