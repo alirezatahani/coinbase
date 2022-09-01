@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { apiKey } from "../../utils/key";
 
-const apiKey = "coinranking369971eebd30ea4d94a91d301bd9fb9099e6792808fd718c";
 
 const headers = {
   "x-access-token": apiKey,
@@ -29,10 +29,10 @@ const initialState = {
   error: null,
   loading: false,
 };
+
 export const coinsSlice = createSlice({
   name: "coins",
   initialState,
-  reducers: {},
   extraReducers: {
     [getAsyncCoins.fulfilled]: (state, action) => {
       return { ...state, coins: action.payload, error: null, loading: false };
@@ -51,5 +51,4 @@ export const coinsSlice = createSlice({
   },
 });
 
-export const {} = coinsSlice.actions;
 export default coinsSlice.reducer;
