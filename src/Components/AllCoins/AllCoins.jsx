@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Modal, Space } from "antd";
+import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { debounce } from "lodash";
 import "./Allcoins.css";
 import SetAlert from "../setAlert/content/SetAlert";
@@ -12,6 +13,7 @@ import {
   removeFromAlerts,
 } from "../../features/alerts/alertsSlice";
 import { showNotification } from "../../utils/notificationConfig";
+import { addToFavCoins } from "../../features/favCoins/favCoinsSlice";
 
 export default function AllCoins() {
   const [intervalId, setIntervalId] = useState(0);
@@ -20,6 +22,7 @@ export default function AllCoins() {
 
   const { coins } = useSelector((state) => state.coins);
   const alerts = useSelector((state) => state.alerts.alerts);
+  const favCoins = useSelector((state) => state.favCoins.favCoins);
   const { alertedCoinData } = useSelector((state) => state.alerts);
 
   const dispatch = useDispatch();
@@ -39,8 +42,8 @@ export default function AllCoins() {
   }
 
   const addToFavorite = (item) => {
-    //dispatch(favoriteDataAction(item));
-    showNotification("success", item);
+    dispatch(addToFavCoins(item));
+    showNotification(favCoins.some((coin) => coin.name === item.name) ?"error":"success", item);
   };
 
   const showModal = (item) => {
@@ -132,10 +135,12 @@ export default function AllCoins() {
                   <td>{item.name}</td>
                   <td>${Number(item.price).toFixed(3)}</td>
                   <td>
-                    <Space>
-                      <Button onClick={() => addToFavorite(item)}>
-                        addToFavorite
-                      </Button>
+                    <Space onClick={() => addToFavorite(item)}>
+                      {favCoins.some((coin) => coin.name === item.name) ? (
+                        <StarFilled />
+                      ) : (
+                        <StarOutlined />
+                      )}
                     </Space>
                   </td>
                   <td>

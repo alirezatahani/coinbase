@@ -1,33 +1,31 @@
 import React from "react";
-import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useSelector } from "react-redux";
 
 export default function FavCoins() {
-  //const { favoriteData } = useSelector((state) => state.coinsReducer);
-
+  const favCoins = useSelector((state) => state.favCoins.favCoins);
+  
   return (
     <div>
-      {/* <table>
-        {favoriteData.length === 0 ? (
+      <table>
+        {favCoins.length === 0 ? (
           <div></div>
         ) : (
           <tr>
-            <th>Rank</th>
             <th>Icon</th>
             <th>Name</th>
             <th>Price</th>
           </tr>
         )}
 
-        {favoriteData.length != 0 ? (
-          favoriteData.map((item, index) => {
+        {favCoins.length !== 0 ? (
+          favCoins.map((item) => {
             return (
-              <tr key={index}>
-                <td>{item.rank}</td>
+              <tr key={item.name}>
                 <td>
                   <img src={item.iconUrl} style={{ width: 40 }} />
                 </td>
                 <td>{item.name}</td>
-                <td>${Number(item.price).toFixed(3)}</td>
+                <td>${Number(item.price).toFixed(5)}</td>
               </tr>
             );
           })
@@ -36,7 +34,7 @@ export default function FavCoins() {
             <p style={{ color: "white" }}>You didn't choose any coins</p>
           </div>
         )}
-      </table> */}
+      </table>
     </div>
   );
 }
