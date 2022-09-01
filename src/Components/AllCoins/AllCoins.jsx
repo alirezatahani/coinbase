@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, Modal, notification, Space } from "antd";
+import { Button, Modal, Space } from "antd";
 import { debounce } from "lodash";
 import "./Allcoins.css";
 import SetAlert from "../setAlert/content/SetAlert";
@@ -12,6 +12,7 @@ import {
   getAsyncAlertsCoins,
   removeFromAlerts,
 } from "../../features/alerts/alertsSlice";
+import { showNotification } from "../../utils/notificationConfig";
 
 export default function AllCoins() {
   const [intervalId, setIntervalId] = useState(0);
@@ -20,17 +21,9 @@ export default function AllCoins() {
 
   const { coins } = useSelector((state) => state.coins);
   const alerts = useSelector((state) => state.alerts.alerts);
-  const { loading, error, alertedCoinData } = useSelector(
-    (state) => state.alerts
-  );
-  const dispatch = useDispatch();
+  const { alertedCoinData } = useSelector((state) => state.alerts);
 
-  const openNotificationWithIcon = (type, name) => {
-    notification[type]({
-      message: `${name} added`,
-      duration: 1,
-    });
-  };
+  const dispatch = useDispatch();
 
   const action = (e) => {
     try {
@@ -46,9 +39,9 @@ export default function AllCoins() {
     handler(e.target.value);
   }
 
-  const addToFavorite = (item, name) => {
+  const addToFavorite = (item) => {
     dispatch(favoriteDataAction(item));
-    openNotificationWithIcon("success", name);
+    showNotification("success", item);
   };
 
   const showModal = (item) => {
@@ -72,18 +65,14 @@ export default function AllCoins() {
         });
         switch (item.crossing) {
           case "crossingUp":
-            if (findCoin[0].price >= item.targetValue) {
-              alert(
-                `${findCoin[0].name} price crossing up ${item.targetValue}`
-              );
+            if (findCoin[0].price > item.targetValue) {
+              showNotification("warning", item);
               dispatch(removeFromAlerts(item));
             }
             break;
           case "crossingDown":
-            if (findCoin[0].price <= item.targetValue) {
-              alert(
-                `${findCoin[0].name} price crossing up ${item.targetValue}`
-              );
+            if (findCoin[0].price < item.targetValue) {
+              showNotification("warning", item);
               dispatch(removeFromAlerts(item));
             }
             break;
@@ -96,18 +85,15 @@ export default function AllCoins() {
   }
 
   useEffect(() => {
+    const uuidQuery = createUuidQuery(alerts);
     const myInterval = setInterval(() => {
+      dispatch(getAsyncAlertsCoins(uuidQuery));
       alerts.length && checkAlertValid();
     }, 5000);
     setIntervalId(myInterval);
     !alerts.length && clearInterval(myInterval);
     return () => clearInterval(myInterval);
   }, [alertedCoinData, alerts]);
-
-  useEffect(() => {
-    const uuidQuery = createUuidQuery(alerts);
-    alerts.length && dispatch(getAsyncAlertsCoins(uuidQuery));
-  }, [alerts]);
 
   return (
     <div>
@@ -128,10 +114,10 @@ export default function AllCoins() {
         <table>
           {coins && coins.data && coins.data.coins.length !== 0 && (
             <tr>
-              <th>Rank</th>
               <th>Icon</th>
               <th>Name</th>
               <th>Price</th>
+              <th></th>
               <th></th>
             </tr>
           )}
@@ -141,7 +127,6 @@ export default function AllCoins() {
             coins.data.coins.map((item, index) => {
               return (
                 <tr key={index}>
-                  <td>{item.rank}</td>
                   <td>
                     <img src={item.iconUrl} style={{ width: 40 }} />
                   </td>
@@ -149,7 +134,7 @@ export default function AllCoins() {
                   <td>${Number(item.price).toFixed(3)}</td>
                   <td>
                     <Space>
-                      <Button onClick={() => addToFavorite(item, item.name)}>
+                      <Button onClick={() => addToFavorite(item)}>
                         addToFavorite
                       </Button>
                     </Space>

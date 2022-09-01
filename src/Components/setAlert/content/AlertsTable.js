@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Table } from "antd";
 import "antd/dist/antd.css";
 import { removeFromAlerts } from "../../../features/alerts/alertsSlice";
+import { showNotification } from "../../../utils/notificationConfig";
 
 export const AlertsTable = () => {
   const alerts = useSelector((state) => state.alerts.alerts);
@@ -10,6 +11,7 @@ export const AlertsTable = () => {
 
   const deleteHandler = (alert) => {
     dispatch(removeFromAlerts(alert));
+    showNotification("info",alert)
   };
 
   const columns = [
