@@ -1,31 +1,28 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, Modal, Space } from "antd";
-import { StarOutlined, StarFilled } from "@ant-design/icons";
+import "./AllCoins.css";
+import { Button, notification, Space } from "antd";
 import { debounce } from "lodash";
-import "./Allcoins.css";
-import SetAlert from "../setAlert/content/SetAlert";
-import { GetTimeAsNumber } from "../setAlert/utils/getTime";
 import { getAsyncCoins } from "../../features/coins/coinsSlice";
-import { createUuidQuery } from "../../utils/createUuidQuery";
-import {
-  getAsyncAlertsCoins,
-  removeFromAlerts,
-} from "../../features/alerts/alertsSlice";
-import { showNotification } from "../../utils/notificationConfig";
-import { addToFavCoins } from "../../features/favCoins/favCoinsSlice";
+import { addToFavorite } from "../../features/favCoins/favCoinsSlice";
 
 export default function AllCoins() {
-  const [intervalId, setIntervalId] = useState(0);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedCoin, setSelectedCoin] = useState({});
-
   const { coins } = useSelector((state) => state.coins);
-  const alerts = useSelector((state) => state.alerts.alerts);
-  const favCoins = useSelector((state) => state.favCoins.favCoins);
-  const { alertedCoinData } = useSelector((state) => state.alerts);
-
+  const { favCoins } = useSelector((state) => state.favCoins);
   const dispatch = useDispatch();
+
+  const addNotification = (type, name) => {
+    notification[type]({
+      message: `${name} added`,
+      duration: 1,
+    });
+  };
+  const isExistNotification = (type, name) => {
+    notification[type]({
+      message: `${name} was added`,
+      duration: 1,
+    });
+  };
 
   const action = (e) => {
     try {
@@ -41,18 +38,14 @@ export default function AllCoins() {
     handler(e.target.value);
   }
 
-  const addToFavorite = (item) => {
-    dispatch(addToFavCoins(item));
-    showNotification(favCoins.some((coin) => coin.name === item.name) ?"error":"success", item);
-  };
-
-  const showModal = (item) => {
-    setSelectedCoin(item);
-    setIsModalVisible(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
+  const favoriteHandler = (item, name) => {
+    const isExist = favCoins.find((coin) => coin.name === item.name);
+    if (isExist) {
+      isExistNotification("error", name);
+    } else {
+      dispatch(addToFavorite(item));
+      addNotification("success", name);
+    }
   };
 
   function checkAlertValid() {
@@ -114,18 +107,7 @@ export default function AllCoins() {
           </form>
         </div>
         <table>
-          {coins && coins.data && coins.data.coins.length !== 0 && (
-            <tr>
-              <th>Icon</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th></th>
-              <th></th>
-            </tr>
-          )}
-
-          {coins &&
-            coins.data &&
+          {coins.length != 0 ? (
             coins.data.coins.map((item, index) => {
               return (
                 <tr key={index}>
@@ -145,21 +127,18 @@ export default function AllCoins() {
                   </td>
                   <td>
                     <Space>
-                      <Button onClick={() => showModal(item)}>set alert</Button>
+                      <Button onClick={() => favoriteHandler(item, item.name)}>
+                        addToFavorite
+                      </Button>
                     </Space>
                   </td>
                 </tr>
               );
-            })}
+            })
+          ) : (
+            <></>
+          )}
         </table>
-        <Modal
-          title={`Create Alert on ${selectedCoin.name}`}
-          onCancel={handleCancel}
-          visible={isModalVisible}
-          footer={null}
-        >
-          <SetAlert coin={selectedCoin} closeModal={handleCancel} />
-        </Modal>
       </div>
     </div>
   );

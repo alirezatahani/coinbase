@@ -7,7 +7,7 @@ export const store = configureStore({
   reducer: {
     coins: coinReducer,
     alerts: alertsReducer,
-    favCoins:favCoinsReducer
+    favCoins: favCoinsReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     serializableCheck:false
