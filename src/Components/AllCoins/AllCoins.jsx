@@ -6,7 +6,6 @@ import "./Allcoins.css";
 import SetAlert from "../setAlert/content/SetAlert";
 import { GetTimeAsNumber } from "../setAlert/utils/getTime";
 import { getAsyncCoins } from "../../features/coins/coinsSlice";
-import { favoriteDataAction } from "../../Redux/Actions/coinAction";
 import { createUuidQuery } from "../../utils/createUuidQuery";
 import {
   getAsyncAlertsCoins,
@@ -40,7 +39,7 @@ export default function AllCoins() {
   }
 
   const addToFavorite = (item) => {
-    dispatch(favoriteDataAction(item));
+    //dispatch(favoriteDataAction(item));
     showNotification("success", item);
   };
 
