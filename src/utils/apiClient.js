@@ -7,7 +7,7 @@ const makingUrl = (url)=>{
  const apiClient =(options)=>{
     const url = makingUrl(options.url)
 
-    return axios({url})
+    return axios({url,method:options.method})
 } 
 
 export default apiClient
