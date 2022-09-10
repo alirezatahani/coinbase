@@ -12,16 +12,16 @@ export default function Home() {
         <TabPane tab="All" key="1">
           All
         </TabPane>
-        <TabPane tab="favorite" key="2">
+        <TabPane tab="Favorite" key="2">
           Favorite
         </TabPane>
-        <TabPane tab="new" key="3">
+        <TabPane tab="New" key="3">
           New
         </TabPane>
-        <TabPane tab="gainer" key="4">
+        <TabPane tab="Gainer" key="4">
           Gainer
         </TabPane>
-        <TabPane tab="loser" key="5">
+        <TabPane tab="Loser" key="5">
           Loser
         </TabPane>
       </Tabs>
