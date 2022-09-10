@@ -15,7 +15,7 @@ export type ColorsType =
   | "secondary";
 
 type PaletteTypes = {
-  background: { paper: string; whiteSmoke: string };
+  background: { paper: string; dark: string };
   common: { black: string; white: string; transparent: string };
   primary: PaletteColorShadesTypes;
   secondary: { main: string };

@@ -6,7 +6,7 @@ import React from "react";
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <h1>this is first Extension ssss</h1>
+      <h1>The theme is configured</h1>
     </ThemeProvider>
   );
 }
