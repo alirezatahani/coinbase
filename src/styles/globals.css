@@ -14,3 +14,18 @@ a {
   padding: 0;
   margin: 0;
 }
+
+/* custom antd style */
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: white !important;
+}
+.ant-tabs-tab-btn,
+.ant-tabs-tab-remove {
+  color: gray;
+}
+
+.ant-tabs-top > .ant-tabs-nav .ant-tabs-ink-bar,
+.ant-tabs-top > div > .ant-tabs-nav .ant-tabs-ink-bar {
+  background-color: whitesmoke !important;
+}
