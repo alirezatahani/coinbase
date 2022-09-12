@@ -2,10 +2,9 @@ const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const webpack = require("webpack");
-const dotenv = require("dotenv");
+const Dotenv = require('dotenv-webpack');
 const CopyPlugin = require("copy-webpack-plugin");
 
-dotenv.config();
 
 module.exports = {
   mode: "development",
@@ -72,9 +71,7 @@ module.exports = {
   devtool: "cheap-module-source-map",
 
   plugins: [
-    new webpack.DefinePlugin({
-      "process.env": JSON.stringify(process.env),
-    }),
+	new Dotenv(),
     new HtmlWebpackPlugin({
       template: path.resolve("./public/index.html"),
     }),
