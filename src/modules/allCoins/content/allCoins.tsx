@@ -5,17 +5,33 @@ import {
   TableContent,
   TableContentPrice,
   TableTitle,
+  StarBtn,
 } from "../style/allCoins_styles";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+
+import { useDispatch } from "react-redux";
 import useFetch from "../../../../src/hooks/useFetch";
 import Spinner from "@components/spin/spin";
+import { FavoriteActionHandler } from "@redux/actions/favoriteAction";
 
 export default function AllCoins() {
   const [{ loading, data }, doFetch] = useFetch();
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     doFetch({ url: "/coins?limit=10", method: "get" });
   }, []);
+
+  const favoriteAction = (coin: any) => {
+    dispatch(FavoriteActionHandler(coin));
+  };
+
+  const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
+  const { favoriteList } = favoriteReducers;
+
+  console.log(favoriteList, "favList");
 
   return (
     <div>
@@ -31,8 +47,13 @@ export default function AllCoins() {
         data.data.coins.map((coin: any, index: number) => {
           return (
             <CoinsStyle key={index}>
-              <StarFilled />
-
+              <StarBtn onClick={() => favoriteAction(coin)}>
+                {favoriteList.some((item: any) => coin.name === item.name) ? (
+                  <StarFilled />
+                ) : (
+                  <StarOutlined />
+                )}
+              </StarBtn>
               <div>
                 <img src={coin.iconUrl} style={{ width: 40, marginLeft: 40 }} />
               </div>

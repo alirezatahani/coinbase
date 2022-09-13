@@ -27,6 +27,9 @@ export const TableContent = styled.p(({ theme }) => ({
   fontSize: theme.typography.body1.fontSize,
   flex: 1,
 }));
+export const StarBtn = styled.div(({}) => ({
+  cursor: "pointer",
+}));
 
 export const TableContentPrice = styled.p(({ theme }) => ({
   fontSize: theme.typography.body1.fontSize,
