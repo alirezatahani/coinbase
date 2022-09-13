@@ -3,8 +3,8 @@ import styled from "styled-components";
 export const CoinsStyle = styled.div(({}) => ({
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "center",
-  padding: 5,
+  alignItems: "baseline",
+  marginBottom: 10,
   color: "white",
 }));
 export const CoinsTitleStyle = styled.div(({ theme }) => ({
@@ -12,7 +12,8 @@ export const CoinsTitleStyle = styled.div(({ theme }) => ({
   display: "flex",
   justifyContent: "space-around",
   alignItems: "center",
-  padding: 5,
+  padding: 4,
+  margin: 8,
   color: "white",
   marginBottom: 16,
 }));
@@ -22,6 +23,7 @@ export const TableTitle = styled.p(({ theme }) => ({
 }));
 export const TableContent = styled.p(({ theme }) => ({
   fontSize: theme.typography.body1.fontSize,
+  flex: 1,
 }));
 export const TableContentPrice = styled.p(({ theme }) => ({
   fontSize: theme.typography.body1.fontSize,
