@@ -7,6 +7,7 @@ export const CoinsStyle = styled.div(({}) => ({
   marginBottom: 10,
   color: "white",
 }));
+
 export const CoinsTitleStyle = styled.div(({ theme }) => ({
   borderBottom: `1px solid ${theme.palette.secondary.main}`,
   display: "flex",
@@ -21,10 +22,12 @@ export const CoinsTitleStyle = styled.div(({ theme }) => ({
 export const TableTitle = styled.p(({ theme }) => ({
   fontSize: theme.typography.table.fontSize,
 }));
+
 export const TableContent = styled.p(({ theme }) => ({
   fontSize: theme.typography.body1.fontSize,
   flex: 1,
 }));
+
 export const TableContentPrice = styled.p(({ theme }) => ({
   fontSize: theme.typography.body1.fontSize,
   backgroundColor: theme.palette.secondary.main,
