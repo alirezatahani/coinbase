@@ -8,10 +8,10 @@ import {
   StarBtn,
 } from "../style/allCoins_styles";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
+import { FavoriteActionHandler } from "@redux/actions/favoriteAction";
 import { useSelector, useDispatch } from "react-redux";
 import useFetch from "../../../../src/hooks/useFetch";
 import Spinner from "@components/spin/spin";
-import { FavoriteActionHandler } from "@redux/actions/favoriteAction";
 
 export default function AllCoins() {
   const [{ loading, data }, doFetch] = useFetch();
