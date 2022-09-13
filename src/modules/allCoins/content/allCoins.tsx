@@ -8,9 +8,7 @@ import {
   StarBtn,
 } from "../style/allCoins_styles";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
-import { useSelector } from "react-redux";
-
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import useFetch from "../../../../src/hooks/useFetch";
 import Spinner from "@components/spin/spin";
 import { FavoriteActionHandler } from "@redux/actions/favoriteAction";
@@ -31,7 +29,7 @@ export default function AllCoins() {
   const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
   const { favoriteList } = favoriteReducers;
 
-  console.log(favoriteList, "favList");
+  console.log(favoriteList, "eeee");
 
   return (
     <div>

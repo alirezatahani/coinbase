@@ -3,6 +3,7 @@ import { HomeStyle } from "../style/home_styles";
 import React from "react";
 import AllCoins from "@modules/allCoins/content/allCoins";
 import "antd/dist/antd.css";
+import FavoritePage from "@pages/Favorites/content/favoritePage";
 
 export default function Home() {
   const { TabPane } = Tabs;
@@ -14,7 +15,7 @@ export default function Home() {
           <AllCoins />
         </TabPane>
         <TabPane tab="Favorites" key="2">
-          test{" "}
+          <FavoritePage/>
         </TabPane>
         <TabPane tab="New" key={3}>
           test{" "}
