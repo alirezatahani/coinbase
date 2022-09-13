@@ -4,8 +4,17 @@ export const CoinsStyle = styled.div(({}) => ({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  padding: 10,
+  padding: 5,
   color: "white",
+}));
+export const CoinsTitleStyle = styled.div(({ theme }) => ({
+  borderBottom: `1px solid ${theme.palette.secondary.main}`,
+  display: "flex",
+  justifyContent: "space-around",
+  alignItems: "center",
+  padding: 5,
+  color: "white",
+  marginBottom: 16,
 }));
 
 export const TableTitle = styled.p(({ theme }) => ({
@@ -13,4 +22,12 @@ export const TableTitle = styled.p(({ theme }) => ({
 }));
 export const TableContent = styled.p(({ theme }) => ({
   fontSize: theme.typography.body1.fontSize,
+}));
+export const TableContentPrice = styled.p(({ theme }) => ({
+  fontSize: theme.typography.body1.fontSize,
+  backgroundColor: theme.palette.secondary.main,
+  borderRadius: 4,
+  textAlign: "center",
+  padding: 2,
+  width: 90,
 }));
