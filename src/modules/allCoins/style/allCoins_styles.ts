@@ -45,7 +45,8 @@ export interface TableContentProps {
 export const TableContentPrice = styled.p<TableContentProps>(({ theme }) => ({
   fontSize: theme.typography.body1.fontSize,
   borderRadius: 4,
-  textAlign: "center",
+  textAlign: "start",
   padding: 2,
   width: 90,
+  marginLeft: "3rem",
 }));
