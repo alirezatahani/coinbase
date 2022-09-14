@@ -1,5 +1,5 @@
 import { RouteType } from "./router_types";
 
-export const Route = ({ component }: RouteType) => {
+export const Route:React.FC<RouteType> = ({ component }: RouteType) => {
   return component;
 };
