@@ -1,12 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import React from "react";
 import {
-  TableTitle,
-  CoinsTitleStyle,
   CoinsStyle,
   TableContent,
   TableContentPrice,
   StarBtn,
+  TableContentChangeMinus,
+  TableContentChangePlus,
 } from "../style/favoriteCoins_styles";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { FavoriteActionHandler } from "@redux/actions/favoriteAction";
@@ -21,19 +21,30 @@ export default function FavoriteCoins() {
     dispatch(FavoriteActionHandler(coin));
   };
 
+  const checkChangePrice = (change: string) => {
+    if (change.includes("-")) {
+      return <TableContentChangeMinus>{change}</TableContentChangeMinus>;
+    } else {
+      return <TableContentChangePlus>+{change}</TableContentChangePlus>;
+    }
+  };
+
   return (
     <div>
       {favoriteList.length !== 0 ? (
         <div>
-          <CoinsTitleStyle>
-            <TableTitle>Icon</TableTitle>
-            <TableTitle>Name</TableTitle>
-            <TableTitle>Price</TableTitle>
-          </CoinsTitleStyle>
           {favoriteList &&
             favoriteList.map((coin: any, index: number) => {
               return (
                 <CoinsStyle key={index}>
+                  <div>
+                    <img src={coin.iconUrl} style={{ width: 40 }} />
+                  </div>
+                  <TableContent> {coin.name}</TableContent>
+                  <TableContentPrice>
+                    ${Number(coin.price).toFixed(3)}
+                  </TableContentPrice>
+                  {checkChangePrice(coin.change)}
                   <StarBtn onClick={() => favoriteAction(coin)}>
                     {favoriteList.some(
                       (item: any) => coin.name === item.name
@@ -43,16 +54,6 @@ export default function FavoriteCoins() {
                       <StarOutlined />
                     )}
                   </StarBtn>
-                  <div>
-                    <img
-                      src={coin.iconUrl}
-                      style={{ width: 40, marginLeft: 40 }}
-                    />
-                  </div>
-                  <TableContent> {coin.name}</TableContent>
-                  <TableContentPrice>
-                    ${Number(coin.price).toFixed(3)}
-                  </TableContentPrice>
                 </CoinsStyle>
               );
             })}

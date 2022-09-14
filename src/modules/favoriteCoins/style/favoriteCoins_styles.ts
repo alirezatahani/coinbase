@@ -8,34 +8,45 @@ export const CoinsStyle = styled.div(({}) => ({
   color: "white",
 }));
 
-export const CoinsTitleStyle = styled.div(({ theme }) => ({
-  borderBottom: `1px solid ${theme.palette.secondary.main}`,
-  display: "flex",
-  justifyContent: "space-around",
-  alignItems: "center",
-  padding: 4,
-  margin: 8,
-  color: "white",
-  marginBottom: 16,
-}));
-
-export const TableTitle = styled.p(({ theme }) => ({
-  fontSize: theme.typography.table.fontSize,
-}));
-
 export const TableContent = styled.p(({ theme }) => ({
   fontSize: theme.typography.body1.fontSize,
   flex: 1,
-}));
-export const StarBtn = styled.div(({}) => ({
-  cursor: "pointer",
+  textAlign: "start",
+  marginLeft: "1rem",
 }));
 
-export const TableContentPrice = styled.p(({ theme }) => ({
+export const TableContentChangePlus = styled.p(({ theme }) => ({
   fontSize: theme.typography.body1.fontSize,
-  backgroundColor: theme.palette.secondary.main,
+  color: theme.palette.success[600],
+  borderBottom: `1px solid ${theme.palette.success[400]}`,
   borderRadius: 4,
-  textAlign: "center",
+  flex: 1,
+  marginLeft: "3rem",
+}));
+
+export const TableContentChangeMinus = styled.p(({ theme }) => ({
+  fontSize: theme.typography.body1.fontSize,
+  color: theme.palette.danger[600],
+  borderBottom: `1px solid ${theme.palette.danger[400]}`,
+  borderRadius: 4,
+  flex: 1,
+  marginLeft: "3rem",
+}));
+
+export const StarBtn = styled.div(({}) => ({
+  cursor: "pointer",
+  marginLeft: "3rem",
+}));
+
+export interface TableContentProps {
+  children?: JSX.Element | JSX.Element[] | any;
+}
+
+export const TableContentPrice = styled.p<TableContentProps>(({ theme }) => ({
+  fontSize: theme.typography.body1.fontSize,
+  borderRadius: 4,
+  textAlign: "start",
   padding: 2,
   width: 90,
+  marginLeft: "3rem",
 }));
