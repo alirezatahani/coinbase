@@ -5,6 +5,9 @@ import {
   TableContent,
   TableContentPrice,
   TableTitle,
+  TableTitleName,
+  TableContentChangePlus,
+  TableContentChangeMinus,
   StarBtn,
 } from "../style/allCoins_styles";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
@@ -33,12 +36,23 @@ export default function AllCoins() {
 
   const { favoriteList } = useSelector((state: any) => state.FavoriteReducer);
 
+  const checkChangePrice = (change: string) => {
+    if (change.includes("-")) {
+      return <TableContentChangeMinus>{change}</TableContentChangeMinus>;
+    } else {
+      return <TableContentChangePlus>{change}</TableContentChangePlus>;
+    }
+  };
+
+  console.log(data);
+
   return (
     <div>
       <CoinsTitleStyle>
         <TableTitle>Icon</TableTitle>
-        <TableTitle>Name</TableTitle>
+        <TableTitleName>Name</TableTitleName>
         <TableTitle>Price</TableTitle>
+        <TableTitle>Change</TableTitle>
       </CoinsTitleStyle>
       {loading ? (
         <Spinner />
@@ -46,7 +60,12 @@ export default function AllCoins() {
         data &&
         data.data.coins.map(
           (
-            coin: { iconUrl: string; name: string; price: string },
+            coin: {
+              iconUrl: string;
+              name: string;
+              price: string;
+              change: string;
+            },
             index: number
           ) => {
             return (
@@ -68,6 +87,7 @@ export default function AllCoins() {
                 <TableContentPrice>
                   {formatPrice(Number(coin.price))} $
                 </TableContentPrice>
+                {checkChangePrice(coin.change)}
               </CoinsStyle>
             );
           }
