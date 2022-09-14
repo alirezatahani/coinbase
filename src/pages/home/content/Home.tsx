@@ -3,8 +3,9 @@ import { Badge, FlexWrapperBadge, HomeStyle } from "../style/home_styles";
 import { useSelector } from "react-redux";
 import React from "react";
 import AllCoins from "@modules/allCoins/content/allCoins";
+import NewCoins from "@modules/newCoins/content/newCoins";
 import "antd/dist/antd.css";
-import FavoritePage from "@pages/Favorites/content/favoritePage";
+import FavoriteCoins from "@modules/Favorites/content/favoriteCoins";
 
 export default function Home() {
   const { TabPane } = Tabs;
@@ -27,10 +28,10 @@ export default function Home() {
           }
           key="2"
         >
-          <FavoritePage />
+          <FavoriteCoins />
         </TabPane>
         <TabPane tab="New" key={3}>
-          test{" "}
+          <NewCoins />
         </TabPane>{" "}
         <TabPane tab="Gainers" key={4}>
           test{" "}
