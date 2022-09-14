@@ -10,6 +10,7 @@ import {
 import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { FavoriteActionHandler } from "@redux/actions/favoriteAction";
 import { useSelector, useDispatch } from "react-redux";
+import { formatPrice } from "@modules/allCoins/utils/formatPrice";
 import useFetch from "../../../../src/hooks/useFetch";
 import Spinner from "@components/spin/spin";
 
@@ -28,8 +29,6 @@ export default function AllCoins() {
 
   const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
   const { favoriteList } = favoriteReducers;
-
-  console.log(favoriteList, "eeee");
 
   return (
     <div>
@@ -57,7 +56,7 @@ export default function AllCoins() {
               </div>
               <TableContent> {coin.name}</TableContent>
               <TableContentPrice>
-                ${Number(coin.price).toFixed(3)}
+                {formatPrice(Number(coin.price))} $
               </TableContentPrice>
             </CoinsStyle>
           );

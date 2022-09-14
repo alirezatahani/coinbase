@@ -31,7 +31,11 @@ export const StarBtn = styled.div(({}) => ({
   cursor: "pointer",
 }));
 
-export const TableContentPrice = styled.p(({ theme }) => ({
+export interface TableContentProps {
+  children?: JSX.Element | JSX.Element[] | any;
+}
+
+export const TableContentPrice = styled.p<TableContentProps>(({ theme }) => ({
   fontSize: theme.typography.body1.fontSize,
   backgroundColor: theme.palette.secondary.main,
   borderRadius: 4,
