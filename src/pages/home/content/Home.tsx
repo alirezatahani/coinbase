@@ -6,6 +6,7 @@ import AllCoins from "@modules/allCoins/content/allCoins";
 import NewCoins from "@modules/newCoins/content/newCoins";
 import FavoriteCoins from "@modules/favoriteCoins/content/favoriteCoins";
 import GainerCoins from "@modules/gainerCoins/content/gainerCoins";
+import LoserCoins from "@modules/loserCoins/content/loserCoins";
 import "antd/dist/antd.css";
 
 export default function Home() {
@@ -36,9 +37,9 @@ export default function Home() {
         </TabPane>
         <TabPane tab="Gainers" key={4}>
           <GainerCoins />
-        </TabPane>{" "}
+        </TabPane>
         <TabPane tab="Losers" key={5}>
-          test{" "}
+          <LoserCoins />
         </TabPane>
       </Tabs>
     </HomeStyle>

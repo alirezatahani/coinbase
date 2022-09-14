@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import {
   CoinsStyle,
   TableContent,
-  TableContentChangeMinus,
   TableContentChangePlus,
   TableContentPrice,
 } from "../style/gainerCoins_styles";
@@ -19,14 +18,6 @@ export default function GainerCoins() {
       method: "get",
     });
   }, []);
-
-  const checkChangePrice = (change: string) => {
-    if (change.includes("-")) {
-      return <TableContentChangeMinus>{change}</TableContentChangeMinus>;
-    } else {
-      return <TableContentChangePlus>+{change}</TableContentChangePlus>;
-    }
-  };
 
   return (
     <div>
@@ -53,7 +44,7 @@ export default function GainerCoins() {
                 <TableContentPrice>
                   {formatPrice(Number(coin.price))} $
                 </TableContentPrice>
-                {checkChangePrice(coin.change)}
+                <TableContentChangePlus>+{coin.change}</TableContentChangePlus>{" "}
               </CoinsStyle>
             );
           }

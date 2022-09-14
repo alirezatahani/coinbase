@@ -36,12 +36,3 @@ export const TableContentChangePlus = styled.p(({ theme }) => ({
   flex: 1,
   marginLeft: "3rem",
 }));
-
-export const TableContentChangeMinus = styled.p(({ theme }) => ({
-  fontSize: theme.typography.body1.fontSize,
-  color: theme.palette.danger[600],
-  borderBottom: `1px solid ${theme.palette.danger[400]}`,
-  borderRadius: 4,
-  flex: 1,
-  marginLeft: "3rem",
-}));
