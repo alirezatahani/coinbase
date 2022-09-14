@@ -1,11 +1,8 @@
 import React, { useEffect } from "react";
 import {
   CoinsStyle,
-  CoinsTitleStyle,
   TableContent,
   TableContentPrice,
-  TableTitle,
-  TableTitleName,
   TableContentChangePlus,
   TableContentChangeMinus,
   StarBtn,
@@ -40,7 +37,7 @@ export default function AllCoins() {
     if (change.includes("-")) {
       return <TableContentChangeMinus>{change}</TableContentChangeMinus>;
     } else {
-      return <TableContentChangePlus>{change}</TableContentChangePlus>;
+      return <TableContentChangePlus>+{change}</TableContentChangePlus>;
     }
   };
 
@@ -48,12 +45,6 @@ export default function AllCoins() {
 
   return (
     <div>
-      <CoinsTitleStyle>
-        <TableTitle>Icon</TableTitle>
-        <TableTitleName>Name</TableTitleName>
-        <TableTitle>Price</TableTitle>
-        <TableTitle>Change</TableTitle>
-      </CoinsTitleStyle>
       {loading ? (
         <Spinner />
       ) : (
@@ -70,6 +61,14 @@ export default function AllCoins() {
           ) => {
             return (
               <CoinsStyle key={index}>
+                <div>
+                  <img src={coin.iconUrl} style={{ width: 40 }} />
+                </div>
+                <TableContent> {coin.name}</TableContent>
+                <TableContentPrice>
+                  {formatPrice(Number(coin.price))} $
+                </TableContentPrice>
+                {checkChangePrice(coin.change)}
                 <StarBtn onClick={() => favoriteAction(coin)}>
                   {favoriteList.some((item: any) => coin.name === item.name) ? (
                     <StarFilled />
@@ -77,17 +76,6 @@ export default function AllCoins() {
                     <StarOutlined />
                   )}
                 </StarBtn>
-                <div>
-                  <img
-                    src={coin.iconUrl}
-                    style={{ width: 40, marginLeft: 40 }}
-                  />
-                </div>
-                <TableContent> {coin.name}</TableContent>
-                <TableContentPrice>
-                  {formatPrice(Number(coin.price))} $
-                </TableContentPrice>
-                {checkChangePrice(coin.change)}
               </CoinsStyle>
             );
           }
