@@ -23,12 +23,15 @@ export default function AllCoins() {
     doFetch({ url: "/coins?limit=10", method: "get" });
   }, []);
 
-  const favoriteAction = (coin: any) => {
+  const favoriteAction = (coin: {
+    iconUrl: string;
+    name: string;
+    price: string;
+  }) => {
     dispatch(FavoriteActionHandler(coin));
   };
 
-  const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
-  const { favoriteList } = favoriteReducers;
+  const { favoriteList } = useSelector((state: any) => state.FavoriteReducer);
 
   return (
     <div>
@@ -41,26 +44,34 @@ export default function AllCoins() {
         <Spinner />
       ) : (
         data &&
-        data.data.coins.map((coin: any, index: number) => {
-          return (
-            <CoinsStyle key={index}>
-              <StarBtn onClick={() => favoriteAction(coin)}>
-                {favoriteList.some((item: any) => coin.name === item.name) ? (
-                  <StarFilled />
-                ) : (
-                  <StarOutlined />
-                )}
-              </StarBtn>
-              <div>
-                <img src={coin.iconUrl} style={{ width: 40, marginLeft: 40 }} />
-              </div>
-              <TableContent> {coin.name}</TableContent>
-              <TableContentPrice>
-                {formatPrice(Number(coin.price))} $
-              </TableContentPrice>
-            </CoinsStyle>
-          );
-        })
+        data.data.coins.map(
+          (
+            coin: { iconUrl: string; name: string; price: string },
+            index: number
+          ) => {
+            return (
+              <CoinsStyle key={index}>
+                <StarBtn onClick={() => favoriteAction(coin)}>
+                  {favoriteList.some((item: any) => coin.name === item.name) ? (
+                    <StarFilled />
+                  ) : (
+                    <StarOutlined />
+                  )}
+                </StarBtn>
+                <div>
+                  <img
+                    src={coin.iconUrl}
+                    style={{ width: 40, marginLeft: 40 }}
+                  />
+                </div>
+                <TableContent> {coin.name}</TableContent>
+                <TableContentPrice>
+                  {formatPrice(Number(coin.price))} $
+                </TableContentPrice>
+              </CoinsStyle>
+            );
+          }
+        )
       )}
     </div>
   );
