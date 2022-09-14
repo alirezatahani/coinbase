@@ -41,8 +41,6 @@ export default function AllCoins() {
     }
   };
 
-  console.log(data);
-
   return (
     <div>
       {loading ? (
