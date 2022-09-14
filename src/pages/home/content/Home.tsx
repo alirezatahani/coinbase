@@ -4,8 +4,9 @@ import { useSelector } from "react-redux";
 import React from "react";
 import AllCoins from "@modules/allCoins/content/allCoins";
 import NewCoins from "@modules/newCoins/content/newCoins";
+import FavoriteCoins from "@modules/favoriteCoins/content/favoriteCoins";
+import GainerCoins from "@modules/gainerCoins/content/gainerCoins";
 import "antd/dist/antd.css";
-import FavoriteCoins from "@modules/Favorites/content/favoriteCoins";
 
 export default function Home() {
   const { TabPane } = Tabs;
@@ -32,9 +33,9 @@ export default function Home() {
         </TabPane>
         <TabPane tab="New" key={3}>
           <NewCoins />
-        </TabPane>{" "}
+        </TabPane>
         <TabPane tab="Gainers" key={4}>
-          test{" "}
+          <GainerCoins />
         </TabPane>{" "}
         <TabPane tab="Losers" key={5}>
           test{" "}

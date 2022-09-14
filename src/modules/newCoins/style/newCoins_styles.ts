@@ -15,29 +15,6 @@ export const TableContent = styled.p(({ theme }) => ({
   marginLeft: "1rem",
 }));
 
-export const TableContentChangePlus = styled.p(({ theme }) => ({
-  fontSize: theme.typography.body1.fontSize,
-  color: theme.palette.success[600],
-  borderBottom: `1px solid ${theme.palette.success[400]}`,
-  borderRadius: 4,
-  flex: 1,
-  marginLeft: "3rem",
-}));
-
-export const TableContentChangeMinus = styled.p(({ theme }) => ({
-  fontSize: theme.typography.body1.fontSize,
-  color: theme.palette.danger[600],
-  borderBottom: `1px solid ${theme.palette.danger[400]}`,
-  borderRadius: 4,
-  flex: 1,
-  marginLeft: "3rem",
-}));
-
-export const StarBtn = styled.div(({}) => ({
-  cursor: "pointer",
-  marginLeft: "3rem",
-}));
-
 export interface TableContentProps {
   children?: JSX.Element | JSX.Element[] | any;
 }

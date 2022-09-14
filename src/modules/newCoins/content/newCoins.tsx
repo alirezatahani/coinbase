@@ -18,8 +18,6 @@ export default function NewCoins() {
     });
   }, []);
 
-  console.log(data, "new");
-
   return (
     <div>
       {loading ? (
