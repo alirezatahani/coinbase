@@ -6,5 +6,5 @@ export type RouteType = {
 };
 
 export type RouterType = {
-  children: JSX.Element | JSX.Element[];
+  children: ReactNode | ReactNode[];
 };
