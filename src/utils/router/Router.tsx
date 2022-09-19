@@ -1,21 +1,19 @@
 import React, { ReactElement } from "react";
 import { RouterType } from "./router_types";
 import useRouter from "./useRouter";
+import { handleDynamicRoute } from "./utils";
 
 export const Router: React.FC<RouterType> = ({ children }: any) => {
   const { stack, goBack } = useRouter();
-  let lastStackItem = stack?.[stack.length - 1];
+  let lastStackItem: string = stack?.[stack.length - 1];
 
   if (lastStackItem?.includes(":")) {
-    let dynamicRouteArray: string[] = lastStackItem.split("/:");
-    let dynamicRoute: string = dynamicRouteArray[0] + "/:id";
-    let dynamicId = dynamicRouteArray[1];
-
+    const { baseRoute, dynamicId } = handleDynamicRoute(lastStackItem);
     return React.Children.map(children, (child: ReactElement) => {
       const clonedElement = React.cloneElement(child.props.component, {
         id: dynamicId,
       });
-      switch (dynamicRoute) {
+      switch (baseRoute) {
         case child.props.to:
           return (
             <>
