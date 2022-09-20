@@ -1,25 +1,31 @@
-import { useEffect } from "react";
+import { useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 
-const useRouter = () => {
-  const [cookies, setCookie] = useCookies(["stack"]);
+export const useRouter = () => {
+	const [cookies, setCookie] = useCookies(["stack"]);
 
-  useEffect(() => {
-    setCookie("stack", cookies?.stack || ["/"]);
-  }, []);
+	useEffect(() => {
+		setCookie("stack", cookies?.stack || ["/"]);
+	}, []);
 
-  const goTo: (query: string) => void = (query: string) => {
-    setCookie("stack", [...cookies.stack, query]);
-  };
+	console.log(cookies.stack, "stack stack stack");
+	const goTo = useCallback(
+		(query: string) => {
+			console.log(cookies.stack, "cookies.stack");
+			const _query = query.startsWith("/") ? query : `/${query}`;
+			setCookie("stack", [...cookies?.stack, _query]);
+		},
+		[cookies.stack],
+	);
 
-  const goBack: () => void = () => {
-    if (cookies.stack.length === 1) return;
-    const cloneStack = [...cookies.stack];
-    cloneStack.pop();
-    setCookie("stack", cloneStack);
-  };
+	const goBack: () => void = () => {
+		if (cookies.stack.length === 1) return;
+		const cloneStack = [...cookies.stack];
+		console.log(cloneStack, "cloneStack");
+		cloneStack.pop();
+		setCookie("stack", cloneStack);
+	};
 
-  return { stack: cookies.stack, goBack, goTo };
+	return { stack: cookies.stack, goBack, goTo };
 };
-
-export default useRouter;
