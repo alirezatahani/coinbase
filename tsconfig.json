@@ -21,7 +21,8 @@
       "@pages/*": ["pages/*"],
       "@modules/*": ["modules/*"],
       "@utils/*": ["utils/*"],
-      "@global/*": ["global/*"]
+      "@global/*": ["global/*"],
+      "@redux/*": ["redux/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],
