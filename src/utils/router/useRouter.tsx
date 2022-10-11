@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addStack, deleteStack } from "@redux/stack/stackAction";
+import { addStack, deleteStack } from "../../Redux/stack/stackAction";
 
 export const useRouter = () => {
   const stack = useSelector((state: any) => state.stack.stack);

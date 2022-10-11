@@ -7,15 +7,18 @@ import {
   TableContentChangeMinus,
   StarBtn,
 } from "../style/allCoins_styles";
-import { StarOutlined, StarFilled } from "@ant-design/icons";
-import { FavoriteActionHandler } from "@redux/actions/favoriteAction";
+import { StarOutlined, StarFilled, BellOutlined } from "@ant-design/icons";
+import { FavoriteActionHandler } from "../../../Redux/actions/favoriteAction";
 import { useSelector, useDispatch } from "react-redux";
 import { formatPrice } from "@modules/allCoins/utils/formatPrice";
 import useFetch from "../../../../src/hooks/useFetch";
 import Spinner from "@components/spin/spin";
+import { useRouter } from "@utils/router";
 
 export default function AllCoins() {
   const [{ loading, data }, doFetch] = useFetch();
+
+  const { goTo } = useRouter();
 
   const dispatch = useDispatch();
 
@@ -73,6 +76,9 @@ export default function AllCoins() {
                   ) : (
                     <StarOutlined />
                   )}
+                </StarBtn>
+                <StarBtn onClick={() => goTo("alert")}>
+                  <BellOutlined />
                 </StarBtn>
               </CoinsStyle>
             );

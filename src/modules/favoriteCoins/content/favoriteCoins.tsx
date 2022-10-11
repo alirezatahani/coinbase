@@ -9,7 +9,7 @@ import {
   TableContentChangePlus,
 } from "../style/favoriteCoins_styles";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
-import { FavoriteActionHandler } from "@redux/actions/favoriteAction";
+import { FavoriteActionHandler } from "../../../Redux/actions/favoriteAction";
 
 export default function FavoriteCoins() {
   const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
