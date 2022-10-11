@@ -1,4 +1,4 @@
-import { FavoriteAction } from "./../types/types";
+import { FavoriteAction } from "@redux/types/types";
 
 export const FavoriteActionHandler = (item: any) => {
   return {

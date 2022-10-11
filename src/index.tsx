@@ -5,7 +5,13 @@ import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 import { Provider } from "react-redux";
 import store from "@redux/store";
+import {saveState} from './localStorage';
 
+store.subscribe(() => {
+  saveState({
+    stack:store.getState().stack,
+  });
+});
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
