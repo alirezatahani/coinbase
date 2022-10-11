@@ -1,31 +1,17 @@
-import { useCallback } from "react";
-import { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { addStack, deleteStack } from "@redux/stack/stackAction";
 
 export const useRouter = () => {
-	const [cookies, setCookie] = useCookies(["stack"]);
+  const stack = useSelector((state: any) => state.stack.stack);
+  const dispatch = useDispatch();
 
-	useEffect(() => {
-		setCookie("stack", cookies?.stack || ["/"]);
-	}, []);
+  const goTo = (query: string) => {
+    const _query = query.startsWith("/") ? query : `/${query}`;
+    dispatch(addStack(_query));
+  };
+  const goBack: () => void = () => {
+    dispatch(deleteStack());
+  };
 
-	console.log(cookies.stack, "stack stack stack");
-	const goTo = useCallback(
-		(query: string) => {
-			console.log(cookies.stack, "cookies.stack");
-			const _query = query.startsWith("/") ? query : `/${query}`;
-			setCookie("stack", [...cookies?.stack, _query]);
-		},
-		[cookies.stack],
-	);
-
-	const goBack: () => void = () => {
-		if (cookies.stack.length === 1) return;
-		const cloneStack = [...cookies.stack];
-		console.log(cloneStack, "cloneStack");
-		cloneStack.pop();
-		setCookie("stack", cloneStack);
-	};
-
-	return { stack: cookies.stack, goBack, goTo };
+  return { goBack, goTo };
 };
