@@ -1,11 +1,12 @@
+import { Provider } from "react-redux";
+import { store, persistor } from "./Redux/store";
+import { PersistGate } from "redux-persist/integration/react";
+import { saveState } from "./localStorage";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
-import { Provider } from "react-redux";
-import store from "./Redux/store";
-import { saveState } from "./localStorage";
 
 store.subscribe(() => {
   saveState({
@@ -15,7 +16,9 @@ store.subscribe(() => {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    <App />
+    <PersistGate persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>
 );
 

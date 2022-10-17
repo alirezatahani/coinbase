@@ -7,3 +7,9 @@ export const AlertStyle = styled.div(({ theme }) => ({
   height: "auto",
   padding: "2rem",
 }));
+export const FormStyle = styled.div(({}) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  marginBottom: "1rem",
+}));
