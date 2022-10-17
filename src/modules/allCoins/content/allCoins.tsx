@@ -5,7 +5,7 @@ import {
   TableContentPrice,
   TableContentChangePlus,
   TableContentChangeMinus,
-  StarBtn,
+  ActionBtn,
 } from "../style/allCoins_styles";
 import { StarOutlined, StarFilled, BellOutlined } from "@ant-design/icons";
 import { FavoriteActionHandler } from "../../../Redux/actions/favoriteAction";
@@ -14,6 +14,7 @@ import { formatPrice } from "@modules/allCoins/utils/formatPrice";
 import useFetch from "../../../../src/hooks/useFetch";
 import Spinner from "@components/spin/spin";
 import { useRouter } from "@utils/router";
+import { selectedCoinHandler } from "Redux/actions/alertAction";
 
 export default function AllCoins() {
   const [{ loading, data }, doFetch] = useFetch();
@@ -32,6 +33,11 @@ export default function AllCoins() {
     price: string;
   }) => {
     dispatch(FavoriteActionHandler(coin));
+  };
+
+  const alertHandler = (item: string) => {
+    goTo("alert");
+    dispatch(selectedCoinHandler(item));
   };
 
   const { favoriteList } = useSelector((state: any) => state.FavoriteReducer);
@@ -70,16 +76,16 @@ export default function AllCoins() {
                   {formatPrice(Number(coin.price))} $
                 </TableContentPrice>
                 {checkChangePrice(coin.change)}
-                <StarBtn onClick={() => favoriteAction(coin)}>
+                <ActionBtn onClick={() => favoriteAction(coin)}>
                   {favoriteList.some((item: any) => coin.name === item.name) ? (
                     <StarFilled />
                   ) : (
                     <StarOutlined />
                   )}
-                </StarBtn>
-                <StarBtn onClick={() => goTo("alert")}>
+                </ActionBtn>
+                <ActionBtn onClick={() => alertHandler(coin.name)}>
                   <BellOutlined />
-                </StarBtn>
+                </ActionBtn>
               </CoinsStyle>
             );
           }

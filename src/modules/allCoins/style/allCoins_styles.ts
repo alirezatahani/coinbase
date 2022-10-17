@@ -10,7 +10,7 @@ export const CoinsStyle = styled.div(({}) => ({
 
 export const TableContent = styled.p(({ theme }) => ({
   fontSize: theme.typography.body1.fontSize,
-  flex: 1,
+  flex: 3,
   textAlign: "start",
   marginLeft: "1rem",
 }));
@@ -33,7 +33,7 @@ export const TableContentChangeMinus = styled.p(({ theme }) => ({
   marginLeft: "3rem",
 }));
 
-export const StarBtn = styled.div(({}) => ({
+export const ActionBtn = styled.div(({}) => ({
   cursor: "pointer",
   marginLeft: "3rem",
 }));
@@ -45,7 +45,7 @@ export interface TableContentProps {
 export const TableContentPrice = styled.p<TableContentProps>(({ theme }) => ({
   fontSize: theme.typography.body1.fontSize,
   borderRadius: 4,
-  textAlign: "start",
+  textAlign: "inherit",
   padding: 2,
   width: 90,
   marginLeft: "3rem",
