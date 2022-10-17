@@ -45,14 +45,10 @@ export default function Alert() {
   const [targetPrice, setTargetPrice] = useState<number>(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      doFetch({
-        url: `/coin/${coinUuid}`,
-        method: "get",
-      });
-    }, 5000);
-
-    return () => clearInterval(interval);
+    doFetch({
+      url: `/coin/${coinUuid}`,
+      method: "get",
+    });
   }, []);
 
   useEffect(() => {
@@ -75,22 +71,12 @@ export default function Alert() {
 
   const inputPriceChangeHandler = (e: any) => {
     setTargetPrice(e.target.value);
-    if (e.target.value >= data.data.coin.price) {
+    if (e.target.value >= formatPrice(Number(data.data.coin.price))) {
       return setArrowFlag("up");
-    } else if (e.target.value <= data.data.coin.price) {
+    } else if (e.target.value <= formatPrice(Number(data.data.coin.price))) {
       return setArrowFlag("down");
     }
   };
-
-  const handleUi = React.useCallback(() => {
-    if (arrowFlag == "up") {
-      return <ArrowUpStyle />;
-    } else if (arrowFlag == "down") {
-      return <ArrowDownStyle />;
-    } else {
-      return <div></div>;
-    }
-  }, [arrowFlag]);
 
   const alertActionPrice = () => {
     dispatch(
@@ -102,7 +88,7 @@ export default function Alert() {
     <AlertStyle>
       <Space />
       <FormStyle>
-        {handleUi()}
+        {arrowFlag == "up" ? <ArrowUpStyle /> : <ArrowDownStyle />}
         <Input
           placeholder="set target price"
           type="number"
