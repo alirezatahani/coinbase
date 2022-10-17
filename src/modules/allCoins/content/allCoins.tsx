@@ -63,6 +63,7 @@ export default function AllCoins() {
               name: string;
               price: string;
               change: string;
+              uuid: string;
             },
             index: number
           ) => {
@@ -83,7 +84,7 @@ export default function AllCoins() {
                     <StarOutlined />
                   )}
                 </ActionBtn>
-                <ActionBtn onClick={() => alertHandler(coin.name)}>
+                <ActionBtn onClick={() => alertHandler(coin.uuid)}>
                   <BellOutlined />
                 </ActionBtn>
               </CoinsStyle>
