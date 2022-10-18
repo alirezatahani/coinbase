@@ -1,4 +1,4 @@
-import { SelectedCoin, SetAlert } from "Redux/types/types";
+import { SelectedCoin, CreateALertAction } from "Redux/types/types";
 
 const initialState = {
   coinUuid: <string>"",
@@ -9,11 +9,12 @@ export const alertReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case SelectedCoin:
       return { ...state, coinUuid: action.payload };
-    case SetAlert:
+    case CreateALertAction:
       return {
         ...state,
         alertList: [...state.alertList, action.payload],
       };
+
     default:
       return state;
   }

@@ -1,4 +1,4 @@
-import { SelectedCoin, SetAlert } from "Redux/types/types";
+import { CreateALertAction, SelectedCoin } from "Redux/types/types";
 
 export const selectedCoinHandler = (item: string) => {
   return {
@@ -7,9 +7,13 @@ export const selectedCoinHandler = (item: string) => {
   };
 };
 
-export const setAlertHandler = (uuid: string, name: string, price: number) => {
+export const createALertAction = (
+  name: string,
+  price: number,
+  targetPrice: string
+) => {
   return {
-    type: SetAlert,
-    payload: [{ uuid: uuid, name: name, targetPrice: price }],
+    type: CreateALertAction,
+    payload: { name: name, price: price, targetPrice: targetPrice },
   };
 };

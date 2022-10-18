@@ -11,7 +11,7 @@ import {
   TableContent,
 } from "../style/alert_styles";
 import React, { useEffect, useState } from "react";
-import { setAlertHandler } from "Redux/actions/alertAction";
+import { createALertAction } from "Redux/actions/alertAction";
 import { formatPrice } from "@modules/allCoins/utils/formatPrice";
 import useFetch from "../../../hooks/useFetch";
 
@@ -34,6 +34,7 @@ export default function Alert() {
   const { coinUuid, alertList } = useSelector(
     (state: any) => state.AlertReducer
   );
+  console.log(alertList, "app");
 
   const dispatch = useDispatch();
 
@@ -42,7 +43,7 @@ export default function Alert() {
   const [{ data }, doFetch] = useFetch();
 
   const [arrowFlag, setArrowFlag] = useState<string>("");
-  const [targetPrice, setTargetPrice] = useState<number>(0);
+  const [targetPriceValue, setTargetPriceValue] = useState<number>(0);
 
   useEffect(() => {
     doFetch({
@@ -51,26 +52,8 @@ export default function Alert() {
     });
   }, []);
 
-  useEffect(() => {
-    alertList.map((array: any) => {
-      return array.map((coin: any) => {
-        if (
-          data &&
-          formatPrice(Number(data.data.coin.price)) <= coin.targetPrice
-        ) {
-          return crossingDownNotification("info", coin.name);
-        } else if (
-          data &&
-          formatPrice(Number(data.data.coin.price)) >= coin.targetPrice
-        ) {
-          return crossingUpNotification("info", coin.name);
-        }
-      });
-    });
-  }, []);
-
   const inputPriceChangeHandler = (e: any) => {
-    setTargetPrice(e.target.value);
+    setTargetPriceValue(e.target.value);
     if (e.target.value >= formatPrice(Number(data.data.coin.price))) {
       return setArrowFlag("up");
     } else if (e.target.value <= formatPrice(Number(data.data.coin.price))) {
@@ -78,10 +61,16 @@ export default function Alert() {
     }
   };
 
-  const alertActionPrice = () => {
-    dispatch(
-      setAlertHandler(data.data.coin.uuid, data.data.coin.name, targetPrice)
-    );
+  const createAlertHandler = () => {
+    if (targetPriceValue >= data.data.coin.price) {
+      dispatch(
+        createALertAction(data.data.coin.name, targetPriceValue, "crossingUp")
+      );
+    } else if (targetPriceValue <= data.data.coin.price) {
+      dispatch(
+        createALertAction(data.data.coin.name, targetPriceValue, "crossingDown")
+      );
+    }
   };
 
   return (
@@ -98,13 +87,13 @@ export default function Alert() {
         <Button
           type="dashed"
           style={{ marginLeft: "1%" }}
-          onClick={() => alertActionPrice()}
+          onClick={() => createAlertHandler()}
         >
           Set Alert
         </Button>
       </FormStyle>
 
-      <>
+      {/* <>
         {alertList.map((item: any) => {
           return item.map((value: any) => {
             if (value.uuid === coinUuid) {
@@ -112,12 +101,13 @@ export default function Alert() {
                 <CoinsStyle>
                   <TableContent>{value.name}</TableContent>
                   <TableContent>{value.targetPrice} $</TableContent>
+                  <TableContent>{value.status} $</TableContent>
                 </CoinsStyle>
               );
             }
           });
         })}
-      </>
+      </> */}
       <div>
         <Button
           type="dashed"
