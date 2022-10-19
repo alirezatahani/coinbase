@@ -95,7 +95,7 @@ export default function Alert() {
   //alert creator
 
   const createAlertHandler = () => {
-    if (targetPriceValue >= data.data.coin.price) {
+    if (targetPriceValue >= data.data.coin.price && targetPriceValue) {
       dispatch(
         createALertAction(
           data.data.coin.uuid,
@@ -104,7 +104,8 @@ export default function Alert() {
           "crossingUp"
         )
       );
-    } else if (targetPriceValue <= data.data.coin.price) {
+    }
+    if (targetPriceValue <= data.data.coin.price && targetPriceValue) {
       dispatch(
         createALertAction(
           data.data.coin.uuid,
@@ -158,19 +159,23 @@ export default function Alert() {
       </FormStyle>
 
       <Wrapper>
-        {alertList.map((value: any) => {
-          if (value.uuid === coinUuid) {
-            return (
-              <CoinsStyle>
-                <TableContent>{value.price} $</TableContent>
-                <TableContent>target : {value.target} </TableContent>
-                <TableContent>
-                  <BellFilled onClick={() => deleteAlertHandler(value)} />
-                </TableContent>
-              </CoinsStyle>
-            );
-          }
-        })}
+        {alertList.length !== 0 ? (
+          alertList.map((value: any) => {
+            if (value.uuid === coinUuid) {
+              return (
+                <CoinsStyle>
+                  <TableContent>{value.price} $</TableContent>
+                  <TableContent>target : {value.target} </TableContent>
+                  <TableContent>
+                    <BellFilled onClick={() => deleteAlertHandler(value)} />
+                  </TableContent>
+                </CoinsStyle>
+              );
+            }
+          })
+        ) : (
+          <p style={{ color: "white" }}>No alert set</p>
+        )}
       </Wrapper>
       <div>
         <Button
