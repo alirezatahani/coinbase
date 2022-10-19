@@ -76,15 +76,9 @@ export default function Alert() {
     if (e.target.value.length < 1 || e.target.value == null) {
       return setArrowFlag("null");
     }
-    if (
-      Number(e.target.value) >=
-      Number(formatPrice(Number(data.data.coin.price)))
-    ) {
+    if (Number(e.target.value) >= Number(data.data.coin.price)) {
       return setArrowFlag("up");
-    } else if (
-      Number(e.target.value) <=
-      Number(formatPrice(Number(data.data.coin.price)))
-    ) {
+    } else if (Number(e.target.value) <= Number(data.data.coin.price)) {
       return setArrowFlag("down");
     }
   };
