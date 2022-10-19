@@ -72,12 +72,19 @@ export default function Alert() {
 
   const arrowِDirectionLogicHandler = (e: any) => {
     setTargetPriceValue(e.target.value);
+
     if (e.target.value.length < 1 || e.target.value == null) {
       return setArrowFlag("null");
     }
-    if (e.target.value >= formatPrice(Number(data.data.coin.price))) {
+    if (
+      Number(e.target.value) >=
+      Number(formatPrice(Number(data.data.coin.price)))
+    ) {
       return setArrowFlag("up");
-    } else if (e.target.value <= formatPrice(Number(data.data.coin.price))) {
+    } else if (
+      Number(e.target.value) <=
+      Number(formatPrice(Number(data.data.coin.price)))
+    ) {
       return setArrowFlag("down");
     }
   };
@@ -95,7 +102,10 @@ export default function Alert() {
   //alert creator
 
   const createAlertHandler = () => {
-    if (targetPriceValue >= data.data.coin.price && targetPriceValue) {
+    if (
+      Number(targetPriceValue) >= Number(data.data.coin.price) &&
+      targetPriceValue
+    ) {
       dispatch(
         createALertAction(
           data.data.coin.uuid,
@@ -105,7 +115,10 @@ export default function Alert() {
         )
       );
     }
-    if (targetPriceValue <= data.data.coin.price && targetPriceValue) {
+    if (
+      Number(targetPriceValue) <= Number(data.data.coin.price) &&
+      targetPriceValue
+    ) {
       dispatch(
         createALertAction(
           data.data.coin.uuid,
