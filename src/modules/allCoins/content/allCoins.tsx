@@ -7,9 +7,14 @@ import {
   TableContentChangeMinus,
   ActionBtn,
 } from "../style/allCoins_styles";
-import { StarOutlined, StarFilled, BellOutlined } from "@ant-design/icons";
+import {
+  StarOutlined,
+  StarFilled,
+  BellOutlined,
+  BellFilled,
+} from "@ant-design/icons";
 import { FavoriteActionHandler } from "../../../Redux/actions/favoriteAction";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { formatPrice } from "@modules/allCoins/utils/formatPrice";
 import { useRouter } from "@utils/router";
 import { selectedCoinHandler } from "Redux/actions/alertAction";
@@ -21,7 +26,12 @@ export default function AllCoins() {
 
   const { goTo } = useRouter();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
+  const { favoriteList } = useAppSelector(
+    (state: any) => state.FavoriteReducer
+  );
+  const { alertList } = useAppSelector((state: any) => state.AlertReducer);
 
   useEffect(() => {
     doFetch({ url: "/coins?limit=10", method: "get" });
@@ -39,8 +49,6 @@ export default function AllCoins() {
     goTo("alert");
     dispatch(selectedCoinHandler(item));
   };
-
-  const { favoriteList } = useSelector((state: any) => state.FavoriteReducer);
 
   const checkChangePrice = (change: string) => {
     if (change.includes("-")) {
@@ -85,7 +93,13 @@ export default function AllCoins() {
                   )}
                 </ActionBtn>
                 <ActionBtn onClick={() => alertHandler(coin.uuid)}>
-                  <BellOutlined />
+                  {alertList.some((item: any) => coin.uuid === item.uuid) ? (
+                    <div>
+                      <BellFilled />
+                    </div>
+                  ) : (
+                    <BellOutlined />
+                  )}
                 </ActionBtn>
               </CoinsStyle>
             );

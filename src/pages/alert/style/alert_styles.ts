@@ -29,6 +29,8 @@ export const TableContent = styled.p(({ theme }) => ({
   flex: 3,
   textAlign: "center",
   marginLeft: "1rem",
+  padding: 4,
+  margin: 0,
 }));
 
 export const ActionBtn = styled.div(({}) => ({
@@ -41,9 +43,39 @@ export interface TableContentProps {
 }
 
 export const CoinsStyle = styled.div(({}) => ({
+  backgroundColor: "#11151e7d",
+  borderRadius: 4,
   display: "flex",
   justifyContent: "space-between",
   alignItems: "baseline",
   marginBottom: 10,
   color: "white",
+}));
+
+export const CoinDetailStyle = styled.div(({ theme }) => ({
+  borderRadius: 4,
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  margin: "1rem",
+  width: 290,
+}));
+
+export const CoinDetailWrapper = styled.div(({}) => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+}));
+
+export const Item = styled.p(({ theme }) => ({
+  fontSize: theme.typography.h5.fontSize,
+  color: theme.palette.background.paper,
+}));
+
+export const SpinnerWrapper = styled.div(({}) => ({
+  marginBottom: "2rem",
+}));
+
+export const Wrapper = styled.div(({}) => ({
+  marginBottom: "2rem",
 }));
