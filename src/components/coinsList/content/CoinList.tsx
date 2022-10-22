@@ -9,10 +9,9 @@ import {
 import { CoinPriceSection } from "./CoinPrice";
 import { CoinPriceChangeSection } from "./CoinChangePrice";
 import { AddToFavoriteSection } from "./AddToFavorite";
+import { CoinListProps } from "../types/coinList_types";
 
-export const CoinList  = (props: any) => {
-  const { loading, data } = props;
-
+export const CoinList: React.FC<CoinListProps> = ({ data, loading }) => {
   return (
     <CoinListContainer>
       {loading ? (
@@ -27,7 +26,7 @@ export const CoinList  = (props: any) => {
             change: string;
             uuid: string;
           }) => {
-            const {change,iconUrl,name,price,uuid} = coin
+            const { change, iconUrl, name, price, uuid } = coin;
             return (
               <CoinContent key={uuid}>
                 <CoinDesc>
