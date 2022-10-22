@@ -1,5 +1,5 @@
 import * as React from "react";
-import { formatPrice } from "../utils/formatPrice";
+import { formatPrice } from "../../../utils/numberToPrice";
 import { CoinPrice } from "../styles/coinPrice_style";
 import { CoinPriceProps } from "../types/coinPrice_types";
 
