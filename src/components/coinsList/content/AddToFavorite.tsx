@@ -1,11 +1,11 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { AddToFavoriteProps } from "../types/addToFavorite_types";
 import { FavBtn } from "../styles/addToFavorite_style";
 import { FavoriteActionHandler } from "@redux/actions/favoriteAction";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
 
-export const AddToFavoriteSection = ({ props }: any) => {
-  const coin = props;
+export const AddToFavoriteSection: React.FC<AddToFavoriteProps> = ({coin}) => {
   const dispatch = useDispatch();
   const favoriteAction = (coin: {
     iconUrl: string;
