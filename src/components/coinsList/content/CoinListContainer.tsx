@@ -10,7 +10,7 @@ import { CoinPriceSection } from "./CoinPrice";
 import { CoinPriceChangeSection } from "./CoinChangePrice";
 import { AddToFavoriteSection } from "./AddToFavorite";
 
-export const CoinList = (props: any) => {
+export const CoinList  = (props: any) => {
   const { loading, data } = props;
 
   return (
@@ -27,14 +27,15 @@ export const CoinList = (props: any) => {
             change: string;
             uuid: string;
           }) => {
+            const {change,iconUrl,name,price,uuid} = coin
             return (
-              <CoinContent key={coin.uuid}>
+              <CoinContent key={uuid}>
                 <CoinDesc>
-                  <img src={coin.iconUrl} style={{ width: 40 }} />
-                  <CoinName> {coin.name}</CoinName>
+                  <img src={iconUrl} style={{ width: 40 }} />
+                  <CoinName> {name}</CoinName>
                 </CoinDesc>
-                <CoinPriceSection props={coin.price} />
-                <CoinPriceChangeSection props={coin.change} />
+                <CoinPriceSection price={price} />
+                <CoinPriceChangeSection props={change} />
                 <AddToFavoriteSection props={coin} />
               </CoinContent>
             );
