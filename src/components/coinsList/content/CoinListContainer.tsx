@@ -1,36 +1,22 @@
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@components/spin/spin";
-import { StarOutlined, StarFilled } from "@ant-design/icons";
-import { FavoriteActionHandler } from "@redux/actions/favoriteAction";
 import {
   CoinContent,
   CoinDesc,
+  CoinListContainer,
   CoinName,
-  FavBtn,
 } from "../styles/coinListContainer_style";
 import { CoinPriceSection } from "./CoinPrice";
 import { CoinPriceChangeSection } from "./CoinChangePrice";
+import { AddToFavoriteSection } from "./AddToFavorite";
 
 export const CoinList = (props: any) => {
   const { loading, data } = props;
-  const dispatch = useDispatch();
-
-  const favoriteAction = (coin: {
-    iconUrl: string;
-    name: string;
-    price: string;
-  }) => {
-    dispatch(FavoriteActionHandler(coin));
-  };
-  const { favoriteList } = useSelector((state: any) => state.FavoriteReducer);
 
   return (
-    <div style={{ marginTop: "1rem" }}>
+    <CoinListContainer>
       {loading ? (
         <Spinner />
-      ) : data && data.data.coins.length === 0 ? (
-        <p>not found...</p>
       ) : (
         data &&
         data.data.coins.map(
@@ -51,18 +37,12 @@ export const CoinList = (props: any) => {
                 {coin.change ? (
                   <CoinPriceChangeSection props={coin.change} />
                 ) : null}
-                <FavBtn onClick={() => favoriteAction(coin)}>
-                  {favoriteList.some((item: any) => coin.name === item.name) ? (
-                    <StarFilled />
-                  ) : (
-                    <StarOutlined />
-                  )}
-                </FavBtn>
+                <AddToFavoriteSection props={coin} />
               </CoinContent>
             );
           }
         )
       )}
-    </div>
+    </CoinListContainer>
   );
 };
