@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { CoinList } from "@components/coinsList/content/CoinListContainer";
+import { CoinList } from "@components/coinsList/content/CoinList";
 
 export default function FavoriteCoins() {
   const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
