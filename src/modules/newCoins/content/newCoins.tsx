@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import useFetch from "../../../hooks/useFetch";
-import { CoinList } from "@components/coinsList/content/CoinList";
+import { CoinList } from "@components/coinsList/index"
 
 export default function NewCoins() {
   const [{ loading, data }, doFetch] = useFetch();
