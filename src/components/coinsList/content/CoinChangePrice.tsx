@@ -6,7 +6,9 @@ import {
 
 export const CoinPriceChangeSection = (props: any) => {
   const priceChange = props.props;
-  return priceChange.includes("-") ? (
+  return priceChange === null ? (
+    <CoinNegetiveChange>0</CoinNegetiveChange>
+  ) : priceChange.includes("-") ? (
     <CoinNegetiveChange>{priceChange}</CoinNegetiveChange>
   ) : (
     <CoinPositiveChange>+{priceChange}</CoinPositiveChange>

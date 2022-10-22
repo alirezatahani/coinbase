@@ -34,9 +34,7 @@ export const CoinList = (props: any) => {
                   <CoinName> {coin.name}</CoinName>
                 </CoinDesc>
                 <CoinPriceSection props={coin.price} />
-                {coin.change ? (
-                  <CoinPriceChangeSection props={coin.change} />
-                ) : null}
+                <CoinPriceChangeSection props={coin.change} />
                 <AddToFavoriteSection props={coin} />
               </CoinContent>
             );
