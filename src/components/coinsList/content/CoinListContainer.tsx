@@ -19,7 +19,7 @@ export const CoinList = (props: any) => {
         <Spinner />
       ) : (
         data &&
-        data.data.coins.map(
+        data.map(
           (coin: {
             iconUrl: string;
             name: string;
