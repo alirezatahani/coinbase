@@ -1,5 +1,4 @@
 import * as React from "react";
-import Spinner from "@components/spin/spin";
 import {
   CoinContent,
   CoinDesc,
@@ -10,12 +9,13 @@ import { CoinPriceSection } from "./CoinPrice";
 import { CoinPriceChangeSection } from "./CoinChangePrice";
 import { AddToFavoriteSection } from "./AddToFavorite";
 import { CoinListProps } from "../types/coinList_types";
+import { Spin } from "antd";
 
 export const CoinList: React.FC<CoinListProps> = ({ data, loading }) => {
   return (
     <CoinListContainer>
       {loading ? (
-        <Spinner />
+        <Spin />
       ) : (
         data &&
         data.map(
