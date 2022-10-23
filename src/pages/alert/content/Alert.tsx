@@ -32,8 +32,7 @@ export default function Alert() {
   const [{ data, loading }, doFetch] = useFetch();
 
   const { param } = useAppSelector((state: any) => state.RouterReducer);
-  // const { state } = useAppSelector((state: any) => state.AlertReducer);
-  // console.log(state, "state");
+   
 
   const dispatch = useAppDispatch();
 
