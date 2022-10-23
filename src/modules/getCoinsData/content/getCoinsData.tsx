@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import useFetch from "../../../hooks/useFetch";
-import { CoinList } from "@components/coinsList";
+import { CoinList } from "@components/index";
 import { GetCoinsDataProps } from "../getCoinsData_type";
 import { convertToQuery } from "../../../utils/queries";
 
