@@ -6,17 +6,15 @@ import { FavoriteActionHandler } from "@redux/actions/favoriteAction";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
 
 export const AddToFavoriteSection: React.FC<AddToFavoriteProps> = ({coin}) => {
+  const { favoriteList } = useSelector((state: any) => state.FavoriteReducer);
   const dispatch = useDispatch();
-  const favoriteAction = (coin: {
-    iconUrl: string;
-    name: string;
-    price: string;
-  }) => {
+
+  const favoriteAction = () => {
     dispatch(FavoriteActionHandler(coin));
   };
-  const { favoriteList } = useSelector((state: any) => state.FavoriteReducer);
+  
   return (
-    <FavBtn onClick={() => favoriteAction(coin)}>
+    <FavBtn onClick={() => favoriteAction()}>
       {favoriteList.some((item: any) => coin.name === item.name) ? (
         <StarFilled />
       ) : (
