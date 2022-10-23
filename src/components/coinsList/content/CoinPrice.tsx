@@ -1,8 +1,10 @@
 import * as React from "react";
+import { CoinPriceSectionProps } from "../types/coinPrice_types";
 import { formatPrice } from "../../../utils/numberToPrice";
 import { CoinPrice } from "../styles/coinPrice_style";
-import { CoinPriceProps } from "../types/coinPrice_types";
 
-export const CoinPriceSection: React.FC<CoinPriceProps> = ({ price }) => {
+export const CoinPriceSection: React.FC<CoinPriceSectionProps> = ({
+  price,
+}) => {
   return <CoinPrice>$ {formatPrice(Number(price))}</CoinPrice>;
 };
