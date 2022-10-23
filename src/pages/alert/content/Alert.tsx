@@ -1,6 +1,6 @@
 import { useRouter } from "@utils/router";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
-import { Input, Button, notification, Space, Table, Tag } from "antd";
+import { Input, Button, Space } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import {
   AlertStyle,
@@ -18,7 +18,6 @@ import {
 import React, { useEffect, useState, useMemo } from "react";
 import {
   createALertAction,
-  setCoinDataToReduxAction,
   deleteAlertAction,
 } from "Redux/actions/alertAction";
 import { formatPrice } from "@modules/allCoins/utils/formatPrice";
@@ -27,15 +26,14 @@ import Spinner from "@components/spin/spin";
 import useFetch from "../../../hooks/useFetch";
 
 export default function Alert() {
-  //
   const [arrowFlag, setArrowFlag] = useState<string>("");
   const [targetPriceValue, setTargetPriceValue] = useState<number>(0);
 
   const [{ data, loading }, doFetch] = useFetch();
 
-  const { coinUuid, alertList, coinData } = useAppSelector(
-    (state: any) => state.AlertReducer
-  );
+  const { param } = useAppSelector((state: any) => state.RouterReducer);
+  // const { state } = useAppSelector((state: any) => state.AlertReducer);
+  // console.log(state, "state");
 
   const dispatch = useAppDispatch();
 
@@ -43,85 +41,51 @@ export default function Alert() {
 
   useEffect(() => {
     doFetch({
-      url: `/coin/${coinUuid}`,
+      url: `/coin/${param}`,
       method: "get",
     });
   }, []);
-
-  useEffect(() => {
-    dispatch(setCoinDataToReduxAction(data));
-  }, [data]);
-
-  //notification
-  type NotificationType = "info";
-
-  const crossingUpNotification = (type: NotificationType, name: string) => {
-    notification[type]({
-      message: "news",
-      description: `${name} is crossing up`,
-    });
-  };
-  const crossingDownNotification = (type: NotificationType, name: string) => {
-    notification[type]({
-      message: "news",
-      description: `${name} is crossing Down`,
-    });
-  };
 
   //arrow direction handler
 
   const arrowِDirectionLogicHandler = (e: any) => {
     setTargetPriceValue(e.target.value);
-
-    if (e.target.value.length < 1 || e.target.value == null) {
+    const inputValue = e.target.value;
+    if (inputValue.length < 1 || e.target.value == null) {
       return setArrowFlag("null");
     }
-    if (Number(e.target.value) >= Number(data.data.coin.price)) {
-      return setArrowFlag("up");
-    } else if (Number(e.target.value) <= Number(data.data.coin.price)) {
-      return setArrowFlag("down");
-    }
+    return Number(inputValue) >= Number(data.data.coin.price)
+      ? setArrowFlag("up")
+      : setArrowFlag("down");
   };
 
   const arrowِDirectionUiHandler = useMemo(() => {
-    if (arrowFlag == "up") {
-      return <ArrowUpStyle />;
-    } else if (arrowFlag == "down") {
-      return <ArrowDownStyle />;
-    } else if (arrowFlag == "null") {
-      return <div></div>;
+    switch (arrowFlag) {
+      case "up":
+        return <ArrowUpStyle />;
+      case "down":
+        return <ArrowDownStyle />;
+      case "null":
+        return <div></div>;
     }
   }, [arrowFlag]);
 
   //alert creator
 
   const createAlertHandler = () => {
-    if (
-      Number(targetPriceValue) >= Number(data.data.coin.price) &&
-      targetPriceValue
-    ) {
-      dispatch(
-        createALertAction(
-          data.data.coin.uuid,
-          data.data.coin.name,
-          targetPriceValue,
-          "crossingUp"
-        )
-      );
-    }
-    if (
-      Number(targetPriceValue) <= Number(data.data.coin.price) &&
-      targetPriceValue
-    ) {
-      dispatch(
-        createALertAction(
-          data.data.coin.uuid,
-          data.data.coin.name,
-          targetPriceValue,
-          "crossingDown"
-        )
-      );
-    }
+    const coinValue = data.data.coin;
+    dispatch(
+      createALertAction({
+        uuid: coinValue.uuid,
+        name: coinValue.name,
+        price: targetPriceValue,
+        target:
+          Number(targetPriceValue) >= Number(coinValue.price)
+            ? "crossingUp"
+            : "crossingDown",
+        status: "active",
+      })
+    );
   };
 
   const deleteAlertHandler = (item: any) => {
@@ -165,25 +129,6 @@ export default function Alert() {
         </Button>
       </FormStyle>
 
-      <Wrapper>
-        {alertList.length !== 0 ? (
-          alertList.map((value: any) => {
-            if (value.uuid === coinUuid) {
-              return (
-                <CoinsStyle>
-                  <TableContent>{value.price} $</TableContent>
-                  <TableContent>target : {value.target} </TableContent>
-                  <TableContent>
-                    <BellFilled onClick={() => deleteAlertHandler(value)} />
-                  </TableContent>
-                </CoinsStyle>
-              );
-            }
-          })
-        ) : (
-          <p style={{ color: "white" }}>No alert set</p>
-        )}
-      </Wrapper>
       <div>
         <Button
           type="dashed"

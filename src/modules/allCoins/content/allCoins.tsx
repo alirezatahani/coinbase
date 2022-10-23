@@ -17,7 +17,7 @@ import { FavoriteActionHandler } from "../../../Redux/actions/favoriteAction";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 import { formatPrice } from "@modules/allCoins/utils/formatPrice";
 import { useRouter } from "@utils/router";
-import { selectedCoinHandler } from "Redux/actions/alertAction";
+import { setParamAction } from "Redux/actions/routerAction";
 import useFetch from "../../../../src/hooks/useFetch";
 import Spinner from "@components/spin/spin";
 
@@ -45,9 +45,9 @@ export default function AllCoins() {
     dispatch(FavoriteActionHandler(coin));
   };
 
-  const alertHandler = (item: string) => {
+  const setParamHandler = (param: string) => {
     goTo("alert");
-    dispatch(selectedCoinHandler(item));
+    dispatch(setParamAction(param));
   };
 
   const checkChangePrice = (change: string) => {
@@ -92,14 +92,8 @@ export default function AllCoins() {
                     <StarOutlined />
                   )}
                 </ActionBtn>
-                <ActionBtn onClick={() => alertHandler(coin.uuid)}>
-                  {alertList.some((item: any) => coin.uuid === item.uuid) ? (
-                    <div>
-                      <BellFilled />
-                    </div>
-                  ) : (
-                    <BellOutlined />
-                  )}
+                <ActionBtn onClick={() => setParamHandler(coin.uuid)}>
+                  <BellFilled />
                 </ActionBtn>
               </CoinsStyle>
             );

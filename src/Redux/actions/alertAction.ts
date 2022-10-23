@@ -1,35 +1,18 @@
-import {
-  CreateALertAction,
-  DeleteAlertAction,
-  SelectedCoin,
-  CoinData,
-} from "Redux/types/types";
+import { CreateALertAction, DeleteAlertAction } from "Redux/types/types";
 
-export const selectedCoinHandler = (item: string) => {
-  return {
-    type: SelectedCoin,
-    payload: item,
-  };
-};
-
-export const createALertAction = (
-  uuid: string,
-  name: string,
-  price: number,
-  target: string
-) => {
+export const createALertAction = (payload: {
+  uuid: string;
+  name: string;
+  price: number;
+  target: string;
+  status: string;
+}) => {
   return {
     type: CreateALertAction,
-    payload: { uuid: uuid, name: name, price: price, target: target },
+    payload,
   };
 };
 
-export const setCoinDataToReduxAction = (item: any) => {
-  return {
-    type: CoinData,
-    payload: item,
-  };
-};
 export const deleteAlertAction = (item: any) => {
   return {
     type: DeleteAlertAction,

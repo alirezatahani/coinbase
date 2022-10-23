@@ -1,7 +1,8 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
-import { favoriteReducer } from "./reducers/favoriteReducer";
-import { alertReducer } from "./reducers/alertReducer";
+import { favoriteReducer } from "./reducers/favorite/favoriteReducer";
+import { routerReducer } from "./reducers/Router/routerReducer";
+import { alertReducer } from "./reducers/alert/alertReducer";
 import { stackReducer } from "./stack/stackReducer";
 import { loadState } from "../localStorage";
 import storage from "redux-persist/lib/storage";
@@ -9,6 +10,7 @@ import storage from "redux-persist/lib/storage";
 const reducer = combineReducers({
   FavoriteReducer: favoriteReducer,
   AlertReducer: alertReducer,
+  RouterReducer: routerReducer,
   stack: stackReducer,
 });
 const persistConfig = {
