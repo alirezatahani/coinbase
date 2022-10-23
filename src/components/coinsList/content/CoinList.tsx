@@ -8,7 +8,7 @@ import {
 import { CoinPriceSection } from "./CoinPrice";
 import { CoinPriceChangeSection } from "./CoinChangePrice";
 import { AddToFavoriteSection } from "./AddToFavorite";
-import { CoinListProps } from "../types/coinList_types";
+import { CoinListProps, CoinProps } from "../types/coinList_types";
 import { Spin } from "antd";
 
 export const CoinList: React.FC<CoinListProps> = ({ data, loading }) => {
@@ -18,28 +18,20 @@ export const CoinList: React.FC<CoinListProps> = ({ data, loading }) => {
         <Spin />
       ) : (
         data &&
-        data.map(
-          (coin: {
-            iconUrl: string;
-            name: string;
-            price: string;
-            change: string;
-            uuid: string;
-          }) => {
-            const { change, iconUrl, name, price, uuid } = coin;
-            return (
-              <CoinContent key={uuid}>
-                <CoinDesc>
-                  <img src={iconUrl} style={{ width: 40 }} />
-                  <CoinName> {name}</CoinName>
-                </CoinDesc>
-                <CoinPriceSection price={price} />
-                <CoinPriceChangeSection priceChange={change} />
-                <AddToFavoriteSection coin={coin} />
-              </CoinContent>
-            );
-          }
-        )
+        data.map((coin: CoinProps) => {
+          const { change, iconUrl, name, price, uuid } = coin;
+          return (
+            <CoinContent key={uuid}>
+              <CoinDesc>
+                <img src={iconUrl} style={{ width: 40 }} />
+                <CoinName> {name}</CoinName>
+              </CoinDesc>
+              <CoinPriceSection price={price} />
+              <CoinPriceChangeSection priceChange={change} />
+              <AddToFavoriteSection coin={coin} />
+            </CoinContent>
+          );
+        })
       )}
     </CoinListContainer>
   );
