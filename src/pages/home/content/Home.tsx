@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { GetCoinsData ,FavoriteCoins} from "@modules/index";
 import { Tabs } from "antd";
+import { tabs } from "../utils/tabs";
 import { Badge, FlexWrapperBadge, HomeStyle } from "../style/home_styles";
 import "antd/dist/antd.css";
 
@@ -10,34 +11,6 @@ export default function Home() {
   const [limit, setLimit] = useState(10);
   const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
   const { favoriteList } = favoriteReducers;
-
-  const tabs = [
-    {
-      name: "All",
-      key: "1",
-      queries: {},
-    },
-    {
-      name: "Favorite Coins",
-      key: "2",
-    },
-    {
-      name: "Gainers",
-      key: "3",
-      queries: { orderBy: "change", orderDirection: "desc", scopeLimit: 200 },
-    },
-    ,
-    {
-      name: "Losers",
-      key: "4",
-      queries: { orderBy: "change", orderDirection: "asc", scopeLimit: 200 },
-    },
-    {
-      name: "New",
-      key: "5",
-      queries: { orderBy: "listedAt", orderDirection: "desc" },
-    },
-  ];
 
   return (
     <HomeStyle>
