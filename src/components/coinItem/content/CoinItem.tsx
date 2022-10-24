@@ -3,12 +3,12 @@ import { CoinInterface } from "types";
 import { AddToFavoriteSection } from "@components/addToFav";
 import { CoinPriceSection } from "@components/coinPrice/content/CoinPrice";
 import { CoinPriceChangeSection } from "@components/coinPriceChange";
-import { CoinDesc, CoinName } from "../style/coinItem_style";
+import { CoinDesc, CoinName, CoinContent } from "../style/coinItem_style";
 
 const CoinItem: React.FC<CoinInterface> = ({ name, ...props }) => {
   const { iconUrl, change, price, uuid } = props;
   return (
-    <div style={{ display: "flex" }}>
+    <CoinContent>
       <CoinDesc>
         <img src={iconUrl} style={{ width: 40 }} />
         <CoinName> {name}</CoinName>
@@ -22,7 +22,7 @@ const CoinItem: React.FC<CoinInterface> = ({ name, ...props }) => {
         price={price}
         uuid={uuid}
       />
-    </div>
+    </CoinContent>
   );
 };
 

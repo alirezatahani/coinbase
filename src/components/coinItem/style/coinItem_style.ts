@@ -10,3 +10,9 @@ export const CoinDesc = styled.div(({ theme }) => ({
   export const CoinName = styled.p(({ theme }) => ({
     fontSize: theme.typography.body1.fontSize,
   }));
+  export const CoinContent = styled.div(({theme}) => ({
+    display: "flex",
+    gap: "2rem",
+    marginBottom: "1rem",
+    color: theme.palette.common.white,
+  }));

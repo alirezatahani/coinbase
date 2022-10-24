@@ -1,6 +1,5 @@
 import * as React from "react";
 import {
-  CoinContent,
   CoinListContainer,
 } from "../styles/coinListContainer_style";
 import { CoinInterface } from "types";
