@@ -5,10 +5,13 @@ import { FavoriteActionHandler } from "@redux/actions/favoriteAction";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { CoinInterface } from "types";
 
-export const AddToFavoriteSection: React.FC<CoinInterface> = ({coin}) => {
+export const AddToFavoriteSection: React.FC<CoinInterface> = ({name,...props}) => {
+  const { iconUrl, change, price } = props;
+  const coin = {"name":name,"iconUrl":iconUrl,"price":price,"change":change}
+  
   const { favoriteList } = useSelector((state: any) => state.FavoriteReducer);
   const dispatch = useDispatch();
-
+ 
   const favoriteAction = () => {
     dispatch(FavoriteActionHandler(coin));
   };

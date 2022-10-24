@@ -14,12 +14,12 @@ const CoinItem: React.FC<CoinInterface> = ({ name, ...props }) => {
       </CoinDesc>
       <CoinPriceSection price={price} />
       {/* <CoinPriceChangeSection priceChange={change} /> */}
-      {/* <AddToFavoriteSection
+      <AddToFavoriteSection
         change={change}
         iconUrl={iconUrl}
         name={name}
         price={price}
-      /> */}
+      />
     </div>
   );
 };
