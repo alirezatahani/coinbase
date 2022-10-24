@@ -6,9 +6,9 @@ import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { CoinInterface } from "types";
 
 export const AddToFavoriteSection: React.FC<CoinInterface> = ({name,...props}) => {
-  const { iconUrl, change, price } = props;
-  const coin = {"name":name,"iconUrl":iconUrl,"price":price,"change":change}
-  
+  const { iconUrl, change, price ,uuid} = props;
+  const coin = {name,iconUrl,price,change,uuid}
+
   const { favoriteList } = useSelector((state: any) => state.FavoriteReducer);
   const dispatch = useDispatch();
  
