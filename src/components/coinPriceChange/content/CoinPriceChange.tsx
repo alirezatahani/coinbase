@@ -1,17 +1,21 @@
 import * as React from "react";
 import { CoinPriceChangeProps } from "./coinPriceChange_types";
-import {
-  CoinNegetiveChange,
-  CoinPositiveChange,
-} from "../style/coinPriceChange_style";
+import { PriceChangeContainer } from "../style/coinPriceChange_style";
 
 export const CoinPriceChangeSection: React.FC<CoinPriceChangeProps> = ({
   priceChange,
 }) => {
-  if (priceChange === 0) return <CoinNegetiveChange>0</CoinNegetiveChange>;
+  if (priceChange === 0)
+    return (
+      <PriceChangeContainer priceChange={priceChange}>0</PriceChangeContainer>
+    );
   return priceChange < 0 ? (
-    <CoinNegetiveChange>{priceChange}%</CoinNegetiveChange>
+    <PriceChangeContainer priceChange={priceChange}>
+      {priceChange}%
+    </PriceChangeContainer>
   ) : (
-    <CoinPositiveChange>+{priceChange}%</CoinPositiveChange>
+    <PriceChangeContainer priceChange={priceChange}>
+      +{priceChange}%
+    </PriceChangeContainer>
   );
 };
