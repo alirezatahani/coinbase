@@ -20,7 +20,7 @@ export const CoinList: React.FC<CoinListProps> = ({ data, loading }) => {
             <CoinItem
               key={uuid}
               uuid={uuid}
-              change={change}
+              change={Number(change)}
               iconUrl={iconUrl}
               name={name}
               price={price}

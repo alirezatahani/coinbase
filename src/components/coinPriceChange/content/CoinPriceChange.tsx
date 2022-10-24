@@ -8,10 +8,10 @@ import {
 export const CoinPriceChangeSection: React.FC<CoinPriceChangeProps> = ({
   priceChange,
 }) => {
-  if (priceChange === null) return <CoinNegetiveChange>0</CoinNegetiveChange>;
-  return priceChange.includes("-") ? (
-    <CoinNegetiveChange>{priceChange}</CoinNegetiveChange>
+  if (priceChange === 0) return <CoinNegetiveChange>0</CoinNegetiveChange>;
+  return priceChange < 0 ? (
+    <CoinNegetiveChange>{priceChange}%</CoinNegetiveChange>
   ) : (
-    <CoinPositiveChange>+{priceChange}</CoinPositiveChange>
+    <CoinPositiveChange>+{priceChange}%</CoinPositiveChange>
   );
 };

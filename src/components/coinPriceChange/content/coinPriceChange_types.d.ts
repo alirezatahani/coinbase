@@ -1,3 +1,3 @@
 export type CoinPriceChangeProps = {
-  priceChange: string;
+  priceChange: number;
 };
