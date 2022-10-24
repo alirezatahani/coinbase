@@ -1,15 +1,12 @@
 import * as React from "react";
 import {
   CoinContent,
-  CoinDesc,
   CoinListContainer,
-  CoinName,
 } from "../styles/coinListContainer_style";
-import { CoinPriceSection } from "./CoinPrice";
-import { CoinPriceChangeSection } from "./CoinChangePrice";
-import { AddToFavoriteSection } from "./AddToFavorite";
-import { CoinListProps, CoinProps } from "../types/coinList_types";
+import { CoinInterface } from "types";
+import { CoinListProps } from "../coinList_types";
 import { Spin } from "antd";
+import CoinItem from "@components/coinItem/content/CoinItem";
 
 export const CoinList: React.FC<CoinListProps> = ({ data, loading }) => {
   return (
@@ -18,17 +15,11 @@ export const CoinList: React.FC<CoinListProps> = ({ data, loading }) => {
         <Spin />
       ) : (
         data &&
-        data.map((coin: CoinProps) => {
-          const { change, iconUrl, name, price, uuid } = coin;
+        data.map((coinItem: CoinInterface) => {
+          const { coin } = coinItem;
           return (
-            <CoinContent key={uuid}>
-              <CoinDesc>
-                <img src={iconUrl} style={{ width: 40 }} />
-                <CoinName> {name}</CoinName>
-              </CoinDesc>
-              <CoinPriceSection price={price} />
-              <CoinPriceChangeSection priceChange={change} />
-              <AddToFavoriteSection coin={coin} />
+            <CoinContent key={coin.uuid}>
+              <CoinItem coin={coin} />
             </CoinContent>
           );
         })
