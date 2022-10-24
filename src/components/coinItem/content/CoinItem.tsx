@@ -1,17 +1,25 @@
 import * as React from "react";
-import { AddToFavoriteSection } from "@components/addToFav/content/AddToFavorite";
+import { AddToFavoriteSection } from "@components/addToFav";
+import { CoinPriceSection } from "@components/coinPrice/content/CoinPrice";
 import { CoinInterface } from "types";
 import { CoinDesc, CoinName } from "../style/coinItem_style";
 
-const CoinItem: React.FC<CoinInterface> = ({coin}) => {
- const {change,iconUrl,name,price}=coin
+const CoinItem: React.FC<CoinInterface> = ({ name, ...props }) => {
+  const { iconUrl, change, price } = props;
   return (
-    <div>
+    <div style={{ display: "flex" }}>
       <CoinDesc>
         <img src={iconUrl} style={{ width: 40 }} />
         <CoinName> {name}</CoinName>
       </CoinDesc>
-      <AddToFavoriteSection coin={coin} />
+      <CoinPriceSection price={price} />
+      {/* <CoinPriceChangeSection priceChange={change} /> */}
+      {/* <AddToFavoriteSection
+        change={change}
+        iconUrl={iconUrl}
+        name={name}
+        price={price}
+      /> */}
     </div>
   );
 };

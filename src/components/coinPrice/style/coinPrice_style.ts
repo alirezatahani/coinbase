@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CoinPriceProps } from "../types/coinPrice_types";
+import { CoinPriceProps } from "../content/coinPrice_types";
 
 export const CoinPrice = styled.p<CoinPriceProps>(({ theme }) => ({
   fontSize: theme.typography.body1.fontSize,

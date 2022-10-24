@@ -15,12 +15,16 @@ export const CoinList: React.FC<CoinListProps> = ({ data, loading }) => {
         <Spin />
       ) : (
         data &&
-        data.map((coinItem: CoinInterface) => {
-          const { coin } = coinItem;
+        data.map((coin: CoinInterface) => {
+          const { change, iconUrl, name, price, uuid } = coin;
           return (
-            <CoinContent key={coin.uuid}>
-              <CoinItem coin={coin} />
-            </CoinContent>
+            <CoinItem
+              key={uuid}
+              change={change}
+              iconUrl={iconUrl}
+              name={name}
+              price={price}
+            />
           );
         })
       )}
