@@ -1,26 +1,16 @@
-import React, { useCallback,useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { debounce } from "lodash";
+import { GetCoinsData ,FavoriteCoins} from "@modules/index";
 import { Tabs } from "antd";
+import { tabs } from "../utils/tabs";
+import { Badge, FlexWrapperBadge, HomeStyle } from "../style/home_styles";
 import "antd/dist/antd.css";
-import { CoinsTable } from "@components/CoinsTable";
-import useFetch from "../../../hooks/useFetch";
-import {
-  Badge,
-  FlexWrapperBadge,
-  HomeStyle,
-  Input,
-} from "../style/home_styles";
-import AllCoins from "@modules/allCoins/content/allCoins";
-import NewCoins from "@modules/newCoins/content/newCoins";
-import FavoriteCoins from "@modules/favoriteCoins/content/favoriteCoins";
-import GainerCoins from "@modules/gainerCoins/content/gainerCoins";
-import LoserCoins from "@modules/loserCoins/content/loserCoins";
+
 
 export default function Home() {
   const [searchCoin, setSearchCoin] = useState("");
   const { TabPane } = Tabs;
-  const [{ loading, data }, doFetch] = useFetch();
+const [limit, setLimit] = useState(10);
   const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
   const { favoriteList } = favoriteReducers;
 
@@ -40,34 +30,34 @@ export default function Home() {
 
   return (
     <HomeStyle>
-      <Input
-        placeholder="Search..."
-        onChange={(e) => onSearch(e.target.value)}
-      />
-      <Tabs defaultActiveKey="1">
-        <TabPane tab="All" key="1">
-          <AllCoins />
-        </TabPane>
-        <TabPane
-          tab={
-            <FlexWrapperBadge>
-              <span>Favorite Coins</span>
-              <Badge>{favoriteList.length}</Badge>
-            </FlexWrapperBadge>
+      <Tabs>
+        {tabs.map((tab) => {
+          const { key, name, queries } = tab;
+          switch (name) {
+            case "Favorite Coins":
+              return (
+                <TabPane
+                  tab={
+                    <FlexWrapperBadge>
+                      <span>Favorite Coins</span>
+                      <Badge>{favoriteList.length}</Badge>
+                    </FlexWrapperBadge>
+                  }
+                  key={key}
+                >
+                  <FavoriteCoins />
+                </TabPane>
+              );
+
+            default:
+              return (
+                <TabPane tab={name} key={key}>
+                  <GetCoinsData queries={{ ...queries, limit }} />
+                </TabPane>
+              );
+
           }
-          key="2"
-        >
-          <FavoriteCoins />
-        </TabPane>
-        <TabPane tab="New" key={3}>
-          <NewCoins />
-        </TabPane>
-        <TabPane tab="Gainers" key={4}>
-          <GainerCoins />
-        </TabPane>
-        <TabPane tab="Losers" key={5}>
-          <LoserCoins />
-        </TabPane>
+        })}
       </Tabs>
     </HomeStyle>
   );
