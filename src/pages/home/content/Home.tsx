@@ -6,11 +6,27 @@ import { tabs } from "../utils/tabs";
 import { Badge, FlexWrapperBadge, HomeStyle } from "../style/home_styles";
 import "antd/dist/antd.css";
 
+
 export default function Home() {
+  const [searchCoin, setSearchCoin] = useState("");
   const { TabPane } = Tabs;
-  const [limit, setLimit] = useState(10);
+const [limit, setLimit] = useState(10);
   const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
   const { favoriteList } = favoriteReducers;
+
+  const searchingCoin = async (searchValue: string) => {
+    try {
+      await doFetch({
+        url: `/search-suggestions?query=${searchValue}`,
+        method: "GET",
+      });
+    } catch (e) {}
+  };
+  const handler = useCallback(debounce(searchingCoin, 600), []);
+  const onSearch = (searchValue: string) => {
+    setSearchCoin(searchValue);
+    handler(searchValue);
+  };
 
   return (
     <HomeStyle>
@@ -39,6 +55,7 @@ export default function Home() {
                   <GetCoinsData queries={{ ...queries, limit }} />
                 </TabPane>
               );
+
           }
         })}
       </Tabs>
