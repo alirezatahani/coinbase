@@ -34,14 +34,9 @@ export const Input = styled.input(({ theme }) => ({
   backgroundColor: "transparent",
   border: "1px solid #fafafa3d",
   color: theme.palette.background.paper,
-  "::placeholder": { color: theme.palette.success[400]},
+  "::placeholder": { color: theme.palette.success[400] },
   "&:focus": {
-    border:0,
-    borderBottom: "2px solid",
-    borderRadius:0,
-    fontSize: 18,
-    width: "80%",
-    borderBottomColor: theme.palette.success[200],
+    border: "2px solid",
     transition: "all .3s",
   },
 }));
