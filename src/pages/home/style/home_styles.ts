@@ -22,3 +22,26 @@ export const Badge = styled.div(({}) => ({
   marginLeft: 6,
   fontSize: 13,
 }));
+export const Input = styled.input(({ theme }) => ({
+  width: "100%",
+  maxHeight: 30,
+  borderRadius: "5px",
+  fontSize: 16,
+  position: "relative",
+  outline: 0,
+  marginBottom: "1rem",
+  padding: "10px",
+  backgroundColor: "transparent",
+  border: "1px solid #fafafa3d",
+  color: theme.palette.background.paper,
+  "::placeholder": { color: theme.palette.success[400]},
+  "&:focus": {
+    border:0,
+    borderBottom: "2px solid",
+    borderRadius:0,
+    fontSize: 18,
+    width: "80%",
+    borderBottomColor: theme.palette.success[200],
+    transition: "all .3s",
+  },
+}));
