@@ -13,7 +13,7 @@ export const GetCoinsData: React.FC<GetCoinsDataProps> = ({ queries }) => {
 
   useEffect(() => {
     const url = makingUrl();
-    fetchCoinsData({ url: url, method: "get" });
+    fetchCoinsData({ url: `/coins?${url}`, method: "get" });
   }, []);
 
   return <CoinList loading={loading} data={data && data.data.coins} />;
