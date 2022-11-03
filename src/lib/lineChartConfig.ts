@@ -1,7 +1,7 @@
 import { theme } from "@global/Global";
 
 export const linChartConfig = (coin: any) => {
-  const series = coin.sparkline.map((item: string) => {
+  const series = coin.sparkline?.map((item: string) => {
     return Number(item);
   });
   const priceChange = () => {
@@ -14,8 +14,8 @@ export const linChartConfig = (coin: any) => {
       height: 60,
       width: 100,
       backgroundColor: "transparent",
-      spacing: [0, 10, 0, 10],
-      marginTop: 45,
+      spacing: [15, 15, 0, 15],
+      
     },
     colors: Number(coin.change >= 0)
       ? [theme.palette.success.main]
@@ -40,7 +40,7 @@ export const linChartConfig = (coin: any) => {
       },
       text: priceChange(),
       verticalAlign: "bottom",
-      y: -5,
+      y: -25,
     },
     plotOptions: {
       series: {
