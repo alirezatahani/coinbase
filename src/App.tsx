@@ -3,12 +3,14 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "@global/Global";
 import { Route, Router, useRouter } from "@utils/router";
 import "./styles/globals.css";
+import Home from "@pages/home/content/Home";
 
 function App() {
 	const { goTo, goBack } = useRouter();
 	return (
 		<ThemeProvider theme={theme}>
-			<Router>
+			<Home />
+			{/* <Router>
 				<Route
 					to="/"
 					component={
@@ -69,7 +71,7 @@ function App() {
 						</div>
 					}
 				/>
-			</Router>
+			</Router> */}
 		</ThemeProvider>
 	);
 }
