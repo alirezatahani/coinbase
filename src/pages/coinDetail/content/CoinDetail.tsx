@@ -1,19 +1,23 @@
-import { Collapse, Spin } from "antd";
-import useFetch from "../../../hooks/useFetch";
 import * as React from "react";
 import { useSelector } from "react-redux";
+import { Spin } from "antd";
+import useFetch from "../../../hooks/useFetch";
+import { numberToPrice } from "@utils/numberToPrice";
+import Highcharts from "highcharts/highstock";
+import Chart from "highcharts-react-official";
+import { linChartConfig } from "lib/lineChartConfig";
 import {
   Coin,
   CoinChange,
   CoinDesc,
   CoinDetailPage,
+  CoinStatistics,
+  CoinStatisticsRow,
+  CoinStatisticsTitle,
+  CoinStatisticsTitleContainer,
   MyDiv,
   RankBadge,
 } from "../style/coinDetail_style";
-import { numberToPrice } from "@utils/numberToPrice";
-import Highcharts from "highcharts/highstock";
-import Chart from "highcharts-react-official";
-import { linChartConfig } from "lib/lineChartConfig";
 
 const CoinDetail = () => {
   const query = useSelector((state: any) => state.stack.query);
@@ -52,6 +56,19 @@ const CoinDetail = () => {
             highcharts={Highcharts}
             options={linChartConfig(data.data.coin, true)}
           />
+          <CoinStatisticsTitleContainer>
+            <CoinStatisticsTitle>Value statistics</CoinStatisticsTitle>
+            <span>
+              An overview showing the statistics of {data.data.coin.name}, such
+              as the base and quote currency, the rank, and trading volume.
+            </span>
+          </CoinStatisticsTitleContainer>
+          <CoinStatistics>
+            <CoinStatisticsRow>
+              <span>Price to USD</span>
+              <span>$ {numberToPrice(Number(data.data.coin.price))}</span>
+            </CoinStatisticsRow>
+          </CoinStatistics>
         </section>
       ) : null}
     </CoinDetailPage>
