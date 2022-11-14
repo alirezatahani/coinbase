@@ -5,9 +5,7 @@ import Chart from "highcharts-react-official";
 import { linChartConfig } from "lib/lineChartConfig";
 import { CoinDetailProps } from "./coinDetail_types";
 import { Tooltip } from "antd";
-import {
-    ExclamationCircleOutlined
-  } from '@ant-design/icons';
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import {
   Coin,
   CoinChange,
@@ -23,6 +21,7 @@ import {
 const CoinDetail: React.FC<CoinDetailProps> = ({ coinData }) => {
   console.log(coinData, "aghaghagh");
   const { iconUrl, change, name, rank, price, symbol, btcPrice } = coinData;
+  const volume24h = coinData["24hVolume"]
   return (
     <section>
       <CoinDesc>
@@ -69,6 +68,15 @@ const CoinDetail: React.FC<CoinDetailProps> = ({ coinData }) => {
             </Tooltip>
           </MyDiv>
           <span>{rank}</span>
+        </CoinStatisticsRow>
+        <CoinStatisticsRow>
+          <MyDiv>
+            <span>24h volume</span>
+            <Tooltip title="The total value of all trades with this coin on exchanges, in the past 24 hours.">
+              <ExclamationCircleOutlined />
+            </Tooltip>
+          </MyDiv>
+          <span>$ {numberToPrice(Number(volume24h))}</span>
         </CoinStatisticsRow>
       </CoinStatistics>
     </section>

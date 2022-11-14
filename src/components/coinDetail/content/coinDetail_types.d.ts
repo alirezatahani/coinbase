@@ -6,7 +6,8 @@ export type CoinDetailProps = {
     iconUrl: string;
     rank: string;
     change:number;
-    btcPrice:string
+    btcPrice:string;
+    "24hVolume":string
   };
 };
 
