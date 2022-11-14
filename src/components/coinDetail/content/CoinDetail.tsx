@@ -4,6 +4,10 @@ import Highcharts from "highcharts/highstock";
 import Chart from "highcharts-react-official";
 import { linChartConfig } from "lib/lineChartConfig";
 import { CoinDetailProps } from "./coinDetail_types";
+import { Tooltip } from "antd";
+import {
+    ExclamationCircleOutlined
+  } from '@ant-design/icons';
 import {
   Coin,
   CoinChange,
@@ -56,6 +60,15 @@ const CoinDetail: React.FC<CoinDetailProps> = ({ coinData }) => {
             {numberToPrice(Number(btcPrice))}
             BTC
           </span>
+        </CoinStatisticsRow>
+        <CoinStatisticsRow>
+          <MyDiv>
+            <span>Rank</span>
+            <Tooltip title="A coin's place on our global ranking (by highest market cap).">
+              <ExclamationCircleOutlined />
+            </Tooltip>
+          </MyDiv>
+          <span>{rank}</span>
         </CoinStatisticsRow>
       </CoinStatistics>
     </section>
