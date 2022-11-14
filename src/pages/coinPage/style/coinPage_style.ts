@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CoinChangeProps } from "../content/coinDetail_type";
+import { CoinChangeProps } from "../content/coinPage_type";
 
 export const CoinDetailPage = styled.div(({ theme }) => ({
   backgroundColor: theme.palette.background.dark,
