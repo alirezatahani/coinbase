@@ -30,9 +30,13 @@ const CoinDetail: React.FC<CoinDetailProps> = ({ coinData }) => {
     symbol,
     btcPrice,
     marketCap,
+    allTimeHigh,
     fullyDilutedMarketCap,
   } = coinData;
   const volume24h = coinData["24hVolume"];
+
+  const mydate = timstampToDate(allTimeHigh.timestamp);
+  console.log(mydate, "hooooooooooooj");
 
   return (
     <section>
@@ -116,6 +120,15 @@ const CoinDetail: React.FC<CoinDetailProps> = ({ coinData }) => {
             </Tooltip>
           </MyDiv>
           <span>$ {numberToPrice(Number(fullyDilutedMarketCap))}</span>
+        </CoinStatisticsRow>
+        <CoinStatisticsRow>
+          <MyDiv>
+            <span>All-time high (daily avg.)</span>
+            <Tooltip title="All-time high (daily average) is the highest daily average price of a coin.">
+              <ExclamationCircleOutlined />
+            </Tooltip>
+          </MyDiv>
+          <span style={{display:"flex",flexDirection:"column"}}>$ {numberToPrice(Number(allTimeHigh.price))}<span>on {timstampToDate(allTimeHigh.timestamp)}</span></span>
         </CoinStatisticsRow>
       </CoinStatistics>
     </section>

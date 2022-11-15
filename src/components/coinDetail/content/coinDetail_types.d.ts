@@ -10,6 +10,7 @@ export type CoinDetailProps = {
     "24hVolume": string;
     marketCap: string;
     fullyDilutedMarketCap:string;
+    allTimeHigh: { price: string; timestamp: number };
   };
 };
 
