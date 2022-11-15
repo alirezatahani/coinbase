@@ -17,11 +17,23 @@ import {
   MyDiv,
   RankBadge,
 } from "../style/coinDetail_style";
+import { timstampToDate } from "@utils/timestamp";
 
 const CoinDetail: React.FC<CoinDetailProps> = ({ coinData }) => {
   console.log(coinData, "aghaghagh");
-  const { iconUrl, change, name, rank, price, symbol, btcPrice } = coinData;
-  const volume24h = coinData["24hVolume"]
+  const {
+    iconUrl,
+    change,
+    name,
+    rank,
+    price,
+    symbol,
+    btcPrice,
+    marketCap,
+    fullyDilutedMarketCap,
+  } = coinData;
+  const volume24h = coinData["24hVolume"];
+
   return (
     <section>
       <CoinDesc>
@@ -77,6 +89,33 @@ const CoinDetail: React.FC<CoinDetailProps> = ({ coinData }) => {
             </Tooltip>
           </MyDiv>
           <span>$ {numberToPrice(Number(volume24h))}</span>
+        </CoinStatisticsRow>
+        <CoinStatisticsRow>
+          <MyDiv>
+            <span>Market cap</span>
+            <Tooltip title="Market cap is the circulating supply of a coin multiplied by its current price. So, if a coin has 100 units outstanding and is trading for $10 a coin, it has a market cap of $1,000.">
+              <ExclamationCircleOutlined />
+            </Tooltip>
+          </MyDiv>
+          <span>$ {numberToPrice(Number(marketCap))}</span>
+        </CoinStatisticsRow>
+        <CoinStatisticsRow>
+          <MyDiv>
+            <span>Volume / Market cap</span>
+            <Tooltip title="Volume / Market cap is a coin's 24h trading volume divided by its market cap. A high ratio means that the coin is highly liquid.">
+              <ExclamationCircleOutlined />
+            </Tooltip>
+          </MyDiv>
+          <span>{numberToPrice(Number(volume24h) / Number(marketCap))}</span>
+        </CoinStatisticsRow>
+        <CoinStatisticsRow>
+          <MyDiv>
+            <span>Fully diluted market cap</span>
+            <Tooltip title="Fully diluted market cap is a coin's price multiplied by its total supply. It shows what the market cap could be if all coins were in circulation, with the current price.">
+              <ExclamationCircleOutlined />
+            </Tooltip>
+          </MyDiv>
+          <span>$ {numberToPrice(Number(fullyDilutedMarketCap))}</span>
         </CoinStatisticsRow>
       </CoinStatistics>
     </section>
