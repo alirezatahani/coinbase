@@ -32,26 +32,3 @@ export const RankBadge = styled.span(({ theme }) => ({
   padding: "1px 5px",
   fontSize: "10px",
 }));
-export const CoinStatistics = styled.div(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  rowGap: "1rem",
-  color: theme.palette.common.white,
-}));
-export const CoinStatisticsTitleContainer = styled.div(({ theme }) => ({
-  color: theme.palette.success[400],
-  textAlign: "start",
-  marginBottom: "1rem",
-}));
-export const CoinStatisticsTitle = styled.h2(({ theme }) => ({
-  color: theme.palette.common.white,
-  textAlign: "start",
-}));
-export const CoinStatisticsRow = styled.div(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  width: " 100%",
-  padding: "0.5rem 1rem",
-  borderBottom: `1px solid ${theme.palette.common.white}`,
-}));
