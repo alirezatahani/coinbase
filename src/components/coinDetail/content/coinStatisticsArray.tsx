@@ -87,6 +87,7 @@ export const CreateCoinStatisticsArray = ({ ...props }: CoinInterface) => {
         "All-time high (daily average) is the highest daily average price of a coin.",
       icon: <FundTwoTone />,
       timestamp: allTimeHigh.timestamp,
+      lastRow:true
     },
   ];
   return coinStatisticsArray;

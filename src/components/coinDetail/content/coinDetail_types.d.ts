@@ -17,3 +17,7 @@ export type CoinDetailProps = {
 export type CoinChangeProps = {
   price: number;
 };
+
+export type CoinStatisticsRowProps = {
+  isLastRow:Boolean
+}

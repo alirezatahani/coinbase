@@ -29,7 +29,7 @@ const CoinStatistics: React.FC<CoinInterface> = ({ name, ...props }) => {
       </CoinStatisticsTitleContainer>
       {coinStatisticsArray.map((item: any) => (
         <CoinStatisticsRowContainer key={item.title}>
-          <CoinStatisticsRow>
+          <CoinStatisticsRow isLastRow={item.lastRow}>
             <CoinStatisticsRowTitleContainer>
               <RowIconContainer>{item.icon}</RowIconContainer>
               <span>{item.title}</span>
