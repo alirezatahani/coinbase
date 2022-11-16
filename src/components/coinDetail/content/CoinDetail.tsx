@@ -14,9 +14,19 @@ import {
 } from "../style/coinDetail_style";
 
 const CoinDetail: React.FC<CoinDetailProps> = ({ coinData }) => {
-  console.log(coinData, "aghaghagh");
-  const { iconUrl, change, name, rank, price, symbol } = coinData;
-
+  const {
+    name,
+    iconUrl,
+    change,
+    rank,
+    price,
+    symbol,
+    allTimeHigh,
+    btcPrice,
+    fullyDilutedMarketCap,
+    marketCap,
+  } = coinData;
+  const volume24h = coinData["24hVolume"];
   return (
     <section>
       <CoinDesc>
@@ -36,7 +46,16 @@ const CoinDetail: React.FC<CoinDetailProps> = ({ coinData }) => {
         <span>$ {numberToPrice(Number(price))}</span>
       </CoinDesc>
       <Chart highcharts={Highcharts} options={linChartConfig(coinData, true)} />
-      <CoinStatistics coinData={coinData} />
+      <CoinStatistics
+        allTimeHigh={allTimeHigh}
+        btcPrice={btcPrice}
+        fullyDilutedMarketCap={fullyDilutedMarketCap}
+        marketCap={marketCap}
+        price={price}
+        rank={rank}
+        change={change}
+        volume24h={volume24h}
+      />
     </section>
   );
 };
