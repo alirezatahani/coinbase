@@ -2,8 +2,19 @@ import styled from "styled-components";
 
 export const CoinDetailPage = styled.div(({ theme }) => ({
   backgroundColor: theme.palette.background.dark,
-  textAlign: "center",
+  display: "flex",
+  justifyContent: "center",
   width: 550,
-  height: "auto",
+  minHeight: 170,
+  maxHeight: 650,
+  overflowY: "scroll",
   padding: "2rem",
+  "&::-webkit-scrollbar": {
+    width: "0.4em",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: theme.palette.background.paper,
+    outline: `1px solid ${theme.palette.background.dark}`,
+    borderRadius: "5px",
+  },
 }));
