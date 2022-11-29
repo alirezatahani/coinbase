@@ -1,4 +1,5 @@
 import { theme } from "@global/Global";
+import { numberToPrice } from "@utils/numberToPrice";
 
 export const linChartConfig = (coin: any, bigChart?: boolean) => {
   const series = coin.sparkline?.map((item: string) => {
@@ -57,6 +58,7 @@ export const linChartConfig = (coin: any, bigChart?: boolean) => {
             title: {
               text: "Price",
             },
+            gridLineWidth: 0.1
           },
         ]
       : [
@@ -90,6 +92,9 @@ export const linChartConfig = (coin: any, bigChart?: boolean) => {
           },
         ],
     tooltip: {
+      formatter: function () {
+        return "$ " + numberToPrice(this.y);
+      },
       enabled: true,
       animation: true,
       backgroundColor: theme.palette.common.white,
