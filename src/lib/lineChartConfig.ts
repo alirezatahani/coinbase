@@ -1,6 +1,7 @@
 import { theme } from "@global/Global";
+import { numberToPrice } from "@utils/numberToPrice";
 
-export const linChartConfig = (coin: any) => {
+export const linChartConfig = (coin: any, bigChart?: boolean) => {
   const series = coin.sparkline?.map((item: string) => {
     return Number(item);
   });
@@ -11,11 +12,10 @@ export const linChartConfig = (coin: any) => {
 
   const options = {
     chart: {
-      height: 60,
-      width: 100,
+      height: bigChart ? 300 : 60,
+      width: bigChart ? null : 100,
       backgroundColor: "transparent",
       spacing: [15, 15, 0, 15],
-      
     },
     colors: Number(coin.change >= 0)
       ? [theme.palette.success.main]
@@ -29,19 +29,21 @@ export const linChartConfig = (coin: any) => {
     title: {
       text: "",
     },
-    caption: {
-      align: "center",
-      floating: true,
-      margin: 10,
-      style: {
-        color: Number(coin.change >= 0)
-          ? theme.palette.success[400]
-          : theme.palette.danger[400],
-      },
-      text: priceChange(),
-      verticalAlign: "bottom",
-      y: -25,
-    },
+    caption: bigChart
+      ? null
+      : {
+          align: "center",
+          floating: true,
+          margin: 10,
+          style: {
+            color: Number(coin.change >= 0)
+              ? theme.palette.success[400]
+              : theme.palette.danger[400],
+          },
+          text: priceChange(),
+          verticalAlign: "bottom",
+          y: -25,
+        },
     plotOptions: {
       series: {
         allowPointSelect: true,
@@ -50,26 +52,54 @@ export const linChartConfig = (coin: any) => {
     boost: {
       enabled: false,
     },
-    yAxis: [
-      {
-        title: {
-          text: "",
-        },
-        labels: { enabled: false },
-        visible: false,
-      },
-    ],
-    xAxis: [
-      {
-        title: {
-          text: "",
-        },
-        labels: { enabled: false },
-        visible: false,
-      },
-    ],
+    yAxis: bigChart
+      ? [
+          {
+            title: {
+              text: "Price",
+            },
+            gridLineWidth: 0.1
+          },
+        ]
+      : [
+          {
+            title: {
+              text: "",
+            },
+            labels: { enabled: false },
+            visible: false,
+          },
+        ],
+    xAxis: bigChart
+      ? [
+          {
+            title: {
+              text: "24H",
+            },
+            crosshair: {
+              enabled: true,
+              width: 1,
+            },
+          },
+        ]
+      : [
+          {
+            title: {
+              text: "",
+            },
+            labels: { enabled: false },
+            visible: false,
+          },
+        ],
     tooltip: {
-      enabled: false,
+      formatter: function () {
+        return "$ " + numberToPrice(this.y);
+      },
+      enabled: true,
+      animation: true,
+      backgroundColor: theme.palette.common.white,
+      borderColor: theme.palette.common.black,
+      borderRadius: 15,
     },
     series: [
       {
