@@ -4,7 +4,7 @@ import { numberToPrice } from "@utils/numberToPrice";
 import { timstampToDate } from "@utils/timestamp";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { CoinInterface } from "types";
-import { CreateCoinStatisticsArray } from "./coinStatisticsArray";
+import { CreateCoinStatisticsArray } from "../constant/coinStatisticsArray";
 import {
   CoinStatisticsRowContainer,
   CoinStatisticsRow,
