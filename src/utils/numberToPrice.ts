@@ -3,5 +3,5 @@ export const numberToPrice = (price: number, sign?: string) => {
     minimumFractionDigits:
       price <= 0.0001 ? 8 : 0.0001 < price && price < 1 ? 3 : 0,
   });
-  return coinPrice + ` ${sign}`;
+  return coinPrice + (sign ? ` ${sign}` : "");
 };

@@ -44,7 +44,7 @@ const CoinStatistics: React.FC<CoinInterface> = ({ name, ...props }) => {
             <RowValueContainer>
               {numberToPrice(
                 Number(item.data),
-                item.currency?.dollarSign ?? item.currency?.btcSign ?? ""
+                item.currency?.dollarSign ?? item.currency?.btcSign
               )}
               {item.timestamp ? (
                 <span>on {timstampToDate(item.timestamp)}</span>
