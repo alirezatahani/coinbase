@@ -1,6 +1,6 @@
 import { theme } from "@global/Global";
 
-export const linChartConfig = (coin: any) => {
+export const littleChartConfig = (coin: any) => {
   const series = coin.sparkline.map((item: string) => {
     return Number(item);
   });
