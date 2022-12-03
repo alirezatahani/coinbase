@@ -45,7 +45,7 @@ const CoinDetail: React.FC<CoinDetailProps> = ({ coinData }) => {
         </MyDiv>
         <span>{numberToPrice(Number(price),"$")}</span>
       </CoinDesc>
-      <Chart highcharts={Highcharts} options={linChartConfig(coinData, true)} />
+      <Chart highcharts={Highcharts} options={linChartConfig(coinData)} />
       <CoinStatistics
         allTimeHigh={allTimeHigh}
         btcPrice={btcPrice}
