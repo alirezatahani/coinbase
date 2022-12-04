@@ -1,8 +1,8 @@
-import { CoinPriceChangeSection } from "@components/coinPriceChange";
-import { numberToPrice } from "@utils/numberToPrice";
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { CoinInterface } from "types";
+import { CoinPriceChangeSection } from "@components/coinPriceChange";
+import { numberToPrice } from "@utils/numberToPrice";
 import {
   FavCoinChange,
   FavCoinContainer,
@@ -14,7 +14,6 @@ import {
 const Footer = () => {
   const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
   const { favoriteList } = favoriteReducers;
-  console.log(favoriteList);
 
   return (
     <FooterContainer>
@@ -23,7 +22,7 @@ const Footer = () => {
           <img src={coin.iconUrl} style={{ width: "40px" }} />
           <FavCoinDesc>
             <FavCoinTitle>
-              {coin.name}
+              <span>{coin.name}</span>
               <FavCoinChange>
                 <CoinPriceChangeSection priceChange={Number(coin.change)} />
               </FavCoinChange>
@@ -35,5 +34,4 @@ const Footer = () => {
     </FooterContainer>
   );
 };
-
 export default Footer;
