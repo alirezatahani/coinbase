@@ -1,4 +1,8 @@
+import { CoinPriceChangeSection } from "@components/coinPriceChange";
+import { numberToPrice } from "@utils/numberToPrice";
 import * as React from "react";
+import { useSelector } from "react-redux";
+import { CoinInterface } from "types";
 import {
   FavCoinChange,
   FavCoinContainer,
@@ -8,18 +12,26 @@ import {
 } from "../style/footer_style";
 
 const Footer = () => {
+  const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
+  const { favoriteList } = favoriteReducers;
+  console.log(favoriteList);
+
   return (
     <FooterContainer>
-      <FavCoinContainer>
-        <img src="https://cdn.coinranking.com/bOabBYkcX/bitcoin_btc.svg" style={{width:"40px"}}/>
-        <FavCoinDesc>
-          <FavCoinTitle>
-            Bitcoin
-            <FavCoinChange>+3.34</FavCoinChange>
-          </FavCoinTitle>
-          <span>16,000 $</span>
-        </FavCoinDesc>
-      </FavCoinContainer>
+      {favoriteList.map((coin: CoinInterface) => (
+        <FavCoinContainer>
+          <img src={coin.iconUrl} style={{ width: "40px" }} />
+          <FavCoinDesc>
+            <FavCoinTitle>
+              {coin.name}
+              <FavCoinChange>
+                <CoinPriceChangeSection priceChange={Number(coin.change)} />
+              </FavCoinChange>
+            </FavCoinTitle>
+            <span>{numberToPrice(Number(coin.price))}</span>
+          </FavCoinDesc>
+        </FavCoinContainer>
+      ))}
     </FooterContainer>
   );
 };
