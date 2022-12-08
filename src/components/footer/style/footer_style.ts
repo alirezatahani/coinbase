@@ -2,10 +2,11 @@ import styled from "styled-components";
 
 export const FooterContainer = styled.div(({ theme }) => ({
   width: "550px",
+  minHeight: "70px",
   position: "fixed",
   bottom: 0,
   zIndex: 999,
-  backgroundColor: theme.palette.primary[800],
+  backgroundColor: theme.palette.secondary.main,
   color: theme.palette.common.white,
   paddingTop: "1rem",
   display: "flex",
@@ -41,4 +42,8 @@ export const FavCoinChange = styled.span(({ theme }) => ({
   position: "absolute",
   top: -13,
   right: -20,
+}));
+export const EmptyText = styled.p(({ theme }) => ({
+  width: "100%",
+  textAlign: "center",
 }));
