@@ -6,6 +6,7 @@ export const HomeStyle = styled.div(({ theme }) => ({
   width: 550,
   height: "auto",
   padding: "2rem",
+  paddingBottom:"70px"
 }));
 export const Input = styled.input(({ theme }) => ({
   width: "100%",
