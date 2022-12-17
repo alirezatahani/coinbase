@@ -10,11 +10,13 @@ export const GetCoinsData: React.FC<GetCoinsDataProps> = ({ queries }) => {
   const makingUrl = () => {
     return convertToQuery(queries);
   };
-
+  
   useEffect(() => {
     const url = makingUrl();
+    console.log(url);
+    
     fetchCoinsData({ url: `/coins?${url}`, method: "get" });
-  }, []);
+  }, [queries]);
 
   return <CoinList loading={loading} data={data && data.data.coins} />;
 };
