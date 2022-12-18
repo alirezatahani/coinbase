@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Tabs } from "antd";
+import React, { useState } from "react";
+import { Tabs, Select } from "antd";
 import { FavoriteCoins } from "@modules/index";
 import { GetCoinsData } from "@modules/index";
+import FavLengthBadge from "./FavLengthBadge";
 import { tabs } from "../utils/tabs";
-import { Badge, FlexWrapperBadge } from "../style/HomeTabs_styles";
-import { Select } from "antd";
 
 const HomeTabs = () => {
   const [limit, setLimit] = useState(10);
   const [timePeriod, setTimePeriod] = useState("24h");
   const { TabPane } = Tabs;
-  const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
-  const { favoriteList } = favoriteReducers;
-  
-  const handleChange = (value: string ) => {
-    console.log(`Selected: ${value}`);
-    setTimePeriod(value)
+
+  const handleChange = (value: string) => {
+    setTimePeriod(value);
   };
+
   return (
     <div>
       <Select
@@ -73,16 +69,8 @@ const HomeTabs = () => {
           switch (name) {
             case "Favorite Coins":
               return (
-                <TabPane
-                  tab={
-                    <FlexWrapperBadge>
-                      <span>Favorite Coins</span>
-                      <Badge>{favoriteList.length}</Badge>
-                    </FlexWrapperBadge>
-                  }
-                  key={key}
-                >
-                  <FavoriteCoins />
+                <TabPane tab={<FavLengthBadge />} key={key}>
+                  <FavoriteCoins timePeriod={timePeriod} />
                 </TabPane>
               );
 
