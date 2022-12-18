@@ -1,4 +1,4 @@
 export type FavoriteCoinsProps = {
-    timePeriod:string
-  };
-  
+  timePeriod: string;
+  referenceCurrencyUuid: string;
+};

@@ -3,7 +3,10 @@ import { useSelector } from "react-redux";
 import { GetCoinsData } from "@modules/getCoinsData/content/getCoinsData";
 import { FavoriteCoinsProps } from "./favoriteCoins_types";
 
-const FavoriteCoins: React.FC<FavoriteCoinsProps> = ({ timePeriod }) => {
+const FavoriteCoins: React.FC<FavoriteCoinsProps> = ({
+  timePeriod,
+  referenceCurrencyUuid,
+}) => {
   const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
   const { favoriteList } = favoriteReducers;
 
@@ -20,7 +23,9 @@ const FavoriteCoins: React.FC<FavoriteCoinsProps> = ({ timePeriod }) => {
     <div>
       {favoriteList.length !== 0 ? (
         favoriteList && (
-          <GetCoinsData queries={{ uuids: uuidsString, timePeriod }} />
+          <GetCoinsData
+            queries={{ uuids: uuidsString, timePeriod, referenceCurrencyUuid }}
+          />
         )
       ) : (
         <p style={{ color: "white" }}>Empty...</p>
