@@ -9,25 +9,35 @@ import { options } from "../utils/selectOptions";
 const HomeTabs = () => {
   const [limit, setLimit] = useState(10);
   const [timePeriod, setTimePeriod] = useState("24h");
-  const [currency, setCurrency] = useState("yhjMzLPhuIDl");
+  const [currency, setCurrency] = useState({
+    value: "yhjMzLPhuIDl",
+    sign: "$",
+  });
   const { TabPane } = Tabs;
 
   const handleChange = (value: string) => {
     setTimePeriod(value);
   };
-  const handleCurrency = (value: string) => {
-    setCurrency(value);
+  const handleCurrency = (value: string, options: OptionInterface) => {
+    console.log(options.sign);
+    setCurrency({ value, sign: options.sign });
   };
-
+  interface OptionInterface {
+    value: string;
+    sign: string;
+    label: string;
+  }
   return (
     <>
       <Select
         defaultValue="yhjMzLPhuIDl"
-        onChange={handleCurrency}
+        onChange={(value: string, options: any) =>
+          handleCurrency(value, options)
+        }
         style={{ width: 120 }}
         options={[
-          { value: "yhjMzLPhuIDl", label: "USD" },
-          { value: "5k-_VTxqtCEI", label: "EUR" },
+          { value: "yhjMzLPhuIDl", label: "USD", sign: "$" },
+          { value: "5k-_VTxqtCEI", label: "EUR", sign: "€" },
         ]}
       />
       <Select
@@ -45,7 +55,8 @@ const HomeTabs = () => {
                 <TabPane tab={<FavLengthBadge />} key={key}>
                   <FavoriteCoins
                     timePeriod={timePeriod}
-                    referenceCurrencyUuid={currency}
+                    referenceCurrencyUuid={currency.value}
+                    currencySign = {currency.sign}
                   />
                 </TabPane>
               );
@@ -58,8 +69,9 @@ const HomeTabs = () => {
                       ...queries,
                       timePeriod,
                       limit,
-                      referenceCurrencyUuid: currency,
+                      referenceCurrencyUuid: currency.value,
                     }}
+                    currencySign ={currency.sign}
                   />
                 </TabPane>
               );
