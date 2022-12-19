@@ -1,5 +1,4 @@
 export type HomeTabsProps = {
-    timePeriod :string,
-    currency:string
-
-}
+  timePeriod: string;
+  currency: { value: string; sign: string };
+};
