@@ -4,7 +4,7 @@ import { CoinList } from "@components/index";
 import { convertToQuery } from "@utils/queries";
 import { GetCoinsDataProps } from "../getCoinsData_type";
 
-export const GetCoinsData: React.FC<GetCoinsDataProps> = ({ queries }) => {
+export const GetCoinsData: React.FC<GetCoinsDataProps> = ({ queries ,currencySign }) => {
   const [{ loading, data }, fetchCoinsData] = useFetch();
 
   const makingUrl = () => {
@@ -18,5 +18,5 @@ export const GetCoinsData: React.FC<GetCoinsDataProps> = ({ queries }) => {
     fetchCoinsData({ url: `/coins?${url}`, method: "get" });
   }, [queries]);
 
-  return <CoinList loading={loading} data={data && data.data.coins} />;
+  return <CoinList loading={loading} data={data && data.data.coins} currencySign = {currencySign}/>;
 };

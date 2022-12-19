@@ -4,4 +4,5 @@ export interface CoinInterface {
   price: string;
   change: number;
   uuid?: string;
+  currencySign:string
 }

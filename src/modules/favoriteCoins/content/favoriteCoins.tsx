@@ -6,6 +6,7 @@ import { FavoriteCoinsProps } from "./favoriteCoins_types";
 const FavoriteCoins: React.FC<FavoriteCoinsProps> = ({
   timePeriod,
   referenceCurrencyUuid,
+  currencySign
 }) => {
   const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
   const { favoriteList } = favoriteReducers;
@@ -25,6 +26,7 @@ const FavoriteCoins: React.FC<FavoriteCoinsProps> = ({
         favoriteList && (
           <GetCoinsData
             queries={{ uuids: uuidsString, timePeriod, referenceCurrencyUuid }}
+            currencySign={currencySign}
           />
         )
       ) : (
