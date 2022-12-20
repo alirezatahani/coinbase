@@ -14,7 +14,7 @@ const CoinItem: React.FC<CoinInterface> = ({ name, ...props }) => {
         <CoinName> {name}</CoinName>
       </CoinDesc>
       <CoinPriceSection price={price} currencySign={currencySign} />
-      <CoinPriceChangeSection priceChange={change} />
+      {change ? <CoinPriceChangeSection priceChange={change} /> : null}
       <AddToFavoriteSection uuid={uuid} />
     </CoinContent>
   );
