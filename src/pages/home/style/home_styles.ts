@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const HomeStyle = styled.div(({ theme }) => ({
-  backgroundColor: theme.palette.background.dark,
+  backgroundColor: theme.palette.background.color,
+  color: theme.palette.text.color,
   textAlign: "center",
   width: 550,
   height: "auto",
@@ -10,12 +11,18 @@ export const HomeStyle = styled.div(({ theme }) => ({
 export const ActionbarContainer = styled.div(({ theme }) => ({
   marginBottom: "1rem",
   "& .ant-select-selector": {
-    color: theme.palette.background.paper,
+    color: theme.palette.text.color,
     backgroundColor: "transparent !important",
-    borderColor: `${theme.palette.success[800]} !important`,
+    borderColor: `${theme.palette.border.color} !important`,
   },
   "& .ant-select-arrow": {
-    color: theme.palette.background.paper,
+    color: theme.palette.text.color,
+  },
+  "& .ant-btn": {
+    color: theme.palette.text.color,
+    border: "1px solid",
+    borderColor: theme.palette.border.color,
+    backgroundColor: "transparent !important",
   },
 }));
 export const Input = styled.input(({ theme }) => ({
@@ -29,8 +36,8 @@ export const Input = styled.input(({ theme }) => ({
   padding: "10px",
   backgroundColor: "transparent",
   border: "1px solid",
-  borderColor:`${theme.palette.success[800]}`,
-  color: theme.palette.background.paper,
+  borderColor: theme.palette.border.color,
+  color: theme.palette.text.color,
   "::placeholder": { color: theme.palette.success[400] },
   "&:focus": {
     boxShadow: "0 0 0 2px rgb(24 144 255 /20%)",

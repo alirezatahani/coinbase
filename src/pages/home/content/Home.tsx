@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { debounce } from "lodash";
-import { Select } from "antd";
+import { Button, Select, Tooltip } from "antd";
 import { CoinList, HomeTabs } from "@components/index";
+import { HomeProps } from "./Home_type_d";
 import useFetch from "../../../hooks/useFetch";
 import { options } from "../utils/selectOptions";
-import { ActionbarContainer, HomeStyle, Input } from "../style/home_styles";
 import "antd/dist/antd.css";
+import { ActionbarContainer, HomeStyle, Input } from "../style/home_styles";
 
 interface OptionInterface {
   value: string;
@@ -13,7 +14,7 @@ interface OptionInterface {
   label: string;
 }
 
-const Home = () => {
+const Home:React.FC<HomeProps> = ({theme,themeHandler}) => {
   const [searchCoin, setSearchCoin] = useState("");
   const [{ loading, data }, doSearchCoin] = useFetch();
   const [timePeriod, setTimePeriod] = useState("24h");
@@ -43,7 +44,6 @@ const Home = () => {
   const handleCurrency = (value: string, options: OptionInterface) => {
     setCurrency({ value, sign: options.sign });
   };
-  
 
   return (
     <HomeStyle>
@@ -53,23 +53,30 @@ const Home = () => {
       />
       {searchCoin ? null : (
         <ActionbarContainer>
-          <Select
-            defaultValue="yhjMzLPhuIDl"
-            onChange={(value: string, options: any) =>
-              handleCurrency(value, options)
-            }
-            style={{ width: 100 }}
-            options={[
-              { value: "yhjMzLPhuIDl", label: "USD", sign: "$" },
-              { value: "5k-_VTxqtCEI", label: "EUR", sign: "€" },
-            ]}
-          />
-          <Select
-            defaultValue="24h"
-            onChange={handleChange}
-            style={{ width: 110 }}
-            options={options}
-          />
+          <Tooltip title="Change currency">
+            <Select
+              defaultValue="yhjMzLPhuIDl"
+              onChange={(value: string, options: any) =>
+                handleCurrency(value, options)
+              }
+              style={{ width: 100 }}
+              options={[
+                { value: "yhjMzLPhuIDl", label: "USD", sign: "$" },
+                { value: "5k-_VTxqtCEI", label: "EUR", sign: "€" },
+              ]}
+            />
+          </Tooltip>
+          <Tooltip title="Change time period">
+            <Select
+              defaultValue="24h"
+              onChange={handleChange}
+              style={{ width: 110 }}
+              options={options}
+            />
+          </Tooltip>
+          <Tooltip title="Change theme">
+            <Button onClick={themeHandler}>{theme==="light"? "Dark":"Light" }</Button>
+          </Tooltip>
         </ActionbarContainer>
       )}
       {searchCoin ? (
