@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+export const TabContainer = styled.div(({ theme }) => ({
+  "& .ant-tabs": {
+    color: theme.palette.text.color,
+  },
+}));
 export const FlexWrapperBadge = styled.div(({}) => ({
   display: "flex",
   justifyContent: "center",
