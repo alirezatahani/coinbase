@@ -18,7 +18,6 @@ const ActionBar: React.FC<ActionBarProps> = ({
           onChange={(value: string, options: any) =>
             handleCurrency(value, options)
           }
-          style={{ width: 100 }}
           options={currencyOptions}
         />
       </Tooltip>
@@ -26,7 +25,6 @@ const ActionBar: React.FC<ActionBarProps> = ({
         <Select
           defaultValue="24h"
           onChange={handleTimePeriod}
-          style={{ width: 110 }}
           options={timpePeriodOptions}
         />
       </Tooltip>
