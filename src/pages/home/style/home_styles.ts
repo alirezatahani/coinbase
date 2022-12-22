@@ -8,23 +8,6 @@ export const HomeStyle = styled.div(({ theme }) => ({
   height: "auto",
   padding: "2rem",
 }));
-export const ActionbarContainer = styled.div(({ theme }) => ({
-  marginBottom: "1rem",
-  "& .ant-select-selector": {
-    color: theme.palette.text.color,
-    backgroundColor: "transparent !important",
-    borderColor: `${theme.palette.border.color} !important`,
-  },
-  "& .ant-select-arrow": {
-    color: theme.palette.text.color,
-  },
-  "& .ant-btn": {
-    color: theme.palette.text.color,
-    border: "1px solid",
-    borderColor: theme.palette.border.color,
-    backgroundColor: "transparent !important",
-  },
-}));
 export const Input = styled.input(({ theme }) => ({
   width: "100%",
   maxHeight: 30,

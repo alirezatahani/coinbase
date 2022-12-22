@@ -1,19 +1,12 @@
 import React, { useCallback, useState } from "react";
 import { debounce } from "lodash";
-import { Button, Select, Tooltip } from "antd";
+import useFetch from "../../../hooks/useFetch";
 import { CoinList, HomeTabs } from "@components/index";
 import { HomeProps } from "./Home_type_d";
-import useFetch from "../../../hooks/useFetch";
-import { options } from "../utils/selectOptions";
+import { ActionBar } from "@components/actionBar";
+import { OptionInterface } from "@components/actionBar/content/actionBar_type";
 import "antd/dist/antd.css";
-import { ActionbarContainer, HomeStyle, Input } from "../style/home_styles";
-import { theme } from "@global/Global";
-
-interface OptionInterface {
-  value: string;
-  sign: string;
-  label: string;
-}
+import { HomeStyle, Input } from "../style/home_styles";
 
 const Home: React.FC<HomeProps> = ({ userTheme, themeHandler }) => {
   const [searchCoin, setSearchCoin] = useState("");
@@ -39,10 +32,13 @@ const Home: React.FC<HomeProps> = ({ userTheme, themeHandler }) => {
     handler(searchValue);
   };
 
-  const handleChange = (value: string) => {
+  const timePeriodeHandler: (value: string) => void = (value: string) => {
     setTimePeriod(value);
   };
-  const handleCurrency = (value: string, options: OptionInterface) => {
+  const currencyHandler: (value: string, options: OptionInterface) => void = (
+    value: string,
+    options: OptionInterface
+  ) => {
     setCurrency({ value, sign: options.sign });
   };
 
@@ -53,34 +49,12 @@ const Home: React.FC<HomeProps> = ({ userTheme, themeHandler }) => {
         onChange={(e) => searchHandler(e.target.value)}
       />
       {searchCoin ? null : (
-        <ActionbarContainer>
-          <Tooltip title="Change currency">
-            <Select
-              defaultValue="yhjMzLPhuIDl"
-              onChange={(value: string, options: any) =>
-                handleCurrency(value, options)
-              }
-              style={{ width: 100 }}
-              options={[
-                { value: "yhjMzLPhuIDl", label: "USD", sign: "$" },
-                { value: "5k-_VTxqtCEI", label: "EUR", sign: "€" },
-              ]}
-            />
-          </Tooltip>
-          <Tooltip title="Change time period">
-            <Select
-              defaultValue="24h"
-              onChange={handleChange}
-              style={{ width: 110 }}
-              options={options}
-            />
-          </Tooltip>
-          <Tooltip title="Change theme">
-            <Button onClick={themeHandler}>
-              {userTheme === "light" ? "Dark" : "Light"}
-            </Button>
-          </Tooltip>
-        </ActionbarContainer>
+        <ActionBar
+          themeHandler={themeHandler}
+          userTheme={userTheme}
+          handleTimePeriod={timePeriodeHandler}
+          handleCurrency={currencyHandler}
+        />
       )}
       {searchCoin ? (
         <CoinList

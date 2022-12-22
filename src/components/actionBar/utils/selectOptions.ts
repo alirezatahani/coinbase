@@ -1,4 +1,4 @@
-export const options = [
+export const timpePeriodOptions = [
   {
     value: "1h",
     label: "1 hour",
@@ -40,3 +40,7 @@ export const options = [
     label: "5 years",
   },
 ];
+export const currencyOptions = [
+  { value: "yhjMzLPhuIDl", label: "USD", sign: "$" },
+  { value: "5k-_VTxqtCEI", label: "EUR", sign: "€" },
+]
