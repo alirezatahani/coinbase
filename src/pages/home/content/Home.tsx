@@ -7,6 +7,7 @@ import useFetch from "../../../hooks/useFetch";
 import { options } from "../utils/selectOptions";
 import "antd/dist/antd.css";
 import { ActionbarContainer, HomeStyle, Input } from "../style/home_styles";
+import { theme } from "@global/Global";
 
 interface OptionInterface {
   value: string;
@@ -14,7 +15,7 @@ interface OptionInterface {
   label: string;
 }
 
-const Home:React.FC<HomeProps> = ({theme,themeHandler}) => {
+const Home: React.FC<HomeProps> = ({ userTheme, themeHandler }) => {
   const [searchCoin, setSearchCoin] = useState("");
   const [{ loading, data }, doSearchCoin] = useFetch();
   const [timePeriod, setTimePeriod] = useState("24h");
@@ -75,7 +76,9 @@ const Home:React.FC<HomeProps> = ({theme,themeHandler}) => {
             />
           </Tooltip>
           <Tooltip title="Change theme">
-            <Button onClick={themeHandler}>{theme==="light"? "Dark":"Light" }</Button>
+            <Button onClick={themeHandler}>
+              {userTheme === "light" ? "Dark" : "Light"}
+            </Button>
           </Tooltip>
         </ActionbarContainer>
       )}

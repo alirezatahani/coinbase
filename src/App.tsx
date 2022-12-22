@@ -15,7 +15,7 @@ function App() {
 
   return (
     <ThemeProvider theme={userTheme === "light" ? theme : darkTheme}>
-      <Home theme={userTheme} themeHandler={themeToggler} />
+      <Home userTheme={userTheme} themeHandler={themeToggler} />
     </ThemeProvider>
   );
 }

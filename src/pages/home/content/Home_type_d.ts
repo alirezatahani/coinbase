@@ -1,4 +1,4 @@
 export type HomeProps = {
-  theme: string;
+  userTheme: string;
   themeHandler: () => void;
 };
