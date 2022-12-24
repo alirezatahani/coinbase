@@ -43,4 +43,7 @@ export const timpePeriodOptions = [
 export const currencyOptions = [
   { value: "yhjMzLPhuIDl", label: "USD", sign: "$" },
   { value: "5k-_VTxqtCEI", label: "EUR", sign: "€" },
+  { value: "7DLFntuafXpZ", label: "JPY", sign: "¥" },
+  { value: "dM1e_xBlNfqq", label: "IRR", sign: "IRR"},
+  { value: "MyJEl2N1LvH3", label: "RUB", sign: "₽"},
 ]
