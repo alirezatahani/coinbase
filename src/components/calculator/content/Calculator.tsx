@@ -1,9 +1,14 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { debounce } from "lodash";
 import { Select } from "antd";
 import { SwapOutlined } from "@ant-design/icons";
 import useFetch from "../../../hooks/useFetch";
 import { CalculatorProps, OptionsType, ResultType } from "./calculator_type";
-import { CalculatorContainer, Input, InputRowContainer } from "../style/calculator_style";
+import {
+  CalculatorContainer,
+  Input,
+  InputRowContainer,
+} from "../style/calculator_style";
 import { CoinOptionType } from "types";
 
 const Calculator: React.FC<CalculatorProps> = ({
@@ -18,7 +23,7 @@ const Calculator: React.FC<CalculatorProps> = ({
     firstCoinValue: undefined,
     defaultCoinValue: undefined,
   });
-
+  
   useEffect(() => {
     fetchCoinData({ url: `/coins`, method: "get" });
   }, []);
@@ -80,6 +85,19 @@ const Calculator: React.FC<CalculatorProps> = ({
     }
   };
 
+  const searchingCoin = async (searchValue: string) => {
+    try {
+      await fetchCoinData({
+        url: `/search-suggestions?query=${searchValue}`,
+        method: "GET",
+      });
+    } catch (e) {}
+  };
+  const handler = useCallback(debounce(searchingCoin, 600), []);
+  const handleSearch = (value: string) => {
+    handler(value)
+  };
+  
   return (
     <CalculatorContainer>
       <h2>Calculator</h2>
@@ -95,7 +113,10 @@ const Calculator: React.FC<CalculatorProps> = ({
           onChange={inputHandler}
         />
         <Select
+          showSearch
+          onSearch={handleSearch}
           options={options}
+          filterOption={false}
           value={firstCoinOption}
           onChange={(value: CoinOptionType, options: CoinOptionType) => {
             selectHandler(value.value, "firstCoin");
@@ -103,7 +124,7 @@ const Calculator: React.FC<CalculatorProps> = ({
           }}
         />
       </InputRowContainer>
-      <SwapOutlined rotate={90}/>
+      <SwapOutlined rotate={90} />
       <InputRowContainer>
         <Input
           type="number"
@@ -112,7 +133,10 @@ const Calculator: React.FC<CalculatorProps> = ({
           onChange={inputHandler}
         />
         <Select
+          showSearch
+          onSearch={handleSearch}
           options={options}
+          filterOption={false}
           value={defaultOption}
           onChange={(value: CoinOptionType, options: CoinOptionType) => {
             selectHandler(value.value, "defaultCoin");
