@@ -9,4 +9,5 @@ export type ActionBarProps = {
   userTheme: string;
   handleTimePeriod: (value: string) => void;
   handleCurrency: (value: string, options: OptionInterface) => void;
+  currency:string
 };

@@ -54,6 +54,7 @@ const Home: React.FC<HomeProps> = ({ userTheme, themeHandler }) => {
           userTheme={userTheme}
           handleTimePeriod={timePeriodeHandler}
           handleCurrency={currencyHandler}
+          currency={currency.value}
         />
       )}
       {searchCoin ? (

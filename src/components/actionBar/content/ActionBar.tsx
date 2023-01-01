@@ -1,18 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Modal, Select, Tooltip } from "antd";
 import { CalculatorFilled } from "@ant-design/icons";
 import { Calculator } from "@components/calculator";
+import useFetch from "../../../hooks/useFetch";
+import { CoinOptionType } from "types";
+import { ActionBarProps } from "./actionBar_type";
 import { currencyOptions, timpePeriodOptions } from "../utils/selectOptions";
 import { ActionbarContainer } from "../style/actionBar_styles";
-import { ActionBarProps } from "./actionBar_type";
 
 const ActionBar: React.FC<ActionBarProps> = ({
   handleTimePeriod,
   handleCurrency,
   themeHandler,
   userTheme,
+  currency,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [firstCoinOption, setFirstCoinOption] = useState<CoinOptionType>();
+  const [defaultOption, setDefaultOption] = useState<CoinOptionType>();
+  const [{ data, loading }, fetchReferenceCoinData] = useFetch();
+  const [{ data: data2, loading: loading2 }, fetchFirstCoinData] = useFetch();
+
+  const createDefualtOption = async () => {
+    let options = { value: "", label: "" };
+    let coinData = await data?.data?.coin;
+    options = {
+      value: coinData?.price,
+      label: coinData?.symbol + "-" + coinData?.name,
+    };
+    setDefaultOption(options);
+  };
+  const createFirstCoinOption = async () => {
+    let options = { value: "", label: "" };
+    let coinData = await data2?.data?.coin;
+    options = {
+      value: coinData?.price,
+      label: coinData?.symbol + "-" + coinData?.name,
+    };
+    setFirstCoinOption(options);
+  };
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -21,6 +47,31 @@ const ActionBar: React.FC<ActionBarProps> = ({
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  const defaultOptionHandler: (options: CoinOptionType) => void = (
+    options: CoinOptionType
+  ) => {
+    return setDefaultOption({ label: options.label, value: options.value });
+  };
+  const firstCoinOptionHandler: (options: CoinOptionType) => void = (
+    options: CoinOptionType
+  ) => {
+    return setFirstCoinOption({ label: options.label, value: options.value });
+  };
+  useEffect(() => {
+    fetchFirstCoinData({ url: "/coin/Qwsogvtv82FCd", method: "get" });
+  }, []);
+
+  useEffect(() => {
+    fetchReferenceCoinData({ url: `/coin/${currency}`, method: "get" });
+    createDefualtOption();
+  }, [currency]);
+
+  useEffect(() => {
+    createDefualtOption();
+    createFirstCoinOption();
+  }, [data, data2]);
+
   return (
     <ActionbarContainer>
       <Tooltip title="Change currency">
@@ -48,12 +99,15 @@ const ActionBar: React.FC<ActionBarProps> = ({
         <Button onClick={showModal}>
           <CalculatorFilled />
         </Button>
-        <Modal
-          visible={isModalOpen}
-          onCancel={handleCancel}
-          footer={null}
-        >
-          <Calculator />
+        <Modal visible={isModalOpen} onCancel={handleCancel} footer={null}>
+          {!loading && !loading2 && data && data2 && (
+            <Calculator
+              defaultOption={defaultOption}
+              handleDefualtOption={defaultOptionHandler}
+              firstCoinOption={firstCoinOption}
+              handleFirstCoinOption={firstCoinOptionHandler}
+            />
+          )}
         </Modal>
       </Tooltip>
     </ActionbarContainer>
