@@ -1,8 +1,9 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Select } from "antd";
+import { SwapOutlined } from "@ant-design/icons";
 import useFetch from "../../../hooks/useFetch";
 import { CalculatorProps, OptionsType, ResultType } from "./calculator_type";
-import { Input, InputRowContainer } from "../style/calculator_style";
+import { CalculatorContainer, Input, InputRowContainer } from "../style/calculator_style";
 import { CoinOptionType } from "types";
 
 const Calculator: React.FC<CalculatorProps> = ({
@@ -80,7 +81,7 @@ const Calculator: React.FC<CalculatorProps> = ({
   };
 
   return (
-    <div>
+    <CalculatorContainer>
       <h2>Calculator</h2>
       <p>
         Use the calculator to convert real-time prices between all available
@@ -102,6 +103,7 @@ const Calculator: React.FC<CalculatorProps> = ({
           }}
         />
       </InputRowContainer>
+      <SwapOutlined rotate={90}/>
       <InputRowContainer>
         <Input
           type="number"
@@ -118,7 +120,7 @@ const Calculator: React.FC<CalculatorProps> = ({
           }}
         />
       </InputRowContainer>
-    </div>
+    </CalculatorContainer>
   );
 };
 
