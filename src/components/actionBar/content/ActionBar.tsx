@@ -4,7 +4,7 @@ import { CalculatorFilled } from "@ant-design/icons";
 import { Calculator } from "@components/calculator";
 import useFetch from "../../../hooks/useFetch";
 import { ActionBarProps, OptionInterface } from "./actionBar_type";
-import { currencyOptions, timpePeriodOptions } from "../utils/selectOptions";
+import { timpePeriodOptions } from "../utils/selectOptions";
 import { ActionbarContainer } from "../style/actionBar_styles";
 import GetRefrenceCurrency from "../utils/getRefrenceCurrency";
 
@@ -80,7 +80,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
           onChange={(value: string, options: OptionInterface) =>
             handleCurrency(value, options)
           }
-          options={currencyOptions}
+          options={GetRefrenceCurrency()}
         />
       </Tooltip>
       <Tooltip title="Change time period">

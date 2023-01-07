@@ -6,7 +6,9 @@ export interface CoinInterface {
   uuid?: string;
   currencySign:string
 }
-export type CoinOptionType = {
-  label: string;
-  value: string;
+export type CurrencyOptions = {
+  uuid: string;
+  symbol: string;
+  name: string;
+  sign: string;
 };
