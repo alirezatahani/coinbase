@@ -9,7 +9,7 @@ import {
   Input,
   InputRowContainer,
 } from "../style/calculator_style";
-import { CoinOptionType } from "types";
+import { OptionInterface } from "@components/actionBar/content/actionBar_type";
 
 const Calculator: React.FC<CalculatorProps> = ({
   firstCoinOption,
@@ -23,7 +23,7 @@ const Calculator: React.FC<CalculatorProps> = ({
     firstCoinValue: undefined,
     defaultCoinValue: undefined,
   });
-  
+
   useEffect(() => {
     fetchCoinData({ url: `/coins`, method: "get" });
   }, []);
@@ -95,9 +95,9 @@ const Calculator: React.FC<CalculatorProps> = ({
   };
   const handler = useCallback(debounce(searchingCoin, 600), []);
   const handleSearch = (value: string) => {
-    handler(value)
+    handler(value);
   };
-  
+
   return (
     <CalculatorContainer>
       <h2>Calculator</h2>
@@ -118,7 +118,7 @@ const Calculator: React.FC<CalculatorProps> = ({
           options={options}
           filterOption={false}
           value={firstCoinOption}
-          onChange={(value: CoinOptionType, options: CoinOptionType) => {
+          onChange={(value: OptionInterface, options: OptionInterface) => {
             selectHandler(value.value, "firstCoin");
             handleFirstCoinOption(options);
           }}
@@ -138,7 +138,7 @@ const Calculator: React.FC<CalculatorProps> = ({
           options={options}
           filterOption={false}
           value={defaultOption}
-          onChange={(value: CoinOptionType, options: CoinOptionType) => {
+          onChange={(value: OptionInterface, options: OptionInterface) => {
             selectHandler(value.value, "defaultCoin");
             handleDefualtOption(options);
           }}

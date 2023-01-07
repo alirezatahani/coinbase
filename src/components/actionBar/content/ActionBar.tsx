@@ -3,10 +3,10 @@ import { Button, Modal, Select, Tooltip } from "antd";
 import { CalculatorFilled } from "@ant-design/icons";
 import { Calculator } from "@components/calculator";
 import useFetch from "../../../hooks/useFetch";
-import { CoinOptionType } from "types";
-import { ActionBarProps } from "./actionBar_type";
+import { ActionBarProps, OptionInterface } from "./actionBar_type";
 import { currencyOptions, timpePeriodOptions } from "../utils/selectOptions";
 import { ActionbarContainer } from "../style/actionBar_styles";
+import GetRefrenceCurrency from "../utils/getRefrenceCurrency";
 
 const ActionBar: React.FC<ActionBarProps> = ({
   handleTimePeriod,
@@ -16,8 +16,8 @@ const ActionBar: React.FC<ActionBarProps> = ({
   currency,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [firstCoinOption, setFirstCoinOption] = useState<CoinOptionType>();
-  const [defaultOption, setDefaultOption] = useState<CoinOptionType>();
+  const [firstCoinOption, setFirstCoinOption] = useState<OptionInterface>();
+  const [defaultOption, setDefaultOption] = useState<OptionInterface>();
   const [{ data, loading }, fetchReferenceCoinData] = useFetch();
   const [{ data: data2, loading: loading2 }, fetchFirstCoinData] = useFetch();
 
@@ -48,13 +48,13 @@ const ActionBar: React.FC<ActionBarProps> = ({
     setIsModalOpen(false);
   };
 
-  const defaultOptionHandler: (options: CoinOptionType) => void = (
-    options: CoinOptionType
+  const defaultOptionHandler: (options: OptionInterface) => void = (
+    options: OptionInterface
   ) => {
     return setDefaultOption({ label: options.label, value: options.value });
   };
-  const firstCoinOptionHandler: (options: CoinOptionType) => void = (
-    options: CoinOptionType
+  const firstCoinOptionHandler: (options: OptionInterface) => void = (
+    options: OptionInterface
   ) => {
     return setFirstCoinOption({ label: options.label, value: options.value });
   };
@@ -77,7 +77,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
       <Tooltip title="Change currency">
         <Select
           defaultValue="yhjMzLPhuIDl"
-          onChange={(value: string, options: any) =>
+          onChange={(value: string, options: OptionInterface) =>
             handleCurrency(value, options)
           }
           options={currencyOptions}
