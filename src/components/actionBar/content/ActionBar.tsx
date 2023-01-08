@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button, Modal, Select, Tooltip } from "antd";
 import { CalculatorFilled } from "@ant-design/icons";
 import { Calculator } from "@components/calculator";
@@ -8,6 +8,7 @@ import { timpePeriodOptions } from "../utils/selectOptions";
 import { ActionbarContainer } from "../style/actionBar_styles";
 import GetRefrenceCurrency from "../utils/getRefrenceCurrency";
 import { createOption } from "../utils/createOption";
+import { debounce } from "lodash";
 
 const ActionBar: React.FC<ActionBarProps> = ({
   handleTimePeriod,
@@ -16,6 +17,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   userTheme,
   currency,
 }) => {
+  const [searchCurrency, setSearchCurrency] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [firstCoinOption, setFirstCoinOption] = useState<OptionInterface>();
   const [defaultOption, setDefaultOption] = useState<OptionInterface>();
@@ -55,15 +57,26 @@ const ActionBar: React.FC<ActionBarProps> = ({
     setFirstCoinOption(createOption(firstCoin));
   }, [refrenceCoin, firstCoin]);
 
+  const searchingCurrency = (searchValue: string) => {
+    setSearchCurrency(searchValue);
+  };
+  const handler = useCallback(debounce(searchingCurrency, 600), []);
+  const handleSearch = (value: string) => {
+    handler(value);
+  };
+
   return (
     <ActionbarContainer>
       <Tooltip title="Change currency">
         <Select
+          showSearch
+          onSearch={handleSearch}
+          filterOption={false}
           defaultValue="yhjMzLPhuIDl"
           onChange={(value: string, options: OptionInterface) =>
             handleCurrency(value, options)
           }
-          options={GetRefrenceCurrency()}
+          options={GetRefrenceCurrency(searchCurrency)}
         />
       </Tooltip>
       <Tooltip title="Change time period">
