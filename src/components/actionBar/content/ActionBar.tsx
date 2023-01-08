@@ -7,6 +7,7 @@ import { ActionBarProps, OptionInterface } from "./actionBar_type";
 import { timpePeriodOptions } from "../utils/selectOptions";
 import { ActionbarContainer } from "../style/actionBar_styles";
 import GetRefrenceCurrency from "../utils/getRefrenceCurrency";
+import { createOption } from "../utils/createOption";
 
 const ActionBar: React.FC<ActionBarProps> = ({
   handleTimePeriod,
@@ -18,27 +19,9 @@ const ActionBar: React.FC<ActionBarProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [firstCoinOption, setFirstCoinOption] = useState<OptionInterface>();
   const [defaultOption, setDefaultOption] = useState<OptionInterface>();
-  const [{ data, loading }, fetchReferenceCoinData] = useFetch();
-  const [{ data: data2, loading: loading2 }, fetchFirstCoinData] = useFetch();
-
-  const createDefualtOption = async () => {
-    let options = { value: "", label: "" };
-    let coinData = await data?.data?.coin;
-    options = {
-      value: coinData?.price,
-      label: coinData?.symbol + "-" + coinData?.name,
-    };
-    setDefaultOption(options);
-  };
-  const createFirstCoinOption = async () => {
-    let options = { value: "", label: "" };
-    let coinData = await data2?.data?.coin;
-    options = {
-      value: coinData?.price,
-      label: coinData?.symbol + "-" + coinData?.name,
-    };
-    setFirstCoinOption(options);
-  };
+  const [{ data: refrenceCoin, loading }, fetchReferenceCoinData] = useFetch();
+  const [{ data: firstCoin, loading: loading2 }, fetchFirstCoinData] =
+    useFetch();
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -64,13 +47,13 @@ const ActionBar: React.FC<ActionBarProps> = ({
 
   useEffect(() => {
     fetchReferenceCoinData({ url: `/coin/${currency}`, method: "get" });
-    createDefualtOption();
+    setDefaultOption(createOption(refrenceCoin));
   }, [currency]);
 
   useEffect(() => {
-    createDefualtOption();
-    createFirstCoinOption();
-  }, [data, data2]);
+    setDefaultOption(createOption(refrenceCoin));
+    setFirstCoinOption(createOption(firstCoin));
+  }, [refrenceCoin, firstCoin]);
 
   return (
     <ActionbarContainer>
@@ -100,7 +83,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
           <CalculatorFilled />
         </Button>
         <Modal visible={isModalOpen} onCancel={handleCancel} footer={null}>
-          {!loading && !loading2 && data && data2 && (
+          {!loading && !loading2 && refrenceCoin && firstCoin && (
             <Calculator
               defaultOption={defaultOption}
               handleDefualtOption={defaultOptionHandler}
