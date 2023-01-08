@@ -12,6 +12,7 @@ export const CoinName = styled.p(({ theme }) => ({
 }));
 export const CoinContent = styled.div(({ theme }) => ({
   display: "flex",
+  alignItems: "center",
   gap: "2rem",
   marginBottom: "1rem",
   color: theme.palette.text.color,
