@@ -12,6 +12,7 @@ import {
   MyDiv,
   RankBadge,
 } from "../style/coinDetail_style";
+import { BackButton } from "@components/backBtn";
 
 const CoinDetail: React.FC<CoinDetailProps> = ({ coinData }) => {
   const {
@@ -29,6 +30,7 @@ const CoinDetail: React.FC<CoinDetailProps> = ({ coinData }) => {
   const volume24h = coinData["24hVolume"];
   return (
     <section>
+      <BackButton />
       <CoinDesc>
         <MyDiv>
           <img src={iconUrl} style={{ width: 40 }} />
@@ -43,9 +45,9 @@ const CoinDetail: React.FC<CoinDetailProps> = ({ coinData }) => {
             </MyDiv>
           </div>
         </MyDiv>
-        <span>$ {numberToPrice(Number(price))}</span>
+        <span>{numberToPrice(Number(price), "$")}</span>
       </CoinDesc>
-      <Chart highcharts={Highcharts} options={linChartConfig(coinData, true)} />
+      <Chart highcharts={Highcharts} options={linChartConfig(coinData)} />
       <CoinStatistics
         allTimeHigh={allTimeHigh}
         btcPrice={btcPrice}

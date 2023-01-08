@@ -4,7 +4,7 @@ import { numberToPrice } from "@utils/numberToPrice";
 import { timstampToDate } from "@utils/timestamp";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { CoinInterface } from "types";
-import { CreateCoinStatisticsArray } from "./coinStatisticsArray";
+import { CreateCoinStatisticsArray } from "../constant/coinStatisticsArray";
 import {
   CoinStatisticsRowContainer,
   CoinStatisticsRow,
@@ -42,9 +42,10 @@ const CoinStatistics: React.FC<CoinInterface> = ({ name, ...props }) => {
               </span>
             </CoinStatisticsRowTitleContainer>
             <RowValueContainer>
-              {" "}
-              {item.dollarSign ? "$" : ""} {numberToPrice(Number(item.data))}
-              {item.btc ? "BTC" : ""}
+              {numberToPrice(
+                Number(item.data),
+                item.currency?.dollarSign ?? item.currency?.btcSign
+              )}
               {item.timestamp ? (
                 <span>on {timstampToDate(item.timestamp)}</span>
               ) : null}

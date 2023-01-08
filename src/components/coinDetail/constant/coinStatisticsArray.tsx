@@ -23,7 +23,7 @@ export const CreateCoinStatisticsArray = ({ ...props }: CoinInterface) => {
     {
       title: "Price to USD",
       data: price,
-      dollarSign: true,
+      currency:{dollarSign:"$"},
       tooltip: false,
       icon: <DollarCircleTwoTone />,
     },
@@ -31,21 +31,20 @@ export const CreateCoinStatisticsArray = ({ ...props }: CoinInterface) => {
       title: "Price to BTC",
       btc: true,
       data: btcPrice,
-      dollarSign: false,
+      currency:{btcSign:"BTC"},
       tooltip: false,
       icon: <PieChartTwoTone />,
     },
     {
       title: "Rank",
       data: rank,
-      dollarSign: false,
       tooltip: false,
       icon: <TrophyTwoTone />,
     },
     {
       title: "24h volume",
       data: volume24h,
-      dollarSign: true,
+      currency:{dollarSign:"$"},
       tooltip: true,
       tooltipTitle:
         "The total value of all trades with this coin on exchanges, in the past 24 hours.",
@@ -54,7 +53,7 @@ export const CreateCoinStatisticsArray = ({ ...props }: CoinInterface) => {
     {
       title: "Market cap",
       data: marketCap,
-      dollarSign: true,
+      currency:{dollarSign:"$"},
       tooltip: true,
       tooltipTitle:
         "Market cap is the circulating supply of a coin multiplied by its current price. So, if a coin has 100 units outstanding and is trading for $10 a coin, it has a market cap of $1,000.",
@@ -63,7 +62,6 @@ export const CreateCoinStatisticsArray = ({ ...props }: CoinInterface) => {
     {
       title: "Volume / Market cap",
       data: Number(volume24h) / Number(marketCap),
-      dollarSign: false,
       tooltip: true,
       tooltipTitle:
         "Volume / Market cap is a coin's 24h trading volume divided by its market cap. A high ratio means that the coin is highly liquid.",
@@ -72,7 +70,7 @@ export const CreateCoinStatisticsArray = ({ ...props }: CoinInterface) => {
     {
       title: "Fully diluted market cap",
       data: fullyDilutedMarketCap,
-      dollarSign: true,
+      currency:{dollarSign:"$"},
       tooltip: true,
       tooltipTitle:
         "Fully diluted market cap is a coin's price multiplied by its total supply. It shows what the market cap could be if all coins were in circulation, with the current price.",
@@ -81,7 +79,7 @@ export const CreateCoinStatisticsArray = ({ ...props }: CoinInterface) => {
     {
       title: "All-time high (daily avg.)",
       data: allTimeHigh.price,
-      dollarSign: true,
+      currency:{dollarSign:"$"},
       tooltip: true,
       tooltipTitle:
         "All-time high (daily average) is the highest daily average price of a coin.",
