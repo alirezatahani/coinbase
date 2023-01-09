@@ -1,3 +1,4 @@
 export type GetCoinsDataProps = {
-    queries?: {};
+    queries?: {limit?:number,offset:number};
+    handleOffset:(page:number)=>void
   };
