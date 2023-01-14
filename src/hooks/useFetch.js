@@ -7,7 +7,7 @@ const actions = {
   fetchFailure: "FETCH_DATA_FAILURE",
 };
 const initialState = {
-  loading: false,
+  loading: true,
   error: null,
   data: [],
   hasMore: false,
