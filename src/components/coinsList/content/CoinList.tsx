@@ -17,19 +17,21 @@ export const CoinList: React.FC<CoinListProps> = ({
   searchCoin,
 }) => {
   const observer = useRef<IntersectionObserver>();
-  const lastCoin = useCallback(
-    (node: Element) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          handleOffset();
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [loading, hasMore]
-  );
+  const lastCoin =
+    !searchCoin &&
+    useCallback(
+      (node: Element) => {
+        if (loading) return;
+        if (observer.current) observer.current.disconnect();
+        observer.current = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            handleOffset();
+          }
+        });
+        if (node) observer.current.observe(node);
+      },
+      [loading, hasMore]
+    );
 
   if (data?.length === 0 && searchCoin && !loading)
     return <NoResultText>No results for {searchCoin}</NoResultText>;
@@ -38,7 +40,7 @@ export const CoinList: React.FC<CoinListProps> = ({
     <CoinListContainer>
       {data.map((coin: CoinInterface, index: number) => {
         const { change, iconUrl, name, price, uuid } = coin;
-        if (data.length === index + 1) {
+        if (data.length === index + 1 && lastCoin) {
           return (
             <div ref={lastCoin} key={uuid}>
               <CoinItem
