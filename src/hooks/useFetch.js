@@ -18,7 +18,7 @@ const reducer = (state, action) => {
     case actions.fetchRequest:
       return {
         ...state,
-        //data: [],
+        data: action.payload === "searching" ? [] : [...state.data],
         loading: true,
         error: null,
       };
@@ -50,7 +50,7 @@ const useFetch = () => {
 
   async function performAction(options) {
     try {
-      dispatch({ type: actions.fetchRequest });
+      dispatch({ type: actions.fetchRequest, payload: options.getBy });
       const response = await apiClient(options);
       dispatch({
         type: actions.fetchSuccess,
