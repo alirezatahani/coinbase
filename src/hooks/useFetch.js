@@ -31,7 +31,6 @@ const reducer = (state, action) => {
         error: null,
       };
     case actions.fetchFailure:
-      console.log(action.payload, "payload");
       return {
         ...state,
         data: [],
