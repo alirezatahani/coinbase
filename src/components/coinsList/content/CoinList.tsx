@@ -33,7 +33,7 @@ export const CoinList: React.FC<CoinListProps> = ({
       [loading, hasMore]
     );
 
-  if (data?.length === 0 && searchCoin && !loading)
+  if (data?.length === 0 && searchCoin && !loading && !error)
     return <NoResultText>No results for {searchCoin}</NoResultText>;
 
   return (
@@ -66,7 +66,7 @@ export const CoinList: React.FC<CoinListProps> = ({
         }
       })}
       {loading && <Spin />}
-      {error && <p>{error}</p>}
+      {error && <NoResultText>{error}</NoResultText>}
     </CoinListContainer>
   );
 };
