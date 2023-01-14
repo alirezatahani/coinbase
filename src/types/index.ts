@@ -4,5 +4,4 @@ export interface CoinInterface {
   price: string;
   change: number;
   uuid?: string;
-  ref?:any
 }
