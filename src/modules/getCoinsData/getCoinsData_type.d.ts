@@ -1,3 +1,3 @@
 export type GetCoinsDataProps = {
-    queries?: {};
+    queries?: {limit:number};
   };

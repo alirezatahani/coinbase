@@ -1,4 +1,4 @@
-import {  useReducer } from "react";
+import { useReducer, useState } from "react";
 import apiClient from "../utils/apiClient";
 
 const actions = {
@@ -9,7 +9,8 @@ const actions = {
 const initialState = {
   loading: false,
   error: null,
-  data: null,
+  data: [],
+  hasMore: false,
 };
 
 const reducer = (state, action) => {
@@ -17,21 +18,23 @@ const reducer = (state, action) => {
     case actions.fetchRequest:
       return {
         ...state,
-        data: null,
+        //data: [],
         loading: true,
         error: null,
       };
     case actions.fetchSuccess:
       return {
         ...state,
-        data: action.payload,
+        data: [...state.data, ...action.payload],
         loading: false,
+        hasMore: action.payload.length > 0,
         error: null,
       };
     case actions.fetchFailure:
+      console.log(action.payload, "payload");
       return {
         ...state,
-        data: null,
+        data: [],
         loading: false,
         error: action.payload,
       };
@@ -43,12 +46,16 @@ const reducer = (state, action) => {
 
 const useFetch = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [data, setData] = useState(state.data);
 
   async function performAction(options) {
     try {
       dispatch({ type: actions.fetchRequest });
       const response = await apiClient(options);
-      dispatch({ type: actions.fetchSuccess, payload: response.data });
+      dispatch({
+        type: actions.fetchSuccess,
+        payload: response.data.data.coins,
+      });
     } catch (error) {
       dispatch({ type: actions.fetchFailure, payload: error.message });
     }
