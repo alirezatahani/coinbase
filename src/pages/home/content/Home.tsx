@@ -7,14 +7,14 @@ import "antd/dist/antd.css";
 
 export default function Home() {
   const [searchCoin, setSearchCoin] = useState("");
-  const [{ loading, data,error }, doSearchCoin] = useFetch();
+  const [{ loading, data, error }, doSearchCoin] = useFetch();
 
   const searchingCoin = async (searchValue: string) => {
     try {
       await doSearchCoin({
         url: `/search-suggestions?query=${searchValue}`,
         method: "GET",
-        getBy:"searching"
+        getBy: "searching",
       });
     } catch (e) {}
   };
@@ -31,7 +31,12 @@ export default function Home() {
         onChange={(e) => searchHandler(e.target.value)}
       />
       {searchCoin ? (
-        <CoinList loading={loading} data={data} error={error}/>
+        <CoinList
+          loading={loading}
+          data={data}
+          error={error}
+          searchCoin={searchCoin}
+        />
       ) : (
         <HomeTabs />
       )}

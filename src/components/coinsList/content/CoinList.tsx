@@ -1,9 +1,12 @@
 import React, { useCallback, useRef } from "react";
-import { CoinListContainer } from "../styles/coinListContainer_style";
 import { CoinInterface } from "types";
 import { CoinListProps } from "./coinList_types";
 import { Spin } from "antd";
 import CoinItem from "@components/coinItem/content/CoinItem";
+import {
+  CoinListContainer,
+  NoResultText,
+} from "../styles/coinListContainer_style";
 
 export const CoinList: React.FC<CoinListProps> = ({
   hasMore,
@@ -11,6 +14,7 @@ export const CoinList: React.FC<CoinListProps> = ({
   error,
   loading,
   handleOffset,
+  searchCoin,
 }) => {
   const observer = useRef<IntersectionObserver>();
   const lastCoin = useCallback(
@@ -26,6 +30,9 @@ export const CoinList: React.FC<CoinListProps> = ({
     },
     [loading, hasMore]
   );
+
+  if (data?.length === 0 && searchCoin && !loading)
+    return <NoResultText>No results for {searchCoin}</NoResultText>;
 
   return (
     <CoinListContainer>

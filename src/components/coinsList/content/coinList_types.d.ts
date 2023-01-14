@@ -3,5 +3,6 @@ export type CoinListProps = {
   error?:string;
   data: {}[];
   hasMore?:boolean;
-  handleOffset?:()=>void
+  handleOffset?:()=>void;
+  searchCoin?:string
 };
