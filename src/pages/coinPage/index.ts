@@ -1,2 +1,2 @@
-import CoinDetail from "./content/CoinPage";
-export {CoinDetail}
+import CoinPage from "./content/CoinPage";
+export default CoinPage
