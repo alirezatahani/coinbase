@@ -14,7 +14,6 @@ export default function Home() {
       await doSearchCoin({
         url: `/search-suggestions?query=${searchValue}`,
         method: "GET",
-        getBy: "searching",
       });
     } catch (e) {}
   };

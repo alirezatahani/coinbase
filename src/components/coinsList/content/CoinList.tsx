@@ -1,4 +1,5 @@
-import React, { useCallback, useRef } from "react";
+import React, { useEffect } from "react";
+import { useInView } from "react-hook-inview";
 import { CoinInterface } from "types";
 import { CoinListProps } from "./coinList_types";
 import { Spin } from "antd";
@@ -9,50 +10,29 @@ import {
 } from "../styles/coinListContainer_style";
 
 export const CoinList: React.FC<CoinListProps> = ({
-  hasMore,
   data,
   error,
+  hasMore,
   loading,
   handleOffset,
   searchCoin,
 }) => {
-  const observer = useRef<IntersectionObserver>();
-  const lastCoin =
-    !searchCoin &&
-    useCallback(
-      (node: Element) => {
-        if (loading) return;
-        if (observer.current) observer.current.disconnect();
-        observer.current = new IntersectionObserver((entries) => {
-          if (entries[0].isIntersecting) {
-            handleOffset();
-          }
-        });
-        if (node) observer.current.observe(node);
-      },
-      [loading, hasMore]
-    );
+  const [ref, isVisible] = useInView({ threshold: 1 });
+
+  useEffect(() => {
+    if (isVisible && hasMore) {
+      handleOffset();
+    }
+  }, [isVisible]);
 
   if (data?.length === 0 && searchCoin && !loading && !error)
     return <NoResultText>No results for {searchCoin}</NoResultText>;
 
   return (
-    <CoinListContainer>
-      {data.map((coin: CoinInterface, index: number) => {
-        const { change, iconUrl, name, price, uuid } = coin;
-        if (data.length === index + 1 && lastCoin) {
-          return (
-            <div ref={lastCoin} key={uuid}>
-              <CoinItem
-                uuid={uuid}
-                change={Number(change)}
-                iconUrl={iconUrl}
-                name={name}
-                price={price}
-              />
-            </div>
-          );
-        } else {
+    <>
+      <CoinListContainer>
+        {data.map((coin: CoinInterface) => {
+          const { change, iconUrl, name, price, uuid } = coin;
           return (
             <CoinItem
               key={uuid}
@@ -63,10 +43,10 @@ export const CoinList: React.FC<CoinListProps> = ({
               price={price}
             />
           );
-        }
-      })}
-      {loading && <Spin />}
+        })}
+      </CoinListContainer>
+      <div ref={ref}>{hasMore && loading && !error ? <Spin /> : ""}</div>
       {error && <NoResultText>{error}</NoResultText>}
-    </CoinListContainer>
+    </>
   );
 };

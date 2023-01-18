@@ -10,7 +10,6 @@ const initialState = {
   loading: true,
   error: null,
   data: [],
-  hasMore: false,
 };
 
 const reducer = (state, action) => {
@@ -18,16 +17,15 @@ const reducer = (state, action) => {
     case actions.fetchRequest:
       return {
         ...state,
-        data: action.payload === "searching" ? [] : [...state.data],
+        data: [],
         loading: true,
         error: null,
       };
     case actions.fetchSuccess:
       return {
         ...state,
-        data: [...state.data, ...action.payload],
+        data: action.payload,
         loading: false,
-        hasMore: action.payload.length > 0,
         error: null,
       };
     case actions.fetchFailure:
@@ -49,7 +47,7 @@ const useFetch = () => {
 
   async function performAction(options) {
     try {
-      dispatch({ type: actions.fetchRequest, payload: options.getBy });
+      dispatch({ type: actions.fetchRequest });
       const response = await apiClient(options);
       dispatch({
         type: actions.fetchSuccess,
