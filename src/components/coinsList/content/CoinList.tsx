@@ -32,17 +32,8 @@ export const CoinList: React.FC<CoinListProps> = ({
     <>
       <CoinListContainer>
         {data.map((coin: CoinInterface) => {
-          const { change, iconUrl, name, price, uuid } = coin;
-          return (
-            <CoinItem
-              key={uuid}
-              uuid={uuid}
-              change={Number(change)}
-              iconUrl={iconUrl}
-              name={name}
-              price={price}
-            />
-          );
+          const { change, uuid } = coin;
+          return <CoinItem key={uuid} change={Number(change)} {...coin} />;
         })}
       </CoinListContainer>
       <div ref={ref}>{hasMore && loading && !error ? <Spin /> : ""}</div>

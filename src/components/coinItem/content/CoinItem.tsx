@@ -5,8 +5,8 @@ import { CoinPriceSection } from "@components/coinPrice/content/CoinPrice";
 import { CoinPriceChangeSection } from "@components/coinPriceChange";
 import { CoinDesc, CoinName, CoinContent } from "../style/coinItem_style";
 
-const CoinItem: React.FC<CoinInterface> = ({ name, ...props }) => {
-  const { iconUrl, change, price, uuid } = props;
+const CoinItem: React.FC<CoinInterface> = ({ ...coin }) => {
+  const { iconUrl, change, price ,name} = coin;
   return (
     <CoinContent>
       <CoinDesc>
@@ -16,11 +16,7 @@ const CoinItem: React.FC<CoinInterface> = ({ name, ...props }) => {
       <CoinPriceSection price={price} />
       <CoinPriceChangeSection priceChange={change} />
       <AddToFavoriteSection
-        change={change}
-        iconUrl={iconUrl}
-        name={name}
-        price={price}
-        uuid={uuid}
+        {...coin}
       />
     </CoinContent>
   );
