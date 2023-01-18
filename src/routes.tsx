@@ -1,3 +1,4 @@
+import React from 'react';
 import Home from "@pages/home/index";
 import CoinPage from "@pages/coinPage/index";
 

@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import React,{ ReactElement } from "react";
 import { ThemeProvider } from "styled-components";
 import { theme } from "@global/Global";
 import { Route, Router } from "@utils/router";
