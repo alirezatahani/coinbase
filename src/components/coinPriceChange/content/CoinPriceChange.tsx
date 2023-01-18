@@ -5,17 +5,13 @@ import { CoinPriceChangeProps } from "./coinPriceChange_types";
 export const CoinPriceChangeSection: React.FC<CoinPriceChangeProps> = ({
   priceChange,
 }) => {
-  if (priceChange === 0)
-    return (
-      <PriceChangeContainer priceChange={priceChange}>0</PriceChangeContainer>
-    );
-  return priceChange < 0 ? (
+  return (
     <PriceChangeContainer priceChange={priceChange}>
-      {priceChange}%
-    </PriceChangeContainer>
-  ) : (
-    <PriceChangeContainer priceChange={priceChange}>
-      +{priceChange}%
+      {priceChange === 0
+        ? 0
+        : priceChange > 0
+        ? `${priceChange}%`
+        : `${priceChange}%`}
     </PriceChangeContainer>
   );
 };
