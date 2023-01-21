@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
-import { useInView } from "react-hook-inview";
+import React from "react";
 import { CoinInterface } from "types";
-import { CoinListProps } from "./coinList_types";
 import { Spin } from "antd";
+import { CoinListProps } from "./coinList_types";
 import CoinItem from "@components/coinItem/content/CoinItem";
 import {
   CoinListContainer,
@@ -11,23 +10,13 @@ import {
 
 export const CoinList: React.FC<CoinListProps> = ({
   data,
-  error,
-  hasMore,
   loading,
-  handleOffset,
+  error,
   searchCoin,
 }) => {
-  const [ref, isVisible] = useInView({ threshold: 1 });
-
-  useEffect(() => {
-    if (isVisible && hasMore) {
-      handleOffset();
-    }
-  }, [isVisible]);
-
-  if (data?.length === 0 && searchCoin && !loading && !error)
+  if (loading) return <Spin />;
+  if (data?.length === 0 && searchCoin)
     return <NoResultText>No results for {searchCoin}</NoResultText>;
-
   return (
     <>
       <CoinListContainer>
@@ -35,9 +24,8 @@ export const CoinList: React.FC<CoinListProps> = ({
           const { change, uuid } = coin;
           return <CoinItem key={uuid} change={Number(change)} {...coin} />;
         })}
+        {error && <NoResultText>{error}</NoResultText>}
       </CoinListContainer>
-      <div ref={ref}>{hasMore && loading && !error ? <Spin /> : ""}</div>
-      {error && <NoResultText>{error}</NoResultText>}
     </>
   );
 };

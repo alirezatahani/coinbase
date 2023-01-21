@@ -1,8 +1,6 @@
 export type CoinListProps = {
   loading?: boolean;
-  error?:string;
+  error?: string;
   data: {}[];
-  hasMore?:boolean;
-  handleOffset?:()=>void;
-  searchCoin?:string
+  searchCoin?: string;
 };
