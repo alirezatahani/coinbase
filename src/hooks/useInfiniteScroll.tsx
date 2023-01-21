@@ -11,11 +11,10 @@ const useInfiniteScroll: (
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
-    if (isVisible) {
-      setIsFetching(true);
-    } else {
+    if (!isVisible) {
       return;
     }
+    setIsFetching(true);
   }, [isVisible]);
   useEffect(() => {
     if (!isFetching) return;
