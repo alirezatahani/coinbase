@@ -29,9 +29,6 @@ export const GetCoinsData: React.FC<GetCoinsDataProps> = ({ queries }) => {
   }
 
   useEffect(() => {
-    loadData();
-  }, []);
-  useEffect(() => {
     setCoinData([...coinData, ...data]);
     if (!loading && !error && data) {
       if (data.length < queries.limit) setHasMore(false);
