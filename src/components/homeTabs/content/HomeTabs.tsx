@@ -10,7 +10,7 @@ import { TabContainer } from "../style/HomeTabs_styles";
 const HomeTabs: React.FC<HomeTabsProps> = ({ currency, timePeriod }) => {
   const [limit, setLimit] = useState(10);
   const { TabPane } = Tabs;
-
+  
   return (
     <TabContainer>
       <Tabs centered>
@@ -27,7 +27,6 @@ const HomeTabs: React.FC<HomeTabsProps> = ({ currency, timePeriod }) => {
                   />
                 </TabPane>
               );
-
             default:
               return (
                 <TabPane tab={name} key={key}>

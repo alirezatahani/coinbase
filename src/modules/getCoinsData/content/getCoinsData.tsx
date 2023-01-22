@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
 import { CoinList } from "@components/index";
 import { convertToQuery } from "@utils/queries";
@@ -10,11 +10,9 @@ export const GetCoinsData: React.FC<GetCoinsDataProps> = ({ queries ,currencySig
   const makingUrl = () => {
     return convertToQuery(queries);
   };
-  
+
   useEffect(() => {
-    const url = makingUrl();
-    console.log(url);
-    
+    const url = makingUrl(); 
     fetchCoinsData({ url: `/coins?${url}`, method: "get" });
   }, [queries]);
 
