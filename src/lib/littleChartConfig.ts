@@ -1,4 +1,5 @@
 import { theme } from "@global/Global";
+import { numberToPrice } from "@utils/numberToPrice";
 
 export const littleChartConfig = (coin: any) => {
   const series = coin.sparkline.map((item: string) => {
@@ -11,11 +12,9 @@ export const littleChartConfig = (coin: any) => {
 
   const options = {
     chart: {
-      height: 60,
-      width: 100,
+      height: 300,
       backgroundColor: "transparent",
-      spacing: [0, 10, 0, 10],
-      marginTop: 45,
+      spacing: [15, 15, 0, 15],
     },
     colors: Number(coin.change >= 0)
       ? [theme.palette.success.main]
@@ -29,19 +28,6 @@ export const littleChartConfig = (coin: any) => {
     title: {
       text: "",
     },
-    caption: {
-      align: "center",
-      floating: true,
-      margin: 10,
-      style: {
-        color: Number(coin.change >= 0)
-          ? theme.palette.success[400]
-          : theme.palette.danger[400],
-      },
-      text: priceChange(),
-      verticalAlign: "bottom",
-      y: -5,
-    },
     plotOptions: {
       series: {
         allowPointSelect: true,
@@ -53,23 +39,31 @@ export const littleChartConfig = (coin: any) => {
     yAxis: [
       {
         title: {
-          text: "",
+          text: "Price",
         },
-        labels: { enabled: false },
-        visible: false,
+        gridLineWidth: 0.1,
       },
     ],
     xAxis: [
       {
         title: {
-          text: "",
+          text: "24H",
         },
-        labels: { enabled: false },
-        visible: false,
+        crosshair: {
+          enabled: true,
+          width: 1,
+        },
       },
     ],
     tooltip: {
-      enabled: false,
+      formatter: function () {
+        return "$ " + numberToPrice(this.y);
+      },
+      enabled: true,
+      animation: true,
+      backgroundColor: theme.palette.common.white,
+      borderColor: theme.palette.common.black,
+      borderRadius: 15,
     },
     series: [
       {

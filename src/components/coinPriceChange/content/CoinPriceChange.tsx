@@ -1,6 +1,6 @@
 import * as React from "react";
-import { PriceChangeContainer } from "../style/coinPriceChange_style";
 import { CoinPriceChangeProps } from "./coinPriceChange_types";
+import { PriceChangeContainer } from "../style/coinPriceChange_style";
 
 export const CoinPriceChangeSection: React.FC<CoinPriceChangeProps> = ({
   priceChange,
