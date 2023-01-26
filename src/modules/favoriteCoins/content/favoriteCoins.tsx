@@ -2,11 +2,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { GetCoinsData } from "@modules/getCoinsData/content/getCoinsData";
 import { FavoriteCoinsProps } from "./favoriteCoins_types";
+import { EmptyText } from "../style/favoriteCoins_styles";
 
 const FavoriteCoins: React.FC<FavoriteCoinsProps> = ({
   timePeriod,
   referenceCurrencyUuid,
-  currencySign
+  currencySign,
 }) => {
   const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
   const { favoriteList } = favoriteReducers;
@@ -30,7 +31,7 @@ const FavoriteCoins: React.FC<FavoriteCoinsProps> = ({
           />
         )
       ) : (
-        <p style={{ color: "white" }}>Empty...</p>
+        <EmptyText>Empty...</EmptyText>
       )}
     </div>
   );

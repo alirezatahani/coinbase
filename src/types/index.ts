@@ -4,7 +4,8 @@ export interface CoinInterface {
   price: string;
   change: number;
   uuid?: string;
-  currencySign:string
+  currencySign?:string
+  sparkline?:[]
 }
 export type CurrencyOptions = {
   uuid: string;

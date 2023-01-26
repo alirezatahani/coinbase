@@ -15,18 +15,8 @@ export const CoinList: React.FC<CoinListProps> = ({ data, loading,currencySign }
       ) : (
         data &&
         data.map((coin: CoinInterface) => {
-          const { change, iconUrl, name, price, uuid } = coin;
-          return (
-            <CoinItem
-              key={uuid}
-              uuid={uuid}
-              change={Number(change)}
-              iconUrl={iconUrl}
-              name={name}
-              price={price}
-              currencySign={currencySign}
-            />
-          );
+          const { uuid } = coin;
+          return <CoinItem key={uuid} {...coin} currencySign={currencySign} />;
         })
       )}
     </CoinListContainer>

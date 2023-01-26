@@ -1,12 +1,14 @@
 import * as React from "react";
 import { CoinInterface } from "types";
+import Highcharts from 'highcharts/highstock'
+import Chart from 'highcharts-react-official'
+import { littleChartConfig } from "lib/littleChartConfig";
 import { AddToFavoriteSection } from "@components/addToFav";
 import { CoinPriceSection } from "@components/coinPrice/content/CoinPrice";
-import { CoinPriceChangeSection } from "@components/coinPriceChange";
 import { CoinDesc, CoinName, CoinContent } from "../style/coinItem_style";
 
-const CoinItem: React.FC<CoinInterface> = ({ name, ...props }) => {
-  const { iconUrl, change, price, uuid, currencySign } = props;
+const CoinItem: React.FC<CoinInterface> = ({currencySign,...coin}) => {
+  const { name,iconUrl, price, uuid } = coin;
   return (
     <CoinContent>
       <CoinDesc>
@@ -14,7 +16,7 @@ const CoinItem: React.FC<CoinInterface> = ({ name, ...props }) => {
         <CoinName> {name}</CoinName>
       </CoinDesc>
       <CoinPriceSection price={price} currencySign={currencySign} />
-      {change ? <CoinPriceChangeSection priceChange={change} /> : null}
+      <Chart highcharts={Highcharts} options={littleChartConfig(coin,currencySign)} />
       <AddToFavoriteSection uuid={uuid} />
     </CoinContent>
   );
