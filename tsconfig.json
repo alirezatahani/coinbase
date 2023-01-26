@@ -5,7 +5,7 @@
     "noImplicitAny": true,
     "forceConsistentCasingInFileNames": true,
     "module": "es6",
-    "jsx": "react-jsx",
+    "jsx": "react",
     "allowJs": true,
     "strict": false,
     "moduleResolution": "node",

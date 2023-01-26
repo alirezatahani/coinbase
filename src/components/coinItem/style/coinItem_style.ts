@@ -14,6 +14,7 @@ export const CoinDesc = styled.div(({ theme }) => ({
   export const CoinContent = styled.div(({theme}) => ({
     display: "flex",
     gap: "2rem",
+    alignItems:"center",
     marginBottom: "1rem",
     color: theme.palette.common.white,
   }));

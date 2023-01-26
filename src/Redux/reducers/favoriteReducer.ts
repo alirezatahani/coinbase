@@ -10,7 +10,6 @@ export const favoriteReducer = (state = initialState, action: any) => {
       const favoriteCoinIndex = state.favoriteList.findIndex(
         (item) => item.name == action.payload.name
       );
-
       if (favoriteCoinIndex < 0) {
         return {
           ...state,
@@ -18,7 +17,7 @@ export const favoriteReducer = (state = initialState, action: any) => {
         };
       } else {
         const newArray = state.favoriteList.filter(
-          (item) => item.name !== action.payload.name
+          (item) => item !== action.payload
         );
 
         return {
