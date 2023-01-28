@@ -12,9 +12,7 @@ export const GetCoinsData: React.FC<GetCoinsDataProps> = ({ queries ,currencySig
   };
   
   useEffect(() => {
-    const url = makingUrl();
-    console.log(url);
-    
+    const url = makingUrl(); 
     fetchCoinsData({ url: `/coins?${url}`, method: "get" });
   }, [queries]);
 

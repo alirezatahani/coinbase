@@ -6,6 +6,7 @@ export const CoinDesc = styled.div(({ theme }) => ({
   height: "100%",
   gap: ".5rem",
   flex: 1.5,
+  cursor: "pointer",
 }));
 export const CoinName = styled.p(({ theme }) => ({
   fontSize: theme.typography.body1.fontSize,
