@@ -12,6 +12,7 @@ export type CoinDetailProps = {
     fullyDilutedMarketCap:string;
     allTimeHigh: { price: string; timestamp: number };
   };
+  sign:string
 };
 
 export type CoinChangeProps = {

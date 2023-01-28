@@ -14,7 +14,7 @@ import {
   RankBadge,
 } from "../style/coinDetail_style";
 
-const CoinDetail: React.FC<CoinDetailProps> = ({ coinData }) => {
+const CoinDetail: React.FC<CoinDetailProps> = ({ coinData ,sign}) => {
   const {
     name,
     iconUrl,
@@ -41,11 +41,12 @@ const CoinDetail: React.FC<CoinDetailProps> = ({ coinData }) => {
             </MyDiv>
           </div>
         </MyDiv>
-        <span>{numberToPrice(Number(price), "$")}</span>
+        <span>{numberToPrice(Number(price), sign)}</span>
       </CoinDesc>
       <Chart highcharts={Highcharts} options={linChartConfig(coinData)} />
       <CoinStatistics
         coinData={coinData}
+        sign={sign}
       />
     </section>
   );

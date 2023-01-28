@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import {
   ExperimentTwoTone,
   DollarCircleTwoTone,
@@ -7,7 +8,6 @@ import {
   PieChartTwoTone,
   FundTwoTone,
 } from "@ant-design/icons";
-import { CoinInterface } from "types";
 
 export const CreateCoinStatisticsArray = ({ ...props }) => {
   const {
@@ -19,11 +19,16 @@ export const CreateCoinStatisticsArray = ({ ...props }) => {
     rank,
   } = props;
   const volume24h = props["24hVolume"];
+  const referenceCurrency = useSelector(
+    (state: any) => state.referenceCurrency
+  );
+  const { sign, label, value } = referenceCurrency;
+
   const coinStatisticsArray = [
     {
-      title: "Price to USD",
+      title: `Price to ${label}`,
       data: price,
-      currency: { dollarSign: "$" },
+      currencySign: sign,
       tooltip: false,
       icon: <DollarCircleTwoTone />,
     },
@@ -31,7 +36,7 @@ export const CreateCoinStatisticsArray = ({ ...props }) => {
       title: "Price to BTC",
       btc: true,
       data: btcPrice,
-      currency: { btcSign: "BTC" },
+      currencySign: "BTC",
       tooltip: false,
       icon: <PieChartTwoTone />,
     },
@@ -39,13 +44,14 @@ export const CreateCoinStatisticsArray = ({ ...props }) => {
       title: "Rank",
       data: rank,
       tooltip: true,
-      tooltipTitle:"A coin's place on our global ranking (by highest market cap).",
+      tooltipTitle:
+        "A coin's place on our global ranking (by highest market cap).",
       icon: <TrophyTwoTone />,
     },
     {
       title: "24h volume",
       data: volume24h,
-      currency: { dollarSign: "$" },
+      currencySign: sign,
       tooltip: true,
       tooltipTitle:
         "The total value of all trades with this coin on exchanges, in the past 24 hours.",
@@ -54,7 +60,7 @@ export const CreateCoinStatisticsArray = ({ ...props }) => {
     {
       title: "Market cap",
       data: marketCap,
-      currency: { dollarSign: "$" },
+      currencySign: sign,
       tooltip: true,
       tooltipTitle:
         "Market cap is the circulating supply of a coin multiplied by its current price. So, if a coin has 100 units outstanding and is trading for $10 a coin, it has a market cap of $1,000.",
@@ -71,7 +77,7 @@ export const CreateCoinStatisticsArray = ({ ...props }) => {
     {
       title: "Fully diluted market cap",
       data: fullyDilutedMarketCap,
-      currency: { dollarSign: "$" },
+      currencySign: sign,
       tooltip: true,
       tooltipTitle:
         "Fully diluted market cap is a coin's price multiplied by its total supply. It shows what the market cap could be if all coins were in circulation, with the current price.",
@@ -80,7 +86,7 @@ export const CreateCoinStatisticsArray = ({ ...props }) => {
     {
       title: "All-time high (daily avg.)",
       data: allTimeHigh.price,
-      currency: { dollarSign: "$" },
+      currencySign: "$",
       tooltip: true,
       tooltipTitle:
         "All-time high (daily average) is the highest daily average price of a coin.",

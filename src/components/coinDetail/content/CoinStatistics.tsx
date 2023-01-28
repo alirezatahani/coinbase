@@ -45,7 +45,7 @@ const CoinStatistics: React.FC<CoinDetailProps> = ({ coinData}) => {
             <RowValueContainer>
               {numberToPrice(
                 Number(item.data),
-                item.currency?.dollarSign ?? item.currency?.btcSign
+                item.currencySign
               )}
               {item.timestamp ? (
                 <span>on {timstampToDate(item.timestamp)}</span>
