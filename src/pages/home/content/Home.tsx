@@ -1,14 +1,13 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { debounce } from "lodash";
 import useFetch from "../../../hooks/useFetch";
 import { CoinList, HomeTabs } from "@components/index";
-import { HomeProps } from "./Home_type_d";
 import { ActionBar } from "@components/actionBar";
 import { OptionInterface } from "@components/actionBar/content/actionBar_type";
 import "antd/dist/antd.css";
 import { HomeStyle, Input } from "../style/home_styles";
 
-const Home: React.FC<HomeProps> = ({ userTheme, themeHandler }) => {
+const Home = () => {
   const [searchCoin, setSearchCoin] = useState("");
   const [{ loading, data }, doSearchCoin] = useFetch();
   const [timePeriod, setTimePeriod] = useState("24h");
@@ -50,8 +49,6 @@ const Home: React.FC<HomeProps> = ({ userTheme, themeHandler }) => {
       />
       {searchCoin ? null : (
         <ActionBar
-          themeHandler={themeHandler}
-          userTheme={userTheme}
           handleTimePeriod={timePeriodeHandler}
           handleCurrency={currencyHandler}
           currency={currency.value}

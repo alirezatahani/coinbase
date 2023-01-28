@@ -9,14 +9,15 @@ import { ActionbarContainer } from "../style/actionBar_styles";
 import GetRefrenceCurrency from "../utils/getRefrenceCurrency";
 import { createOption } from "../utils/createOption";
 import { debounce } from "lodash";
+import { changeToDark, changeToLight } from "@redux/userTheme/userThemeAction";
+import { useDispatch, useSelector } from "react-redux";
 
 const ActionBar: React.FC<ActionBarProps> = ({
   handleTimePeriod,
   handleCurrency,
-  themeHandler,
-  userTheme,
   currency,
 }) => {
+  const userTheme = useSelector((state: any) => state.theme.theme);
   const [searchCurrency, setSearchCurrency] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [firstCoinOption, setFirstCoinOption] = useState<OptionInterface>();
@@ -24,6 +25,13 @@ const ActionBar: React.FC<ActionBarProps> = ({
   const [{ data: refrenceCoin, loading }, fetchReferenceCoinData] = useFetch();
   const [{ data: firstCoin, loading: loading2 }, fetchFirstCoinData] =
     useFetch();
+  const dispatch = useDispatch();
+
+  const themeToggler = () => {
+    userTheme === "light"
+      ? dispatch(changeToDark())
+      : dispatch(changeToLight());
+  };
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -87,7 +95,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
         />
       </Tooltip>
       <Tooltip title="Change theme">
-        <Button onClick={themeHandler}>
+        <Button onClick={()=>themeToggler()}>
           {userTheme === "light" ? "Dark" : "Light"}
         </Button>
       </Tooltip>

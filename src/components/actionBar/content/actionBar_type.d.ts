@@ -4,8 +4,6 @@ interface OptionInterface {
   label: string;
 }
 export type ActionBarProps = {
-  themeHandler: () => void;
-  userTheme: string;
   handleTimePeriod: (value: string) => void;
   handleCurrency: (value: string, options: OptionInterface) => void;
   currency: string;
