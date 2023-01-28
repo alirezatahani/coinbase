@@ -1,5 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { debounce } from "lodash";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Modal, Select, Tooltip } from "antd";
+import { changeToDark, changeToLight } from "@redux/userTheme/userThemeAction";
+import { changeReferenceCurrency } from "@redux/referenceCurrency/referenceCurrencyAction";
 import { CalculatorFilled } from "@ant-design/icons";
 import { Calculator } from "@components/calculator";
 import useFetch from "../../../hooks/useFetch";
@@ -8,16 +12,13 @@ import { timpePeriodOptions } from "../utils/selectOptions";
 import { ActionbarContainer } from "../style/actionBar_styles";
 import GetRefrenceCurrency from "../utils/getRefrenceCurrency";
 import { createOption } from "../utils/createOption";
-import { debounce } from "lodash";
-import { changeToDark, changeToLight } from "@redux/userTheme/userThemeAction";
-import { useDispatch, useSelector } from "react-redux";
 
 const ActionBar: React.FC<ActionBarProps> = ({
   handleTimePeriod,
-  handleCurrency,
   currency,
 }) => {
   const userTheme = useSelector((state: any) => state.theme.theme);
+  const referenceCurrency = useSelector((state: any) => state.referenceCurrency.value);
   const [searchCurrency, setSearchCurrency] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [firstCoinOption, setFirstCoinOption] = useState<OptionInterface>();
@@ -80,9 +81,9 @@ const ActionBar: React.FC<ActionBarProps> = ({
           showSearch
           onSearch={handleSearch}
           filterOption={false}
-          defaultValue="yhjMzLPhuIDl"
+          defaultValue={referenceCurrency}
           onChange={(value: string, options: OptionInterface) =>
-            handleCurrency(value, options)
+           dispatch(changeReferenceCurrency(options))            
           }
           options={GetRefrenceCurrency(searchCurrency)}
         />
