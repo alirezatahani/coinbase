@@ -1,8 +1,9 @@
-import { FavoriteAction } from "@redux/favoriteCoins/types";
+import { ADD_TO_FAVORITE } from "./favoriteTypes";
 
-export const FavoriteActionHandler = (item: any) => {
+
+export const FavoriteActionHandler = (uuid :string) => {
   return {
-    type: FavoriteAction,
-    payload: item,
+    type: ADD_TO_FAVORITE,
+    payload: uuid,
   };
 };

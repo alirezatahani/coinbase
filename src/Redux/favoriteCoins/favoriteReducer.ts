@@ -1,12 +1,12 @@
-import { FavoriteAction } from "@redux/favoriteCoins/types";
+import { ADD_TO_FAVORITE } from "@redux/favoriteCoins/favoriteTypes";
 
-const initialState = {
-  favoriteList: <any[]>[],
+const initialState:{favoriteList:string[]} = {
+  favoriteList:[],
 };
 
-export const favoriteReducer = (state = initialState, action: any) => {
+export const favoriteReducer = (state = initialState, action:{type:string,payload:string}) => {
   switch (action.type) {
-    case FavoriteAction:
+    case ADD_TO_FAVORITE:
       const favoriteCoinIndex = state.favoriteList.findIndex(
         (item) => item == action.payload
       );
