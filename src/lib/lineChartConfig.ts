@@ -1,9 +1,11 @@
 import { theme } from "@global/Global";
 import { numberToPrice } from "@utils/numberToPrice";
+import { useAppSelector } from "hooks/hooks";
 import { CoinInterface } from "types";
 
 export const linChartConfig = (coin: CoinInterface) => {
-  
+  const referenceCurrency = useAppSelector((state)=>state.referenceCurrency)
+  const {sign} = referenceCurrency
   const series = coin.sparkline?.map((item: string) => {
     return Number(item);
   });
@@ -60,7 +62,7 @@ export const linChartConfig = (coin: CoinInterface) => {
     ],
     tooltip: {
       formatter: function () {
-        return numberToPrice(this.y);
+        return numberToPrice(this.y,sign);
       },
       enabled: true,
       animation: true,
