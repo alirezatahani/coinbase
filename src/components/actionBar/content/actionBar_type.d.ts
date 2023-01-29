@@ -4,6 +4,5 @@ interface OptionInterface {
   label?: string;
 }
 export type ActionBarProps = {
-  handleTimePeriod: (value: string) => void;
   currency: string;
 };

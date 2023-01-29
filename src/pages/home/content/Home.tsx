@@ -11,7 +11,6 @@ const Home = () => {
   const referenceCurrency = useAppSelector((state) => state.referenceCurrency);
   const [searchCoin, setSearchCoin] = useState("");
   const [{ loading, data }, doSearchCoin] = useFetch();
-  const [timePeriod, setTimePeriod] = useState("24h");
 
   const searchingCoin = async (searchValue: string) => {
     try {
@@ -28,22 +27,13 @@ const Home = () => {
     handler(searchValue);
   };
 
-  const timePeriodeHandler: (value: string) => void = (value: string) => {
-    setTimePeriod(value);
-  };
-
   return (
     <HomeStyle>
       <Input
         placeholder="Search..."
         onChange={(e) => searchHandler(e.target.value)}
       />
-      {searchCoin ? null : (
-        <ActionBar
-          handleTimePeriod={timePeriodeHandler}
-          currency={referenceCurrency.value}
-        />
-      )}
+      {searchCoin ? null : <ActionBar currency={referenceCurrency.value} />}
       {searchCoin ? (
         <CoinList
           loading={loading}
@@ -51,7 +41,7 @@ const Home = () => {
           currencySign={"$"}
         />
       ) : (
-        <HomeTabs currency={referenceCurrency} timePeriod={timePeriod} />
+        <HomeTabs currency={referenceCurrency} />
       )}
     </HomeStyle>
   );

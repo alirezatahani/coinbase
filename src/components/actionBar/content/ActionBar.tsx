@@ -12,13 +12,14 @@ import { timpePeriodOptions } from "../utils/selectOptions";
 import { ActionbarContainer } from "../style/actionBar_styles";
 import GetRefrenceCurrency from "../utils/getRefrenceCurrency";
 import { createOption } from "../utils/createOption";
+import { changeTimePeriod } from "@redux/timePeriod/timePeriodAction";
 
-const ActionBar: React.FC<ActionBarProps> = ({
-  handleTimePeriod,
-  currency,
-}) => {
+const ActionBar: React.FC<ActionBarProps> = ({ currency }) => {
   const userTheme = useAppSelector((state) => state.theme.theme);
-  const referenceCurrency = useAppSelector((state) => state.referenceCurrency.value);
+  const referenceCurrency = useAppSelector(
+    (state) => state.referenceCurrency.value
+  );
+  const timePeriod = useAppSelector((state) => state.timePeriod.timePeriod);
   const [searchCurrency, setSearchCurrency] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [firstCoinOption, setFirstCoinOption] = useState<OptionInterface>();
@@ -33,11 +34,9 @@ const ActionBar: React.FC<ActionBarProps> = ({
       ? dispatch(changeToDark())
       : dispatch(changeToLight());
   };
-
   const showModal = () => {
     setIsModalOpen(true);
   };
-
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -52,6 +51,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   ) => {
     return setFirstCoinOption({ label: options.label, value: options.value });
   };
+
   useEffect(() => {
     fetchFirstCoinData({ url: "/coin/Qwsogvtv82FCd", method: "get" });
   }, []);
@@ -83,20 +83,20 @@ const ActionBar: React.FC<ActionBarProps> = ({
           filterOption={false}
           defaultValue={referenceCurrency}
           onChange={(value: string, options: OptionInterface) =>
-           dispatch(changeReferenceCurrency(options))            
+            dispatch(changeReferenceCurrency(options))
           }
           options={GetRefrenceCurrency(searchCurrency)}
         />
       </Tooltip>
       <Tooltip title="Change time period">
         <Select
-          defaultValue="24h"
-          onChange={handleTimePeriod}
+          onChange={(value) => dispatch(changeTimePeriod(value))}
+          defaultValue={timePeriod}
           options={timpePeriodOptions}
         />
       </Tooltip>
       <Tooltip title="Change theme">
-        <Button onClick={()=>themeToggler()}>
+        <Button onClick={() => themeToggler()}>
           {userTheme === "light" ? "Dark" : "Light"}
         </Button>
       </Tooltip>
