@@ -4,8 +4,9 @@ import { useAppSelector } from "hooks/hooks";
 import { CoinInterface } from "types";
 
 export const linChartConfig = (coin: CoinInterface) => {
-  const referenceCurrency = useAppSelector((state)=>state.referenceCurrency)
-  const {sign} = referenceCurrency
+  const referenceCurrency = useAppSelector((state) => state.referenceCurrency);
+  const timePeriod = useAppSelector((state) => state.timePeriod.timePeriod);
+  const { sign } = referenceCurrency;
   const series = coin.sparkline?.map((item: string) => {
     return Number(item);
   });
@@ -16,7 +17,7 @@ export const linChartConfig = (coin: CoinInterface) => {
 
   const options = {
     chart: {
-      styleMode:true,
+      styleMode: true,
       height: 300,
       backgroundColor: "transparent",
       spacing: [15, 15, 0, 15],
@@ -52,7 +53,7 @@ export const linChartConfig = (coin: CoinInterface) => {
     xAxis: [
       {
         title: {
-          text: "24H",
+          text: timePeriod,
         },
         crosshair: {
           enabled: true,
@@ -62,7 +63,7 @@ export const linChartConfig = (coin: CoinInterface) => {
     ],
     tooltip: {
       formatter: function () {
-        return numberToPrice(this.y,sign);
+        return numberToPrice(this.y, sign);
       },
       enabled: true,
       animation: true,

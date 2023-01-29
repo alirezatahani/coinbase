@@ -6,15 +6,14 @@ import { CoinDetail } from "@components/index";
 import { CoinDetailPage } from "../style/coinPage_style";
 
 const CoinPage = () => {
-  const query = useAppSelector((state: any) => state.stack.query);
-  const referenceCurrency = useAppSelector(
-    (state: any) => state.referenceCurrency
-  );
+  const query = useAppSelector((state) => state.stack.query);
+  const referenceCurrency = useAppSelector((state) => state.referenceCurrency);
+  const timePeriod = useAppSelector((state) => state.timePeriod.timePeriod);
   const [{ loading, data }, getCoinData] = useFetch();
 
   useEffect(() => {
     getCoinData({
-      url: `/coin/${query}?referenceCurrencyUuid=${referenceCurrency.value}`,
+      url: `/coin/${query}?referenceCurrencyUuid=${referenceCurrency.value}&timePeriod=${timePeriod}`,
       method: "get",
     });
   }, []);
@@ -24,7 +23,7 @@ const CoinPage = () => {
       {loading ? (
         <Spin />
       ) : data && data.data.coin ? (
-        <CoinDetail coinData={data.data.coin} sign={referenceCurrency.sign}/>
+        <CoinDetail coinData={data.data.coin} sign={referenceCurrency.sign} />
       ) : null}
     </CoinDetailPage>
   );
