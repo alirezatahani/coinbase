@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useAppDispatch, useAppSelector } from "hooks/hooks";
 import { FavBtn } from "../style/addToFavorite_style";
-import { FavoriteActionHandler } from "@redux/actions/favoriteAction";
+import { FavoriteActionHandler } from "@redux/favoriteCoins/favoriteAction";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { AddToFavProps } from "./addToFav_type";
 

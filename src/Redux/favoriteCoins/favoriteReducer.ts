@@ -1,4 +1,4 @@
-import { FavoriteAction } from "@redux/types/types";
+import { FavoriteAction } from "@redux/favoriteCoins/types";
 
 const initialState = {
   favoriteList: <any[]>[],

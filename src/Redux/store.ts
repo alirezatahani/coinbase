@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { favoriteReducer } from "./reducers/favoriteReducer";
+import { favoriteReducer } from "./favoriteCoins/favoriteReducer";
 import { stackReducer } from "./stack/stackReducer";
 import { loadState } from "../localStorage";
 import { themeReducer } from "./userTheme/userThemeReducer";
