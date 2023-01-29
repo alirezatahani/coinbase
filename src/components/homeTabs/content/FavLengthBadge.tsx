@@ -1,9 +1,9 @@
 import React from "react";
+import { useAppSelector } from "hooks/hooks";
 import { Badge, FlexWrapperBadge } from "../style/HomeTabs_styles";
-import { useSelector } from "react-redux";
 
 const FavLengthBadge = () => {
-  const favoriteReducers = useSelector((state:any) => state.FavoriteReducer);
+  const favoriteReducers = useAppSelector((state) => state.FavoriteReducer);
   const { favoriteList } = favoriteReducers;
 
   return (

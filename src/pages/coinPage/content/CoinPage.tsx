@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "hooks/hooks";
 import { Spin } from "antd";
 import useFetch from "../../../hooks/useFetch";
 import { CoinDetail } from "@components/index";
 import { CoinDetailPage } from "../style/coinPage_style";
 
 const CoinPage = () => {
-  const query = useSelector((state: any) => state.stack.query);
-  const referenceCurrency = useSelector(
+  const query = useAppSelector((state: any) => state.stack.query);
+  const referenceCurrency = useAppSelector(
     (state: any) => state.referenceCurrency
   );
   const [{ loading, data }, getCoinData] = useFetch();

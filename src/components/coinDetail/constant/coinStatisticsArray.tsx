@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "hooks/hooks";
 import {
   ExperimentTwoTone,
   DollarCircleTwoTone,
@@ -19,8 +19,8 @@ export const CreateCoinStatisticsArray = ({ ...props }) => {
     rank,
   } = props;
   const volume24h = props["24hVolume"];
-  const referenceCurrency = useSelector(
-    (state: any) => state.referenceCurrency
+  const referenceCurrency = useAppSelector(
+    (state) => state.referenceCurrency
   );
   const { sign, label, value } = referenceCurrency;
 

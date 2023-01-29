@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "hooks/hooks";
 import { GetCoinsData } from "@modules/getCoinsData/content/getCoinsData";
 import { FavoriteCoinsProps } from "./favoriteCoins_types";
 import { EmptyText } from "../style/favoriteCoins_styles";
@@ -9,7 +9,7 @@ const FavoriteCoins: React.FC<FavoriteCoinsProps> = ({
   referenceCurrencyUuid,
   currencySign,
 }) => {
-  const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
+  const favoriteReducers = useAppSelector((state) => state.FavoriteReducer);
   const { favoriteList } = favoriteReducers;
 
   const uuidsString = favoriteList

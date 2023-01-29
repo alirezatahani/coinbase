@@ -1,19 +1,18 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { debounce } from "lodash";
+import { useAppSelector } from "hooks/hooks";
 import useFetch from "../../../hooks/useFetch";
 import { CoinList, HomeTabs } from "@components/index";
 import { ActionBar } from "@components/actionBar";
-import { OptionInterface } from "@components/actionBar/content/actionBar_type";
 import "antd/dist/antd.css";
 import { HomeStyle, Input } from "../style/home_styles";
-import { useSelector } from "react-redux";
 
 const Home = () => {
-  const referenceCurrency = useSelector((state: any) => state.referenceCurrency);
+  const referenceCurrency = useAppSelector((state) => state.referenceCurrency);
   const [searchCoin, setSearchCoin] = useState("");
   const [{ loading, data }, doSearchCoin] = useFetch();
   const [timePeriod, setTimePeriod] = useState("24h");
-  
+
   const searchingCoin = async (searchValue: string) => {
     try {
       await doSearchCoin({
@@ -32,7 +31,7 @@ const Home = () => {
   const timePeriodeHandler: (value: string) => void = (value: string) => {
     setTimePeriod(value);
   };
-  
+
   return (
     <HomeStyle>
       <Input

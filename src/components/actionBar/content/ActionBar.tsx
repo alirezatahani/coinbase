@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { debounce } from "lodash";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "hooks/hooks";
 import { Button, Modal, Select, Tooltip } from "antd";
 import { changeToDark, changeToLight } from "@redux/userTheme/userThemeAction";
 import { changeReferenceCurrency } from "@redux/referenceCurrency/referenceCurrencyAction";
@@ -17,8 +17,8 @@ const ActionBar: React.FC<ActionBarProps> = ({
   handleTimePeriod,
   currency,
 }) => {
-  const userTheme = useSelector((state: any) => state.theme.theme);
-  const referenceCurrency = useSelector((state: any) => state.referenceCurrency.value);
+  const userTheme = useAppSelector((state) => state.theme.theme);
+  const referenceCurrency = useAppSelector((state) => state.referenceCurrency.value);
   const [searchCurrency, setSearchCurrency] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [firstCoinOption, setFirstCoinOption] = useState<OptionInterface>();
@@ -26,7 +26,7 @@ const ActionBar: React.FC<ActionBarProps> = ({
   const [{ data: refrenceCoin, loading }, fetchReferenceCoinData] = useFetch();
   const [{ data: firstCoin, loading: loading2 }, fetchFirstCoinData] =
     useFetch();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const themeToggler = () => {
     userTheme === "light"
