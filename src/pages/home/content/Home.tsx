@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from "react";
 import { debounce } from "lodash";
-import { useAppSelector } from "hooks/hooks";
 import useFetch from "../../../hooks/useFetch";
 import { CoinList, HomeTabs } from "@components/index";
 import { ActionBar } from "@components/actionBar";
@@ -8,7 +7,6 @@ import "antd/dist/antd.css";
 import { HomeStyle, Input } from "../style/home_styles";
 
 const Home = () => {
-  const referenceCurrency = useAppSelector((state) => state.referenceCurrency);
   const [searchCoin, setSearchCoin] = useState("");
   const [{ loading, data }, doSearchCoin] = useFetch();
 
@@ -33,7 +31,7 @@ const Home = () => {
         placeholder="Search..."
         onChange={(e) => searchHandler(e.target.value)}
       />
-      {searchCoin ? null : <ActionBar currency={referenceCurrency.value} />}
+      {searchCoin ? null : <ActionBar />}
       {searchCoin ? (
         <CoinList
           loading={loading}
@@ -41,7 +39,7 @@ const Home = () => {
           currencySign={"$"}
         />
       ) : (
-        <HomeTabs currency={referenceCurrency} />
+        <HomeTabs />
       )}
     </HomeStyle>
   );

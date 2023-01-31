@@ -1,16 +1,12 @@
 import React from "react";
 import { useAppSelector } from "hooks/hooks";
 import { GetCoinsData } from "@modules/getCoinsData/content/getCoinsData";
-import { FavoriteCoinsProps } from "./favoriteCoins_types";
 import { EmptyText } from "../style/favoriteCoins_styles";
 
-const FavoriteCoins: React.FC<FavoriteCoinsProps> = ({
-  timePeriod,
-  referenceCurrencyUuid,
-  currencySign,
-}) => {
-  const favoriteReducers = useAppSelector((state) => state.FavoriteReducer);
-  const { favoriteList } = favoriteReducers;
+const FavoriteCoins = () => {
+  const { favoriteList } = useAppSelector((state) => state.FavoriteReducer);
+  const { sign, value } = useAppSelector((state) => state.referenceCurrency);
+  const timePeriod = useAppSelector((state) => state.timePeriod.timePeriod);
 
   const uuidsString = favoriteList
     .map((item: string, index: number) => {
@@ -26,8 +22,12 @@ const FavoriteCoins: React.FC<FavoriteCoinsProps> = ({
       {favoriteList.length !== 0 ? (
         favoriteList && (
           <GetCoinsData
-            queries={{ uuids: uuidsString, timePeriod, referenceCurrencyUuid }}
-            currencySign={currencySign}
+            queries={{
+              uuids: uuidsString,
+              timePeriod,
+              referenceCurrencyUuid: value,
+            }}
+            currencySign={sign}
           />
         )
       ) : (

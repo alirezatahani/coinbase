@@ -1,20 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { debounce } from "lodash";
 import { useAppDispatch, useAppSelector } from "hooks/hooks";
-import { Button, Modal, Select, Tooltip } from "antd";
+import { changeTimePeriod } from "@redux/timePeriod/timePeriodAction";
 import { changeToDark, changeToLight } from "@redux/userTheme/userThemeAction";
 import { changeReferenceCurrency } from "@redux/referenceCurrency/referenceCurrencyAction";
+import { Button, Modal, Select, Tooltip } from "antd";
+import useFetch from "../../../hooks/useFetch";
 import { CalculatorFilled } from "@ant-design/icons";
 import { Calculator } from "@components/calculator";
-import useFetch from "../../../hooks/useFetch";
-import { ActionBarProps, OptionInterface } from "./actionBar_type";
+import { OptionInterface } from "./actionBar_type";
 import { timpePeriodOptions } from "../utils/selectOptions";
 import { ActionbarContainer } from "../style/actionBar_styles";
 import GetRefrenceCurrency from "../utils/getRefrenceCurrency";
 import { createOption } from "../utils/createOption";
-import { changeTimePeriod } from "@redux/timePeriod/timePeriodAction";
 
-const ActionBar: React.FC<ActionBarProps> = ({ currency }) => {
+const ActionBar = () => {
   const userTheme = useAppSelector((state) => state.theme.theme);
   const referenceCurrency = useAppSelector(
     (state) => state.referenceCurrency.value
@@ -24,7 +24,7 @@ const ActionBar: React.FC<ActionBarProps> = ({ currency }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [firstCoinOption, setFirstCoinOption] = useState<OptionInterface>();
   const [defaultOption, setDefaultOption] = useState<OptionInterface>();
-  const [{ data: refrenceCoin, loading }, fetchReferenceCoinData] = useFetch();
+  const [{ data: referenceCoin, loading }, fetchReferenceCoinData] = useFetch();
   const [{ data: firstCoin, loading: loading2 }, fetchFirstCoinData] =
     useFetch();
   const dispatch = useAppDispatch();
@@ -57,14 +57,17 @@ const ActionBar: React.FC<ActionBarProps> = ({ currency }) => {
   }, []);
 
   useEffect(() => {
-    fetchReferenceCoinData({ url: `/coin/${currency}`, method: "get" });
-    setDefaultOption(createOption(refrenceCoin));
-  }, [currency]);
+    fetchReferenceCoinData({
+      url: `/coin/${referenceCurrency}`,
+      method: "get",
+    });
+    setDefaultOption(createOption(referenceCoin));
+  }, [referenceCurrency]);
 
   useEffect(() => {
-    setDefaultOption(createOption(refrenceCoin));
+    setDefaultOption(createOption(referenceCoin));
     setFirstCoinOption(createOption(firstCoin));
-  }, [refrenceCoin, firstCoin]);
+  }, [referenceCoin, firstCoin]);
 
   const searchingCurrency = (searchValue: string) => {
     setSearchCurrency(searchValue);
@@ -105,7 +108,7 @@ const ActionBar: React.FC<ActionBarProps> = ({ currency }) => {
           <CalculatorFilled />
         </Button>
         <Modal visible={isModalOpen} onCancel={handleCancel} footer={null}>
-          {!loading && !loading2 && refrenceCoin && firstCoin && (
+          {!loading && !loading2 && referenceCoin && firstCoin && (
             <Calculator
               defaultOption={defaultOption}
               handleDefualtOption={defaultOptionHandler}

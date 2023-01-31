@@ -4,11 +4,11 @@ import { useAppSelector } from "hooks/hooks";
 import { FavoriteCoins } from "@modules/index";
 import { GetCoinsData } from "@modules/index";
 import FavLengthBadge from "./FavLengthBadge";
-import { HomeTabsProps } from "../content/homeTabs_type";
 import { tabs } from "../utils/tabs";
 import { TabContainer } from "../style/HomeTabs_styles";
 
-const HomeTabs: React.FC<HomeTabsProps> = ({ currency }) => {
+const HomeTabs = () => {
+  const { sign, value } = useAppSelector((state) => state.referenceCurrency);
   const [limit, setLimit] = useState(10);
   const timePeriod = useAppSelector((state) => state.timePeriod.timePeriod);
   const { TabPane } = Tabs;
@@ -21,11 +21,7 @@ const HomeTabs: React.FC<HomeTabsProps> = ({ currency }) => {
             case "Favorite Coins":
               return (
                 <TabPane tab={<FavLengthBadge />} key={key}>
-                  <FavoriteCoins
-                    timePeriod={timePeriod}
-                    referenceCurrencyUuid={currency.value}
-                    currencySign={currency.sign}
-                  />
+                  <FavoriteCoins />
                 </TabPane>
               );
             default:
@@ -36,9 +32,9 @@ const HomeTabs: React.FC<HomeTabsProps> = ({ currency }) => {
                       ...queries,
                       timePeriod,
                       limit,
-                      referenceCurrencyUuid: currency.value,
+                      referenceCurrencyUuid: value,
                     }}
-                    currencySign={currency.sign}
+                    currencySign={sign}
                   />
                 </TabPane>
               );
