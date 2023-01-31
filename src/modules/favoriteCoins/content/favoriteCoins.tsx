@@ -1,66 +1,39 @@
-import { useSelector, useDispatch } from "react-redux";
 import React from "react";
-import {
-  CoinsStyle,
-  TableContent,
-  TableContentPrice,
-  StarBtn,
-  TableContentChangeMinus,
-  TableContentChangePlus,
-} from "../style/favoriteCoins_styles";
-import { StarOutlined, StarFilled } from "@ant-design/icons";
-import { FavoriteActionHandler } from "@redux/actions/favoriteAction";
+import { useAppSelector } from "hooks/hooks";
+import { GetCoinsData } from "@modules/getCoinsData/content/getCoinsData";
+import { EmptyText } from "../style/favoriteCoins_styles";
 
-export default function FavoriteCoins() {
-  const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
-  const { favoriteList } = favoriteReducers;
+const FavoriteCoins = () => {
+  const { favoriteList } = useAppSelector((state) => state.FavoriteReducer);
+  const { sign, value } = useAppSelector((state) => state.referenceCurrency);
+  const timePeriod = useAppSelector((state) => state.timePeriod.timePeriod);
 
-  const dispatch = useDispatch();
-
-  const favoriteAction = (coin: any) => {
-    dispatch(FavoriteActionHandler(coin));
-  };
-
-  const checkChangePrice = (change: string) => {
-    if (change.includes("-")) {
-      return <TableContentChangeMinus>{change}</TableContentChangeMinus>;
-    } else {
-      return <TableContentChangePlus>+{change}</TableContentChangePlus>;
-    }
-  };
+  const uuidsString = favoriteList
+    .map((item: string, index: number) => {
+      let query = "";
+      if (index === 0) query = item;
+      else query = `uuids[]=${item}`;
+      return query;
+    })
+    .join("&");
 
   return (
     <div>
       {favoriteList.length !== 0 ? (
-        <div>
-          {favoriteList &&
-            favoriteList.map((coin: any, index: number) => {
-              return (
-                <CoinsStyle key={index}>
-                  <div>
-                    <img src={coin.iconUrl} style={{ width: 40 }} />
-                  </div>
-                  <TableContent> {coin.name}</TableContent>
-                  <TableContentPrice>
-                    ${Number(coin.price).toFixed(3)}
-                  </TableContentPrice>
-                  {checkChangePrice(coin.change)}
-                  <StarBtn onClick={() => favoriteAction(coin)}>
-                    {favoriteList.some(
-                      (item: any) => coin.name === item.name
-                    ) ? (
-                      <StarFilled />
-                    ) : (
-                      <StarOutlined />
-                    )}
-                  </StarBtn>
-                </CoinsStyle>
-              );
-            })}
-        </div>
+        favoriteList && (
+          <GetCoinsData
+            queries={{
+              uuids: uuidsString,
+              timePeriod,
+              referenceCurrencyUuid: value,
+            }}
+            currencySign={sign}
+          />
+        )
       ) : (
-        <p style={{ color: "white" }}>Empty</p>
+        <EmptyText>Empty...</EmptyText>
       )}
     </div>
   );
-}
+};
+export default FavoriteCoins;

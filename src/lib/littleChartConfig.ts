@@ -1,7 +1,9 @@
 import { theme } from "@global/Global";
-import { numberToPrice } from "@utils/numberToPrice";
+import { CoinInterface } from "types";
 
-export const littleChartConfig = (coin: any) => {
+export const littleChartConfig = (
+  coin: CoinInterface,
+) => {
   const series = coin.sparkline.map((item: string) => {
     return Number(item);
   });
@@ -12,9 +14,11 @@ export const littleChartConfig = (coin: any) => {
 
   const options = {
     chart: {
-      height: 300,
+      height: 60,
+      width: 100,
       backgroundColor: "transparent",
-      spacing: [15, 15, 0, 15],
+      spacing: [0, 1, 0, 10],
+      marginTop: 35,
     },
     colors: Number(coin.change >= 0)
       ? [theme.palette.success.main]
@@ -28,6 +32,19 @@ export const littleChartConfig = (coin: any) => {
     title: {
       text: "",
     },
+    caption: {
+      align: "center",
+      floating: true,
+      margin: 10,
+      style: {
+        color: Number(coin.change >= 0)
+          ? theme.palette.success[400]
+          : theme.palette.danger[400],
+      },
+      text: priceChange(),
+      verticalAlign: "bottom",
+      y: -10,
+    },
     plotOptions: {
       series: {
         allowPointSelect: true,
@@ -39,31 +56,23 @@ export const littleChartConfig = (coin: any) => {
     yAxis: [
       {
         title: {
-          text: "Price",
+          text: "",
         },
-        gridLineWidth: 0.1,
+        labels: { enabled: false },
+        visible: false,
       },
     ],
     xAxis: [
       {
         title: {
-          text: "24H",
+          text: "",
         },
-        crosshair: {
-          enabled: true,
-          width: 1,
-        },
+        labels: { enabled: false },
+        visible: false,
       },
     ],
     tooltip: {
-      formatter: function () {
-        return "$ " + numberToPrice(this.y);
-      },
-      enabled: true,
-      animation: true,
-      backgroundColor: theme.palette.common.white,
-      borderColor: theme.palette.common.black,
-      borderRadius: 15,
+      enabled: false,
     },
     series: [
       {
