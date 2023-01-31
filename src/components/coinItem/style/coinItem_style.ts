@@ -15,6 +15,6 @@ export const CoinContent = styled.div(({ theme }) => ({
   display: "flex",
   alignItems: "end",
   gap: "2rem",
-  marginBottom: ".1rem",
+  marginBottom: ".5rem",
   color: theme.palette.text.color,
 }));
