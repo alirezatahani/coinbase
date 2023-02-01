@@ -6,7 +6,7 @@ import { convertToQuery } from "@utils/queries";
 import { GetCoinsDataProps } from "../getCoinsData_type";
 import useInfiniteScroll from "hooks/useInfiniteScroll";
 
-export const GetCoinsData: React.FC<GetCoinsDataProps> = ({ queries }) => {
+export const GetCoinsData: React.FC<GetCoinsDataProps> = ({ queries ,currencySign }) => {
   const [{ loading, data, error }, fetchCoinsData] = useFetch();
   const [coinData, setCoinData] = useState([]);
   const [hasMore, setHasMore] = useState(true);
@@ -37,7 +37,7 @@ export const GetCoinsData: React.FC<GetCoinsDataProps> = ({ queries }) => {
 
   return (
     <>
-      <CoinList data={coinData} />
+      <CoinList data={coinData} currencySign = {currencySign} />
       <div ref={ref}>{hasMore && loading && !error ? <Spin /> : ""}</div>
     </>
   );

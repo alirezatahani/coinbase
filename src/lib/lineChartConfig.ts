@@ -1,6 +1,12 @@
 import { theme } from "@global/Global";
+import { numberToPrice } from "@utils/numberToPrice";
+import { useAppSelector } from "hooks/hooks";
+import { CoinInterface } from "types";
 
-export const linChartConfig = (coin: any) => {
+export const linChartConfig = (coin: CoinInterface) => {
+  const referenceCurrency = useAppSelector((state) => state.referenceCurrency);
+  const timePeriod = useAppSelector((state) => state.timePeriod.timePeriod);
+  const { sign } = referenceCurrency;
   const series = coin.sparkline?.map((item: string) => {
     return Number(item);
   });
@@ -11,11 +17,10 @@ export const linChartConfig = (coin: any) => {
 
   const options = {
     chart: {
-      height: 60,
-      width: 100,
+      styleMode: true,
+      height: 300,
       backgroundColor: "transparent",
       spacing: [15, 15, 0, 15],
-      
     },
     colors: Number(coin.change >= 0)
       ? [theme.palette.success.main]
@@ -29,19 +34,6 @@ export const linChartConfig = (coin: any) => {
     title: {
       text: "",
     },
-    caption: {
-      align: "center",
-      floating: true,
-      margin: 10,
-      style: {
-        color: Number(coin.change >= 0)
-          ? theme.palette.success[400]
-          : theme.palette.danger[400],
-      },
-      text: priceChange(),
-      verticalAlign: "bottom",
-      y: -25,
-    },
     plotOptions: {
       series: {
         allowPointSelect: true,
@@ -53,23 +45,30 @@ export const linChartConfig = (coin: any) => {
     yAxis: [
       {
         title: {
-          text: "",
+          text: "Price",
         },
-        labels: { enabled: false },
-        visible: false,
+        gridLineWidth: 0.1,
       },
     ],
     xAxis: [
       {
         title: {
-          text: "",
+          text: timePeriod,
         },
-        labels: { enabled: false },
-        visible: false,
+        crosshair: {
+          enabled: true,
+          width: 1,
+        },
       },
     ],
     tooltip: {
-      enabled: false,
+      formatter: function () {
+        return numberToPrice(this.y, sign);
+      },
+      enabled: true,
+      animation: true,
+      borderColor: theme.palette.border.color,
+      borderRadius: 15,
     },
     series: [
       {

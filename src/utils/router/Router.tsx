@@ -1,10 +1,10 @@
 import React, { ReactElement } from "react";
+import { useAppSelector } from "hooks/hooks";
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
 import { RouterType } from "./router_types";
 
 export const Router: React.FC<RouterType> = ({ children }: any) => {
-  const stack = useSelector((state: any) => state.stack.stack);
+  const stack = useAppSelector((state) => state.stack.stack);
 
   let lastStackItem: string = stack?.[stack.length - 1] ?? "/";
   const isEqual = (array1: string[], array2: string[]) => {

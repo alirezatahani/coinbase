@@ -1,18 +1,39 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { CoinList } from "@components/coinsList/index"
+import { useAppSelector } from "hooks/hooks";
+import { GetCoinsData } from "@modules/getCoinsData/content/getCoinsData";
+import { EmptyText } from "../style/favoriteCoins_styles";
 
-export default function FavoriteCoins() {
-  const favoriteReducers = useSelector((state: any) => state.FavoriteReducer);
-  const { favoriteList } = favoriteReducers;
+const FavoriteCoins = () => {
+  const { favoriteList } = useAppSelector((state) => state.FavoriteReducer);
+  const { sign, value } = useAppSelector((state) => state.referenceCurrency);
+  const timePeriod = useAppSelector((state) => state.timePeriod.timePeriod);
+
+  const uuidsString = favoriteList
+    .map((item: string, index: number) => {
+      let query = "";
+      if (index === 0) query = item;
+      else query = `uuids[]=${item}`;
+      return query;
+    })
+    .join("&");
 
   return (
     <div>
       {favoriteList.length !== 0 ? (
-        favoriteList && <CoinList data={favoriteList} />
+        favoriteList && (
+          <GetCoinsData
+            queries={{
+              uuids: uuidsString,
+              timePeriod,
+              referenceCurrencyUuid: value,
+            }}
+            currencySign={sign}
+          />
+        )
       ) : (
-        <p style={{ color: "white" }}>Empty...</p>
+        <EmptyText>Empty...</EmptyText>
       )}
     </div>
   );
-}
+};
+export default FavoriteCoins;

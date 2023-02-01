@@ -1,5 +1,7 @@
-export const numberToPrice = (price: number) => {
-  return price.toLocaleString(undefined, {
-    minimumFractionDigits: price <= 0.0001 ? 8 : 3,
+export const numberToPrice = (price: number, sign?: string) => {
+  let coinPrice = price.toLocaleString(undefined, {
+    minimumFractionDigits:
+      price <= 0.0001 ? 8 : 0.0001 < price && price < 1 ? 3 : 0,
   });
+  return sign ? sign + " " + coinPrice : coinPrice;
 };

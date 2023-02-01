@@ -1,22 +1,21 @@
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "hooks/hooks";
 import { FavBtn } from "../style/addToFavorite_style";
-import { FavoriteActionHandler } from "@redux/actions/favoriteAction";
+import { FavoriteActionHandler } from "@redux/favoriteCoins/favoriteAction";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
-import { CoinInterface } from "types";
+import { AddToFavProps } from "./addToFav_type";
 
-export const AddToFavoriteSection: React.FC<CoinInterface> = ({...coin}) => {
-  
-  const { favoriteList } = useSelector((state: any) => state.FavoriteReducer);
-  const dispatch = useDispatch();
- 
+export const AddToFavoriteSection: React.FC<AddToFavProps> = ({uuid}) => {
+  const { favoriteList } = useAppSelector((state) => state.FavoriteReducer);
+  const dispatch = useAppDispatch();
+
   const favoriteAction = () => {
-    dispatch(FavoriteActionHandler(coin));
+    dispatch(FavoriteActionHandler(uuid));
   };
   
   return (
     <FavBtn onClick={() => favoriteAction()}>
-      {favoriteList.some((item: any) => coin.name === item.name) ? (
+      {favoriteList.some((item: {}) => uuid === item) ? (
         <StarFilled />
       ) : (
         <StarOutlined />

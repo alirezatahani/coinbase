@@ -3,4 +3,5 @@ export type CoinListProps = {
   error?: string;
   data: {}[];
   searchCoin?: string;
+  currencySign:string
 };
