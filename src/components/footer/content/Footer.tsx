@@ -29,7 +29,11 @@ const Footer = () => {
     })
     .join("&");
 
-  const queries = { timePeriod, value, uuids: uuidsString };
+  const queries = {
+    timePeriod,
+    referenceCurrencyUuid: value,
+    uuids: uuidsString,
+  };
 
   const makingUrl = () => {
     return convertToQuery(queries);
@@ -38,7 +42,7 @@ const Footer = () => {
   useEffect(() => {
     const url = makingUrl();
     fetchCoinsData({ url: `/coins?${url}`, method: "get" });
-  }, [favoriteList]);
+  }, [favoriteList, value]);
 
   if (loading)
     return (
@@ -58,7 +62,7 @@ const Footer = () => {
                 <span>{coin.symbol}</span>
                 <FavCoinChange change={Number(coin.change)}>
                   {Number(coin.change) > 0
-                    ? `+ ${coin.change}`
+                    ? `+${coin.change}`
                     : `${coin.change}`}
                 </FavCoinChange>
               </FavCoinTitle>
