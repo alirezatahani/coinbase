@@ -162,6 +162,13 @@ const theme: DefaultTheme = {
       color: "#323232",
     },
     border: { color: "#1a1e29" },
+    favCoinCard: {
+      background: { color: "#fafafa" },
+      text: { color: "#26495c" },
+      border: { color: "#26495c" },
+      title: { color: "#f3ca20" },
+      subTitle: { color: "#c4a35a" },
+    },
     ...common,
   },
   typography,

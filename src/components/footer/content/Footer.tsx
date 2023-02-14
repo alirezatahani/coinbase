@@ -74,7 +74,7 @@ const Footer = () => {
                   <FavCoinTitle>
                     <CoinName>{coin.symbol}</CoinName>
                     <FavCoinChange change={Number(coin.change)}>
-                      {Number(coin.change) >= 0
+                      {Number(coin.change) > 0
                         ? `+${coin.change}`
                         : `${coin.change}`}
                     </FavCoinChange>

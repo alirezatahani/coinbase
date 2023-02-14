@@ -6,14 +6,15 @@ type FavCoinProps = {
 type InnerCardProps = {
   flipped: boolean;
 };
+
 export const FooterContainer = styled.div(({ theme }) => ({
   width: "550px",
   minHeight: "130px",
   position: "fixed",
   bottom: 0,
   zIndex: 999,
-  backgroundColor: "#26495c",
-  color: "#e5e5dc",
+  backgroundColor: theme.palette.favCoinCard.background.color,
+  color: theme.palette.favCoinCard.text.color,
   padding: "1rem 2rem",
   display: "flex",
   alignItems: "center",
@@ -34,7 +35,7 @@ export const FlipCoinCard = styled.div(({}) => ({
   minHeight: "130px",
   perspective: "1000px",
 }));
-export const InnerCard = styled.div<InnerCardProps>(({ flipped }) => ({
+export const InnerCard = styled.div<InnerCardProps>(({ flipped, theme }) => ({
   height: "100%",
   width: "100%",
   position: "relative",
@@ -43,7 +44,7 @@ export const InnerCard = styled.div<InnerCardProps>(({ flipped }) => ({
   cursor: "pointer",
   transform: flipped ? "rotateY(180deg)" : null,
   borderRadius: "8px",
-  border: "1px solid #e5e5dc",
+  border: `1px solid ${theme.palette.favCoinCard.border.color}`,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -63,7 +64,7 @@ export const FrontCard = styled.div(({ theme }) => ({
   boxShadow: "2px 3px 4px rgba(0, 0, 0, 0.15)",
   justifyContent: "center",
 }));
-export const BackCard = styled.div(({ theme }) => ({
+export const BackCard = styled.div(({}) => ({
   display: "flex",
   flexDirection: "column",
   fontSize: "12px",
@@ -78,12 +79,12 @@ export const BackCard = styled.div(({ theme }) => ({
   justifyContent: "center",
   transform: "rotateY(180deg)",
 }));
-export const FavCoinDesc = styled.div(({ theme }) => ({
+export const FavCoinDesc = styled.div(({}) => ({
   display: "flex",
   flexDirection: "column",
   rowGap: ".2rem",
 }));
-export const FavCoinTitle = styled.div(({ theme }) => ({
+export const FavCoinTitle = styled.div(({}) => ({
   position: "relative",
 }));
 export const FavCoinChange = styled.span<FavCoinProps>(({ theme, change }) => ({
@@ -92,7 +93,7 @@ export const FavCoinChange = styled.span<FavCoinProps>(({ theme, change }) => ({
   right: change >= 0 ? -12 : -26,
   color: change >= 0 ? theme.palette.success[600] : theme.palette.danger[600],
 }));
-export const BackCardDesc = styled.div(({ theme }) => ({
+export const BackCardDesc = styled.div(({}) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",
@@ -101,18 +102,18 @@ export const BackCardDesc = styled.div(({ theme }) => ({
 export const CoinName = styled.p(({ theme }) => ({
   fontSize: theme.typography.subtitle2.fontSize,
   fontWeight: theme.typography.subtitle2.fontWeight,
-  color: "#f3ca20",
+  color: theme.palette.favCoinCard.title.color,
   marginBottom: 0,
 }));
 export const BackCardTitle = styled.p(({ theme }) => ({
-  color: "#c4a35a",
-  borderBottom: `.5px solid #c4a35a`,
+  color: theme.palette.favCoinCard.subTitle.color,
+  borderBottom: `.5px solid ${theme.palette.favCoinCard.border.color}`,
   marginBottom: 0,
 }));
-export const BackCardValue = styled.p(({ theme }) => ({
+export const BackCardValue = styled.p(({}) => ({
   marginBottom: 0,
 }));
-export const EmptyText = styled.p(({ theme }) => ({
+export const EmptyText = styled.p(({}) => ({
   width: "100%",
   textAlign: "center",
 }));
