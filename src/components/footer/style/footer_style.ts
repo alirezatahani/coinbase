@@ -19,6 +19,7 @@ export const FooterContainer = styled.div<FooterContainerProps>(
     zIndex: 999,
     backgroundColor: theme.palette.favCoinCard.background.color,
     color: theme.palette.favCoinCard.text.color,
+    borderRadius: "38px 38px 0 0",
     padding: "1rem 2rem",
     display: "flex",
     alignItems: "center",
@@ -68,6 +69,7 @@ export const FrontCard = styled.div(({ theme }) => ({
   position: "absolute",
   backfaceVisibility: "hidden",
   boxShadow: "2px 3px 4px rgba(0, 0, 0, 0.15)",
+  borderRadius: "8px",
   justifyContent: "center",
 }));
 export const BackCard = styled.div(({}) => ({
@@ -82,6 +84,7 @@ export const BackCard = styled.div(({}) => ({
   gap: ".5rem",
   backfaceVisibility: "hidden",
   boxShadow: "2px 3px 4px rgba(0, 0, 0, 0.15)",
+  borderRadius: "8px",
   justifyContent: "center",
   transform: "rotateY(180deg)",
 }));
