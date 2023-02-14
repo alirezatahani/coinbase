@@ -1,11 +1,12 @@
 import React from "react";
+import { useAppSelector } from "hooks/hooks";
 import Highcharts from "highcharts/highstock";
 import Chart from "highcharts-react-official";
 import { linChartConfig } from "lib/lineChartConfig";
 import { BackButton } from "@components/backBtn";
 import { numberToPrice } from "@utils/numberToPrice";
+import { CoinInterface } from "types";
 import CoinStatistics from "./CoinStatistics";
-import { CoinDetailProps } from "./coinDetail_types";
 import {
   Coin,
   CoinChange,
@@ -14,16 +15,10 @@ import {
   RankBadge,
 } from "../style/coinDetail_style";
 
-const CoinDetail: React.FC<CoinDetailProps> = ({ coinData ,sign}) => {
-  const {
-    name,
-    iconUrl,
-    change,
-    rank,
-    price,
-    symbol,
-  } = coinData;
-  
+const CoinDetail: React.FC<CoinInterface> = ({ ...props }) => {
+  const { name, iconUrl, change, rank, price, symbol } = props;
+  const { sign } = useAppSelector((state) => state.referenceCurrency);
+
   return (
     <section>
       <BackButton />
@@ -43,11 +38,8 @@ const CoinDetail: React.FC<CoinDetailProps> = ({ coinData ,sign}) => {
         </MyDiv>
         <span>{numberToPrice(Number(price), sign)}</span>
       </CoinDesc>
-      <Chart highcharts={Highcharts} options={linChartConfig(coinData)} />
-      <CoinStatistics
-        coinData={coinData}
-        sign={sign}
-      />
+      <Chart highcharts={Highcharts} options={linChartConfig(props)} />
+      <CoinStatistics {...props} />
     </section>
   );
 };

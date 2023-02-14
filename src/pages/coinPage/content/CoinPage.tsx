@@ -23,7 +23,7 @@ const CoinPage = () => {
       {loading ? (
         <Spin />
       ) : data && data.data.coin ? (
-        <CoinDetail coinData={data.data.coin} sign={referenceCurrency.sign} />
+        <CoinDetail {...data.data.coin} />
       ) : null}
       <Footer />
     </CoinDetailPage>

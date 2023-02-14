@@ -1,5 +1,6 @@
 import React from "react";
 import { useAppSelector } from "hooks/hooks";
+import { coinStatisticsType } from "../content/coinDetail_types";
 import {
   ExperimentTwoTone,
   DollarCircleTwoTone,
@@ -19,12 +20,9 @@ export const CreateCoinStatisticsArray = ({ ...props }) => {
     rank,
   } = props;
   const volume24h = props["24hVolume"];
-  const referenceCurrency = useAppSelector(
-    (state) => state.referenceCurrency
-  );
-  const { sign, label, value } = referenceCurrency;
+  const {label,sign} = useAppSelector((state) => state.referenceCurrency);
 
-  const coinStatisticsArray = [
+  const coinStatisticsArray:coinStatisticsType[] = [
     {
       title: `Price to ${label}`,
       data: price,
