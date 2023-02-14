@@ -15,6 +15,10 @@ import {
   BackCard,
   FlipCoinCard,
   InnerCard,
+  BackCardDesc,
+  BackCardValue,
+  BackCardTitle,
+  CoinName,
 } from "../style/footer_style";
 
 const Footer = () => {
@@ -62,15 +66,15 @@ const Footer = () => {
       {favoriteList.length ? (
         data &&
         data.data.coins.map((coin: CoinInterface, i: number) => (
-          <FlipCoinCard>
+          <FlipCoinCard key={coin.uuid}>
             <InnerCard onClick={() => flipCard(i)} flipped={flipped[i]}>
               <FrontCard>
                 <img src={coin.iconUrl} style={{ width: "40px" }} />
                 <FavCoinDesc>
                   <FavCoinTitle>
-                    <span>{coin.symbol}</span>
+                    <CoinName>{coin.symbol}</CoinName>
                     <FavCoinChange change={Number(coin.change)}>
-                      {Number(coin.change) > 0
+                      {Number(coin.change) >= 0
                         ? `+${coin.change}`
                         : `${coin.change}`}
                     </FavCoinChange>
@@ -79,7 +83,19 @@ const Footer = () => {
                 </FavCoinDesc>
               </FrontCard>
               <BackCard>
-                <span>test</span>
+                <CoinName>{coin.name}</CoinName>
+                <BackCardDesc>
+                  <BackCardTitle>24h volume :</BackCardTitle>
+                  <BackCardValue>
+                    {numberToPrice(Number(coin["24hVolume"]), sign)}
+                  </BackCardValue>
+                </BackCardDesc>
+                <BackCardDesc>
+                  <BackCardTitle>Market cap :</BackCardTitle>
+                  <BackCardValue>
+                    {numberToPrice(Number(coin.marketCap), sign)}
+                  </BackCardValue>
+                </BackCardDesc>
               </BackCard>
             </InnerCard>
           </FlipCoinCard>
