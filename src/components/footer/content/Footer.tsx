@@ -57,7 +57,7 @@ const Footer = () => {
 
   if (loading)
     return (
-      <FooterContainer>
+      <FooterContainer loading={loading}>
         <Spin />
       </FooterContainer>
     );

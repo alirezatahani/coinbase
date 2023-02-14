@@ -6,29 +6,35 @@ type FavCoinProps = {
 type InnerCardProps = {
   flipped: boolean;
 };
+type FooterContainerProps = {
+  loading?: boolean;
+};
 
-export const FooterContainer = styled.div(({ theme }) => ({
-  width: "550px",
-  minHeight: "130px",
-  position: "fixed",
-  bottom: 0,
-  zIndex: 999,
-  backgroundColor: theme.palette.favCoinCard.background.color,
-  color: theme.palette.favCoinCard.text.color,
-  padding: "1rem 2rem",
-  display: "flex",
-  alignItems: "center",
-  gap: "1.5rem",
-  overflowX: "scroll",
-  "&::-webkit-scrollbar": {
-    height: "0.4rem",
-  },
-  "&::-webkit-scrollbar-thumb": {
-    backgroundColor: theme.palette.background.color,
-    outline: `.5px solid ${theme.palette.background.color}`,
-    borderRadius: "5px",
-  },
-}));
+export const FooterContainer = styled.div<FooterContainerProps>(
+  ({ theme, loading }) => ({
+    width: "550px",
+    minHeight: "130px",
+    position: "fixed",
+    bottom: 0,
+    zIndex: 999,
+    backgroundColor: theme.palette.favCoinCard.background.color,
+    color: theme.palette.favCoinCard.text.color,
+    padding: "1rem 2rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: loading ? "center" : "unset",
+    gap: "1.5rem",
+    overflowX: "scroll",
+    "&::-webkit-scrollbar": {
+      height: "0.4rem",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: theme.palette.background.color,
+      outline: `.5px solid ${theme.palette.background.color}`,
+      borderRadius: "5px",
+    },
+  })
+);
 export const FlipCoinCard = styled.div(({}) => ({
   backgroundColor: "transparent",
   minWidth: "130px",
