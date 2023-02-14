@@ -22,7 +22,7 @@ const Footer = () => {
   const { sign, value } = useAppSelector((state) => state.referenceCurrency);
   const timePeriod = useAppSelector((state) => state.timePeriod.timePeriod);
   const [{ loading, data }, fetchCoinsData] = useFetch();
-  const [clicked, setClicked] = useState(false);
+  const [flipped, setFlipped] = useState<any>({});
 
   const uuidsString = favoriteList
     .map((item: string, index: number) => {
@@ -42,8 +42,8 @@ const Footer = () => {
   const makingUrl = () => {
     return convertToQuery(queries);
   };
-  const flipCard = () => {
-    setClicked((prevState) => !prevState);
+  const flipCard = (id: number) => {
+    setFlipped((prevState: any) => ({ ...flipped, [id]: !prevState[id] }));
   };
 
   useEffect(() => {
@@ -61,9 +61,9 @@ const Footer = () => {
     <FooterContainer>
       {favoriteList.length ? (
         data &&
-        data.data.coins.map((coin: CoinInterface) => (
+        data.data.coins.map((coin: CoinInterface, i: number) => (
           <FlipCoinCard>
-            <InnerCard onClick={flipCard} clicked={clicked}>
+            <InnerCard onClick={() => flipCard(i)} flipped={flipped[i]}>
               <FrontCard>
                 <img src={coin.iconUrl} style={{ width: "40px" }} />
                 <FavCoinDesc>

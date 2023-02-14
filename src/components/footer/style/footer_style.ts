@@ -4,7 +4,7 @@ type FavCoinProps = {
   change: number;
 };
 type InnerCardProps = {
-  clicked: boolean;
+  flipped: boolean;
 };
 export const FooterContainer = styled.div(({ theme }) => ({
   width: "550px",
@@ -34,14 +34,14 @@ export const FlipCoinCard = styled.div(({}) => ({
   minHeight: "130px",
   perspective: "1000px",
 }));
-export const InnerCard = styled.div<InnerCardProps>(({ clicked }) => ({
+export const InnerCard = styled.div<InnerCardProps>(({ flipped }) => ({
   height: "100%",
   width: "100%",
   position: "relative",
   transformStyle: "preserve-3d",
   transition: " all 1s ease-in-out",
   cursor: "pointer",
-  transform: clicked ? "rotateY(180deg)" : null,
+  transform: flipped ? "rotateY(180deg)" : null,
   borderRadius: "8px",
   border: "1px solid #FEE715FF",
   display: "flex",
