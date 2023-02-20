@@ -31,6 +31,7 @@ const Footer = () => {
   const [{ loading, data }, fetchCoinsData] = useFetch();
   const [flipped, setFlipped] = useState<any>({});
   const [favCoinData, setFavCoinData] = useState(favoriteCoins);
+  const initialRender = useRef(true);
 
   const uuidsString = favoriteCoinsUuid
     .map((item: string, index: number) => {
@@ -62,7 +63,22 @@ const Footer = () => {
       return;
     }
   }, [value, favoriteCoinsUuid]);
-  
+  useEffect(() => {
+  let myInterval: any;
+  if (initialRender.current) {
+    initialRender.current = false;
+  } else {
+    myInterval = setInterval(() => {
+      console.log("ok");
+      const url = makingUrl();
+      fetchCoinsData({ url: `/coins?${url}`, method: "get" });
+    }, 20000);
+  }
+  if (favoriteCoinsUuid.length === 0) {
+    clearInterval(myInterval);
+  }
+  return () => clearInterval(myInterval);
+}, [favoriteCoinsUuid, value]);
   useEffect(() => {
     if (data) {
       setFavCoinData(data.data.coins);
