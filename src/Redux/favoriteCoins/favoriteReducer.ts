@@ -1,29 +1,41 @@
 import { ADD_TO_FAVORITE } from "@redux/favoriteCoins/favoriteTypes";
+import { CoinInterface } from "types";
 
-const initialState:{favoriteList:string[]} = {
-  favoriteList:[],
+const initialState: {
+  favoriteCoinsUuid: string[];
+  favoriteCoins: CoinInterface[];
+} = {
+  favoriteCoinsUuid: [],
+  favoriteCoins: [],
 };
 
-export const favoriteReducer = (state = initialState, action:{type:string,payload:string}) => {
+export const favoriteReducer = (
+  state = initialState,
+  action: { type: string; payload: CoinInterface }
+) => {
   switch (action.type) {
     case ADD_TO_FAVORITE:
-      const favoriteCoinIndex = state.favoriteList.findIndex(
-        (item) => item == action.payload
+      const favoriteCoinIndex = state.favoriteCoinsUuid.findIndex(
+        (item) => item == action.payload.uuid
       );
 
       if (favoriteCoinIndex < 0) {
         return {
           ...state,
-          favoriteList: [...state.favoriteList, action.payload],
+          favoriteCoinsUuid: [...state.favoriteCoinsUuid, action.payload.uuid],
+          favoriteCoins: [...state.favoriteCoins, action.payload],
         };
       } else {
-        const newArray = state.favoriteList.filter(
-          (item) => item !== action.payload
+        const newArray = state.favoriteCoinsUuid.filter(
+          (item) => item !== action.payload.uuid
         );
-
+        const newFavCoins = state.favoriteCoins.filter(
+          (item) => item.uuid !== action.payload.uuid
+        );
         return {
           ...state,
-          favoriteList: newArray,
+          favoriteCoinsUuid: newArray,
+          favoriteCoins: newFavCoins,
         };
       }
     default:
