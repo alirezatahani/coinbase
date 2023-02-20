@@ -6,39 +6,43 @@ type FavCoinProps = {
 type InnerCardProps = {
   flipped: boolean;
 };
-type FooterContainerProps = {
-  loading?: boolean;
-};
 
-export const FooterContainer = styled.div<FooterContainerProps>(
-  ({ theme, loading }) => ({
-    width: "550px",
-    minHeight: "130px",
-    position: "fixed",
-    bottom: 0,
-    zIndex: 999,
-    backgroundColor: theme.palette.favCoinCard.background.color,
-    color: theme.palette.favCoinCard.text.color,
-    borderRadius: "38px 38px 0 0",
-    padding: "1rem 2rem",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: loading ? "center" : "unset",
-    gap: "1.5rem",
-    overflowX: "scroll",
-    "&::-webkit-scrollbar": {
-      height: "0.4rem",
-    },
-    "&::-webkit-scrollbar-thumb": {
-      backgroundColor: theme.palette.background.color,
-      outline: `.5px solid ${theme.palette.background.color}`,
-      borderRadius: "5px",
-    },
-  })
-);
+export const FooterSection = styled.div(({ theme }) => ({
+  width: "550px",
+  minHeight: "130px",
+  position: "fixed",
+  bottom: 0,
+  zIndex: 999,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  backgroundColor: theme.palette.favCoinCard.background.color,
+  color: theme.palette.favCoinCard.text.color,
+  borderRadius: "38px 38px 0 0",
+  overflowX: "scroll",
+  "&::-webkit-scrollbar": {
+    height: "0.4rem",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: theme.palette.background.color,
+    outline: `.5px solid ${theme.palette.background.color}`,
+    borderRadius: "5px",
+  },
+  "& .ant-spin-nested-loading": {
+    width: "100%",
+  },
+}));
+export const Container = styled.div(() => ({
+  width: "100%",
+  display: "flex",
+  padding: "1rem 2rem",
+  alignItems: "center",
+  justifyContent: "start",
+  gap: "1.5rem",
+}));
 export const FlipCoinCard = styled.div(({}) => ({
   backgroundColor: "transparent",
-  minWidth: "130px",
+  minWidth: "150px",
   minHeight: "130px",
   perspective: "1000px",
 }));
@@ -107,20 +111,27 @@ export const BackCardDesc = styled.div(({}) => ({
   flexDirection: "column",
   alignItems: "flex-start",
   gap: ".2rem",
+  width: "100%",
 }));
 export const CoinName = styled.p(({ theme }) => ({
   fontSize: theme.typography.subtitle2.fontSize,
   fontWeight: theme.typography.subtitle2.fontWeight,
   color: theme.palette.favCoinCard.title.color,
   marginBottom: 0,
+  display: "flex",
+  justifyContent: "center",
+  gap: "1rem",
 }));
 export const BackCardTitle = styled.p(({ theme }) => ({
   color: theme.palette.favCoinCard.subTitle.color,
   borderBottom: `.5px solid ${theme.palette.favCoinCard.border.color}`,
   marginBottom: 0,
+  textAlign: "left",
 }));
 export const BackCardValue = styled.p(({}) => ({
   marginBottom: 0,
+  width: "100%",
+  textAlign: "center",
 }));
 export const EmptyText = styled.p(({}) => ({
   width: "100%",
