@@ -1,35 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import { CoinInterface } from "types";
 import useFetch from "../../../hooks/useFetch";
-import { useAppSelector } from "hooks/hooks";
-import { numberToPrice } from "@utils/numberToPrice";
-import { convertToQuery } from "@utils/queries";
 import { Spin } from "antd";
-import {
-  FavCoinChange,
-  FavCoinDesc,
-  FavCoinTitle,
-  EmptyText,
-  FrontCard,
-  BackCard,
-  FlipCoinCard,
-  InnerCard,
-  BackCardDesc,
-  BackCardValue,
-  BackCardTitle,
-  CoinName,
-  FooterSection,
-  Container,
-} from "../style/footer_style";
+import { useAppSelector } from "hooks/hooks";
+import { convertToQuery } from "@utils/queries";
+import FavoriteCoinsContainer from "./FavoriteCoinsContainer";
+import { FooterSection, EmptyText } from "../style/footer_style";
 
 const Footer = () => {
   const { favoriteCoinsUuid, favoriteCoins } = useAppSelector(
     (state) => state.FavoriteReducer
   );
-  const { sign, value } = useAppSelector((state) => state.referenceCurrency);
+  const { value } = useAppSelector((state) => state.referenceCurrency);
   const timePeriod = useAppSelector((state) => state.timePeriod.timePeriod);
   const [{ loading, data }, fetchCoinsData] = useFetch();
-  const [flipped, setFlipped] = useState<any>({});
   const [favCoinData, setFavCoinData] = useState(favoriteCoins);
   const initialRender = useRef(true);
 
@@ -51,9 +34,6 @@ const Footer = () => {
   const makingUrl = () => {
     return convertToQuery(queries);
   };
-  const flipCard = (id: number) => {
-    setFlipped((prevState: any) => ({ ...flipped, [id]: !prevState[id] }));
-  };
 
   useEffect(() => {
     if (favoriteCoinsUuid.length > 0) {
@@ -64,21 +44,20 @@ const Footer = () => {
     }
   }, [value, favoriteCoinsUuid]);
   useEffect(() => {
-  let myInterval: any;
-  if (initialRender.current) {
-    initialRender.current = false;
-  } else {
-    myInterval = setInterval(() => {
-      console.log("ok");
-      const url = makingUrl();
-      fetchCoinsData({ url: `/coins?${url}`, method: "get" });
-    }, 20000);
-  }
-  if (favoriteCoinsUuid.length === 0) {
-    clearInterval(myInterval);
-  }
-  return () => clearInterval(myInterval);
-}, [favoriteCoinsUuid, value]);
+    let myInterval: any;
+    if (initialRender.current) {
+      initialRender.current = false;
+    } else {
+      myInterval = setInterval(() => {
+        const url = makingUrl();
+        fetchCoinsData({ url: `/coins?${url}`, method: "get" });
+      }, 20000);
+    }
+    if (favoriteCoinsUuid.length === 0) {
+      clearInterval(myInterval);
+    }
+    return () => clearInterval(myInterval);
+  }, [favoriteCoinsUuid, value]);
   useEffect(() => {
     if (data) {
       setFavCoinData(data.data.coins);
@@ -94,48 +73,7 @@ const Footer = () => {
   return (
     <FooterSection>
       <Spin spinning={loading} delay={500}>
-        <Container>
-          {favCoinData.map((coin: CoinInterface, i: number) => (
-            <FlipCoinCard key={coin.uuid}>
-              <InnerCard onClick={() => flipCard(i)} flipped={flipped[i]}>
-                <FrontCard>
-                  <img src={coin.iconUrl} style={{ width: "40px" }} />
-                  <FavCoinDesc>
-                    <FavCoinTitle>
-                      <CoinName>
-                        {coin.symbol}
-                        <FavCoinChange change={Number(coin.change)}>
-                          {Number(coin.change) > 0
-                            ? `+${coin.change}`
-                            : `${coin.change}`}
-                        </FavCoinChange>
-                      </CoinName>
-                    </FavCoinTitle>
-                    <span>{numberToPrice(Number(coin.price), sign)}</span>
-                  </FavCoinDesc>
-                </FrontCard>
-                <BackCard>
-                  <CoinName>
-                    <span>{coin.name}</span>
-                    <span>#{coin.rank}</span>
-                  </CoinName>
-                  <BackCardDesc>
-                    <BackCardTitle>24h volume({sign}):</BackCardTitle>
-                    <BackCardValue>
-                      {numberToPrice(Number(coin["24hVolume"]))}
-                    </BackCardValue>
-                  </BackCardDesc>
-                  <BackCardDesc>
-                    <BackCardTitle>Market cap({sign}):</BackCardTitle>
-                    <BackCardValue>
-                      {numberToPrice(Number(coin.marketCap))}
-                    </BackCardValue>
-                  </BackCardDesc>
-                </BackCard>
-              </InnerCard>
-            </FlipCoinCard>
-          ))}
-        </Container>
+        <FavoriteCoinsContainer favCoinsList={favCoinData} />
       </Spin>
     </FooterSection>
   );
