@@ -4,6 +4,7 @@ import { numberToPrice } from "@utils/numberToPrice";
 import { timstampToDate } from "@utils/timestamp";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { CoinInterface } from "types";
+import { coinStatisticsType } from "./coinDetail_types";
 import { CreateCoinStatisticsArray } from "../constant/coinStatisticsArray";
 import {
   CoinStatisticsRowContainer,
@@ -14,21 +15,20 @@ import {
   RowIconContainer,
   RowValueContainer,
 } from "../style/coinStatistics_styles";
-import { CoinDetailProps } from "./coinDetail_types";
 
-const CoinStatistics: React.FC<CoinDetailProps> = ({ coinData}) => {
-  const coinStatisticsArray = CreateCoinStatisticsArray(coinData);
+const CoinStatistics: React.FC<CoinInterface> = ({ name, ...props }) => {
+  const coinStatisticsArray = CreateCoinStatisticsArray(props);
 
   return (
     <section>
       <CoinStatisticsTitleContainer>
         <CoinStatisticsTitle>Value statistics</CoinStatisticsTitle>
         <span>
-          An overview showing the statistics of {coinData.name}, such as the base and
+          An overview showing the statistics of {name}, such as the base and
           quote currency, the rank, and trading volume.
         </span>
       </CoinStatisticsTitleContainer>
-      {coinStatisticsArray.map((item: any) => (
+      {coinStatisticsArray.map((item: coinStatisticsType) => (
         <CoinStatisticsRowContainer key={item.title}>
           <CoinStatisticsRow isLastRow={item.lastRow}>
             <CoinStatisticsRowTitleContainer>
@@ -43,10 +43,7 @@ const CoinStatistics: React.FC<CoinDetailProps> = ({ coinData}) => {
               </span>
             </CoinStatisticsRowTitleContainer>
             <RowValueContainer>
-              {numberToPrice(
-                Number(item.data),
-                item.currencySign
-              )}
+              {numberToPrice(Number(item.data), item.currencySign)}
               {item.timestamp ? (
                 <span>on {timstampToDate(item.timestamp)}</span>
               ) : null}

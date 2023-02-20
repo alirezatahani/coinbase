@@ -4,11 +4,13 @@ import { GetCoinsData } from "@modules/getCoinsData/content/getCoinsData";
 import { EmptyText } from "../style/favoriteCoins_styles";
 
 const FavoriteCoins = () => {
-  const { favoriteList } = useAppSelector((state) => state.FavoriteReducer);
+  const { favoriteCoinsUuid } = useAppSelector(
+    (state) => state.FavoriteReducer
+  );
   const { sign, value } = useAppSelector((state) => state.referenceCurrency);
   const timePeriod = useAppSelector((state) => state.timePeriod.timePeriod);
 
-  const uuidsString = favoriteList
+  const uuidsString = favoriteCoinsUuid
     .map((item: string, index: number) => {
       let query = "";
       if (index === 0) query = item;
@@ -19,8 +21,8 @@ const FavoriteCoins = () => {
 
   return (
     <div>
-      {favoriteList.length !== 0 ? (
-        favoriteList && (
+      {favoriteCoinsUuid.length !== 0 ? (
+        favoriteCoinsUuid && (
           <GetCoinsData
             queries={{
               uuids: uuidsString,

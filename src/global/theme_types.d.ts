@@ -15,6 +15,13 @@ export type ColorsType =
   | "secondary";
 
 type PaletteTypes = {
+  favCoinCard: {
+    background: { color: string };
+    text: { color: string };
+    border: { color: string };
+    title: { color: string };
+    subTitle: { color: string };
+  };
   background: { color: string };
   text: {
     color: string;

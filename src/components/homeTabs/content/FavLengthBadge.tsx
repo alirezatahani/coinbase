@@ -4,12 +4,12 @@ import { Badge, FlexWrapperBadge } from "../style/HomeTabs_styles";
 
 const FavLengthBadge = () => {
   const favoriteReducers = useAppSelector((state) => state.FavoriteReducer);
-  const { favoriteList } = favoriteReducers;
+  const { favoriteCoinsUuid } = favoriteReducers;
 
   return (
     <FlexWrapperBadge>
       <span>Favorite Coins</span>
-      <Badge>{favoriteList.length}</Badge>
+      <Badge>{favoriteCoinsUuid.length}</Badge>
     </FlexWrapperBadge>
   );
 };

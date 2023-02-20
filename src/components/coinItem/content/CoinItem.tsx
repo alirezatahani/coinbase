@@ -26,7 +26,7 @@ const CoinItem: React.FC<CoinInterface> = ({ currencySign, ...coin }) => {
       {sparkline && (
         <Chart highcharts={Highcharts} options={littleChartConfig(coin)} />
       )}
-      <AddToFavoriteSection uuid={uuid} />
+      <AddToFavoriteSection {...coin}/>
     </CoinContent>
   );
 };

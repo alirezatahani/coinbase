@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useAppSelector } from "hooks/hooks";
 import { Spin } from "antd";
 import useFetch from "../../../hooks/useFetch";
-import { CoinDetail } from "@components/index";
+import { CoinDetail,Footer } from "@components/index";
 import { CoinDetailPage } from "../style/coinPage_style";
 
 const CoinPage = () => {
@@ -23,8 +23,9 @@ const CoinPage = () => {
       {loading ? (
         <Spin />
       ) : data && data.data.coin ? (
-        <CoinDetail coinData={data.data.coin} sign={referenceCurrency.sign} />
+        <CoinDetail {...data.data.coin} />
       ) : null}
+      <Footer />
     </CoinDetailPage>
   );
 };
